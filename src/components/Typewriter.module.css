@@ -1,0 +1,19 @@
+.typewriter {
+	background-color: black;
+	color: white;
+  letter-spacing: 0.1em;
+	padding: 0.1em;
+}
+
+.typewriter p {
+  border-right: 0.25em solid white;
+	animation: blink-caret 1s step-end infinite;
+	width: max-content;
+	font-weight: 900;
+	margin: 1em auto;
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: white; }
+}

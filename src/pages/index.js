@@ -21,6 +21,7 @@ export default function Home() {
           ]}
           typingRate={250}
           pauseMS={2500}
+          initialIndex={4}
         />
       </header>
     </div>

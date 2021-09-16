@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react"
+import styles from './Typewriter.module.css'
 
 /**
  * @param args Arguments of {@link window.setTimeout}
@@ -10,12 +11,20 @@ const createTimeoutEffect = (...args: Parameters<typeof window.setTimeout>) => {
 }
 
 interface TypewriterProps {
+	/** Array of phrases to cycle through */
 	phrases: string[]
+	/** Rate of typing characters */
 	typingRate: number
+	/** Delay when reaching the beginning/end of a phrase */
 	pauseMS: number
+	/** Initial character index */
+	initialIndex: number
 }
 
-export default function Typewriter({ phrases, typingRate, pauseMS }: TypewriterProps){
+/**
+ * Cycle through all phrases via a Typewriter style
+ */
+export default function Typewriter({ phrases, typingRate, pauseMS, initialIndex=0 }: TypewriterProps){
 	// Current phrase index, phrase, and the next phrase
 	const [phraseIndex, setPhraseIndex] = useState(0);
 	const phrase = useMemo(() => phrases[phraseIndex] ?? '', [phraseIndex, phrases]);
@@ -23,7 +32,7 @@ export default function Typewriter({ phrases, typingRate, pauseMS }: TypewriterP
 
 
 	// Current text index and text itself
-	const [textIndex, setTextIndex] = useState(0);
+	const [textIndex, setTextIndex] = useState(initialIndex);
 	const text = useMemo(() =>  phrase.slice(0, textIndex), [phrase, textIndex])
 
 
@@ -52,5 +61,12 @@ export default function Typewriter({ phrases, typingRate, pauseMS }: TypewriterP
 		return createTimeoutEffect(() => setTextIndex(i => i + (writing ? 1 : -1)), typingRate);
 	}, [phrases, typingRate, pauseMS, writing, textIndex, nextPhrase, text, phrase.length]);
 
-	return <p>{text}</p>
+	return (
+		<div
+			role="marquee"
+			className={styles.typewriter}
+		>
+			<p>{text}</p>
+		</div>
+	)
 }
