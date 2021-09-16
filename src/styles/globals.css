@@ -22,3 +22,21 @@ a {
 * {
   box-sizing: border-box;
 }
+
+section {
+  color: hsl(200, 10%, 50%);
+}
+
+  section:first-child {
+    border-top: 0 !important;
+  }
+
+  section:nth-child(even) {
+    border-top: 1em solid hsl(200, 30%, 15%);
+    background: hsl(200, 40%, 15%);
+  }
+
+  section:nth-child(odd) {
+    border-top: 1em solid hsl(200, 30%, 15%);
+    background: hsl(200, 20%, 15%);
+  }

@@ -1,0 +1,28 @@
+
+.titleWrapper {
+	display: flex;
+	text-align: center;
+}
+
+	.titleWrapper > h2 {
+		opacity: 0.125;
+		width: 100%;
+		color: hsl(200, 10%, 50%);
+		font-weight: 900;
+		font-size: min(6em, 12.5vw);
+		margin: 0;
+	}
+
+	.titleWrapper > p {
+		align-self: center;
+		position: absolute;
+		width: 100%;
+		color: white;
+		font-weight: 600;
+		font-size: min(2em, 4vw);
+		margin: 0;
+	}
+
+.childrenWrapper {
+	padding: 1em;
+}
