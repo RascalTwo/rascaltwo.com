@@ -1,5 +1,6 @@
 .header {
 	height: 50vh;
+	/** Center the children both vertically and horizontally */
 	text-align: center;
 	display: flex;
 	align-items: center;
@@ -7,15 +8,8 @@
 	flex-direction: column;
 }
 
-.header span {
-	position: relative;
-}
-
-.header span p {
-	margin: -1em 0 0 0;
-}
-
 .header::before {
+	/** Background image that can be targeted with filter for animation */
 	content: "";
 	position: absolute;
 	width: 100vw;
@@ -26,6 +20,16 @@
 	animation: cycle-hues 10s linear 2.5s infinite;
 }
 
+.header span {
+	position: relative;
+}
+
+.header span p {
+	/** Move the "Hello" up so the Typewriter is centered */
+	margin: -1em 0 0 0;
+}
+
+/** Cycle through all the hue-rotate values */
 @keyframes cycle-hues {
 	from { filter: hue-rotate(0deg); }
 	to { filter: hue-rotate(360deg); }
