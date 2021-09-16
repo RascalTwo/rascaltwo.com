@@ -1,0 +1,32 @@
+.header {
+	height: 50vh;
+	text-align: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+}
+
+.header span {
+	position: relative;
+}
+
+.header span p {
+	margin: -1em 0 0 0;
+}
+
+.header::before {
+	content: "";
+	position: absolute;
+	width: 100vw;
+	height: 50vh;
+	background-image: url("/header.png");
+	background-repeat: no-repeat;
+	background-position: center center;
+	animation: cycle-hues 10s linear 2.5s infinite;
+}
+
+@keyframes cycle-hues {
+	from { filter: hue-rotate(0deg); }
+	to { filter: hue-rotate(360deg); }
+}

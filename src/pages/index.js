@@ -1,6 +1,7 @@
 import { useCallback } from 'react'
 import Head from 'next/head'
 import Typewriter from '../components/Typewriter'
+import styles from '../styles/Home.module.css'
 
 export default function Home() {
   return (
@@ -10,7 +11,7 @@ export default function Home() {
         <meta name="description" content="Joseph Milliken Portfolio" />
       </Head>
 
-      <header>
+      <header className={styles.header}>
         <span>
           <p>Hello!</p>
           <Typewriter
