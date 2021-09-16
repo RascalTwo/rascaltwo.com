@@ -19,12 +19,14 @@ interface TypewriterProps {
 	pauseMS: number
 	/** Initial character index */
 	initialIndex: number
+	/** Function to render the actual JSX element with the current text */
+	render: (text: string) => JSX.Element
 }
 
 /**
  * Cycle through all phrases via a Typewriter style
  */
-export default function Typewriter({ phrases, typingRate, pauseMS, initialIndex=0 }: TypewriterProps){
+export default function Typewriter({ phrases, typingRate, pauseMS, initialIndex=0, render=(text: string) => <p>{text}</p> }: TypewriterProps){
 	// Current phrase index, phrase, and the next phrase
 	const [phraseIndex, setPhraseIndex] = useState(0);
 	const phrase = useMemo(() => phrases[phraseIndex] ?? '', [phraseIndex, phrases]);
@@ -66,7 +68,7 @@ export default function Typewriter({ phrases, typingRate, pauseMS, initialIndex=
 			role="marquee"
 			className={styles.typewriter}
 		>
-			<p>{text}</p>
+			{render(text)}
 		</div>
 	)
 }

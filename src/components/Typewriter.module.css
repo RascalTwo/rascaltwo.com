@@ -1,16 +1,16 @@
 .typewriter {
-	background-color: black;
 	color: white;
   letter-spacing: 0.1em;
 	padding: 0.1em;
 }
 
-.typewriter p {
+.typewriter > * {
   border-right: 0.25em solid white;
 	animation: blink-caret 1s step-end infinite;
 	width: max-content;
 	font-weight: 900;
 	margin: 1em auto;
+	text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
 }
 
 @keyframes blink-caret {
