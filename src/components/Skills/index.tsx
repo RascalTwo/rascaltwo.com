@@ -14,7 +14,8 @@ const CATEGORIES_ORDER = [
   'Data',
   'Equipment',
   'Libraries',
-  'Tooling'
+  'Tooling',
+	'Protocols'
 ];
 
 export default function Skills(){

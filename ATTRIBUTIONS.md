@@ -23,6 +23,12 @@ In no particular internal order:
 - [Visual Studio](https://visualstudio.microsoft.com)
 - [Kaboom.js](https://kaboomjs.com/)
 - [Pandas](https://pandas.pydata.org/)
+- [REST](https://restfulapi.net/rest/)
+- [Nodemon](https://nodemon.io/)
+- [MyPy](https://github.com/python/mypy)
+- [Poetry](https://python-poetry.org/)
+- [Pylint](https://pylint.org/)
+- [Brython](https://brython.info/)
 
 #### Collections
 
@@ -36,6 +42,7 @@ In no particular internal order:
 - [EJS](https://icon-icons.com/icon/file-type-ejs/130626)
 - [Gunicorn](https://worldvectorlogo.com/logo/gunicorn)
 - [Minecraft](https://freebiesupply.com/logos/minecraft-logo-2/)
+- [WebSocket](https://seeklogo.com/vector-logo/286189/websocket)
 
 #### Wikipedia
 
@@ -43,6 +50,7 @@ In no particular internal order:
 - [YouTube](https://commons.wikimedia.org/wiki/File:YouTube_Logo_2017.svg#/media/File:YouTube_full-color_icon_(2017).svg)
 - [Matplotlib](https://commons.wikimedia.org/wiki/File:Matplotlib_icon.svg)
 - [Blender](https://commons.wikimedia.org/wiki/File:Logo_Blender.svg#/media/File:Blender_logo_no_text.svg)
+- [SVG](https://en.wikipedia.org/wiki/File:SVG_Logo.svg)
 
 #### GitHub Repositories
 
@@ -172,3 +180,5 @@ In no particular internal order:
 - [Google Apps Script](https://gist.github.com/printminion/e4fd5713c19d1db43f0f)
 - [Microsoft Access](https://www.wizcase.com/download/microsoft-access/)
 - [Chef](https://i.imgur.com/tN9Ctch.png)
+- [Web Worker/Service Worker](https://www.vippng.com/preview/hTTooRR_process-icon-service-worker-logo/)
+- [PyTest](https://marketplace.visualstudio.com/items?itemName=reverbc.vscode-pytest)
