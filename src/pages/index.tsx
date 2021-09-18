@@ -17,7 +17,7 @@ export default function Home() {
         <Section title="ABOUT ME" subTitle="Who am I">
           <h3>I am <i title="Rascal Two">Joseph Milliken</i>, a Software Engineer.</h3>
           <p>I&apos;ve been solving the problems I encounter with whatever tools I have at my disposal since 2008, from Fullstack Websites, to automated IT management, and everything inbetween!</p>
-          <p>My experience started with Java, and blossemed into PHP, Python, the Cs, JavaScript, Ruby, Go, Rust and many more <a href="#section-skills">Technologies</a></p>
+          <p>My experience started with Java, and blossomed into PHP, Python, the Cs, JavaScript, Ruby, Go, Rust and many more <a href="#section-skills">Technologies</a></p>
         </Section>
         <Skills />
         <Section title="WORK" subTitle="Projects I've Made">
