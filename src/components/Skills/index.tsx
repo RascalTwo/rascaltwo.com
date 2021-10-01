@@ -2,7 +2,7 @@ import Image from 'next/image'
 import React from "react";
 import Section from "../Section";
 import Tabs from "../Tabs";
-import TECHNOLOGIES from '../../data/technologies.yaml'
+import { Technologies } from '../../types';
 import styles from './Skills.module.css'
 
 
@@ -18,11 +18,17 @@ const CATEGORIES_ORDER = [
 	'Protocols'
 ];
 
-export default function Skills(){
+interface SkillsProps {
+	technologies: Technologies
+}
+
+export default function Skills({ technologies }: SkillsProps){
+	if (!Object.keys(technologies)) return null;
+
 	return (
 		<Section title="SKILLS" subTitle="Technologies I've Used">
 			<Tabs>
-				{Object.entries(TECHNOLOGIES)
+				{Object.entries(technologies)
 					.sort(([a], [b]) => CATEGORIES_ORDER.indexOf(a) - CATEGORIES_ORDER.indexOf(b))
 					.reduce((map, [key, values]) => ({
 						...map,
