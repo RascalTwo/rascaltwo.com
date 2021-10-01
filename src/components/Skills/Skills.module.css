@@ -18,6 +18,28 @@
 	background-color: white;
 }
 
+.skill:hover .text {
+	opacity: 1;
+}
+
+.text {
+	margin: auto;
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	padding: 0.1em;
+	line-height: 1em;
+	text-align: center;
+	word-wrap: anywhere;
+	border-bottom-left-radius: 1em;
+	border-bottom-right-radius: 1em;
+	background-color: rgba(0, 0, 0, 0.8);
+	color: var(--color);
+	opacity: 0;
+	transition: 250ms opacity linear;
+}
+
 .img {
 	padding: 0.25em !important;
 }

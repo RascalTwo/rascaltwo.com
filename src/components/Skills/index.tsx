@@ -36,7 +36,7 @@ export default function Skills({ technologies }: SkillsProps){
 							<div className={styles.wrapper}>
 								{Object.entries(values) // @ts-ignore
 									.map(([slug, { name, image, background }]) =>
-										<div
+										<figure
 											key={slug}
 											className={styles.skill}
 											data-background={background || 'dark'}
@@ -49,7 +49,8 @@ export default function Skills({ technologies }: SkillsProps){
 												objectFit="contain"
 												className={styles.img}
 											/>
-										</div>
+											<figcaption className={styles.text}>{name}</figcaption>
+										</figure>
 								)}
 							</div>
 					}), {})
