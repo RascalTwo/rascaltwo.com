@@ -5,6 +5,7 @@ import Header from '../components/Header/index'
 import Section from '../components/Section/index'
 import Skills from '../components/Skills/index'
 import Work from '../components/Work/index'
+import Contact from '../components/Contact/index'
 import type { Technologies, WorkData, WorkSource } from '../types'
 
 import WORK from '../data/work.yaml'
@@ -44,6 +45,7 @@ export default function Home({ technologies, work }: HomeProps) {
             </WorkFilterContext.Provider>
           </WorkContext.Provider>
         </TechnologiesContext.Provider>
+        <Contact />
       </main>
     </div>
   )
