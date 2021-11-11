@@ -14,9 +14,10 @@ import { R2Set } from '../../hooks';
 interface MiniWorkMedia {
   video: string;
   image: string;
+  text: string
 }
 
-function MiniWorkMedia({ video, image }: MiniWorkMedia) {
+function MiniWorkMedia({ video, image, text }: MiniWorkMedia) {
   const { ref, inView, entry } = useInView({ threshold: 1 });
   const [playing, setPlaying] = useState(false);
 
@@ -40,28 +41,30 @@ function MiniWorkMedia({ video, image }: MiniWorkMedia) {
       onMouseLeave={startPlaying}
       onCanPlayThrough={startPlaying}
       poster={image}
+      title={text}
     />
   ) : (
-    <img ref={ref} src={image} className={styles.media} />
+    <img ref={ref} src={image} className={styles.media} alt={text} title={text} />
   );
 }
 
 function WorkItem({
   urls: { image, video, source: sourceURL },
-  text: { title },
+  text: { title, alt, description },
   tags: { technologies, concepts },
 }: WorkData) {
+  const text = useMemo(() => description + ' - ' + alt, [alt, description]);
   const media = useMemo(() => {
-    if (video) return <MiniWorkMedia video={video} image={image} />;
-    if (image) return <img className={styles.media} src={image} />;
+    if (video) return <MiniWorkMedia video={video} image={image} text={text} />;
+    if (image) return <img className={styles.media} src={image} alt={text} title={text} />;
 
     const tech = Object.values(concepts)[0];
     return (
       <img
         className={styles.media}
         src={tech.image}
-        title={tech.name}
-        alt={tech.name}
+        title={text}
+        alt={text}
         data-background={tech.background || 'dark'}
       />
     );
