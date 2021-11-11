@@ -1,8 +1,10 @@
 import Image from 'next/image'
-import React from "react";
+import React, { useCallback, useMemo } from "react";
 import Section from "../Section";
 import Tabs from "../Tabs";
-import { Technologies } from '../../types';
+import { Technology } from '../../types';
+import { useTechnologiesContext, useWorkFilterContext } from '../../context';
+
 import styles from './Skills.module.css'
 
 
@@ -15,46 +17,74 @@ const CATEGORIES_ORDER = [
   'Equipment',
   'Libraries',
   'Tooling',
-	'Protocols'
+	'Protocols',
+	'Concepts'
 ];
 
-interface SkillsProps {
-	technologies: Technologies
+interface SkillProps {
+	slug: string
+	technology: Technology
 }
 
-export default function Skills({ technologies }: SkillsProps){
+function Skill({ slug, technology: { background, name, image } }: SkillProps){
+	const { inclusive, exclusive } = useWorkFilterContext();
+	const isInclusive = useMemo(() => inclusive.set.has(slug), [slug, inclusive]);
+	const isExclusive = useMemo(() => exclusive.set.has(slug), [slug, exclusive]);
+
+	return (
+    <figure
+			className={styles.skill}
+			data-background={useMemo(() => background || 'dark', [background])}
+			data-inclusive={isInclusive}
+			data-exclusive={isExclusive}
+			onClick={useCallback(() => {
+				if (isInclusive)  return inclusive.delete(slug);
+
+				inclusive.add(slug);
+				if (isExclusive) exclusive.delete(slug);
+			}, [exclusive, inclusive, isExclusive, isInclusive, slug])}
+			onContextMenu={useCallback((e) => {
+				e.preventDefault();
+				if (isExclusive) return exclusive.delete(slug);
+
+				exclusive.add(slug);
+				if (isInclusive) inclusive.delete(slug)
+			}, [exclusive, inclusive, isExclusive, isInclusive, slug])}
+		>
+      <Image src={image} alt={name} title={name} layout="fill" objectFit="contain" className={styles.img} />
+      <figcaption className={styles.text}>{name}</figcaption>
+    </figure>
+  );
+}
+
+export default function Skills(){
+	const technologies = useTechnologiesContext();
 	if (!Object.keys(technologies)) return null;
 
 	return (
 		<Section title="SKILLS" subTitle="Technologies I've Used">
 			<Tabs>
-				{Object.entries(technologies)
+				{{
+					...Object.entries(technologies)
 					.sort(([a], [b]) => CATEGORIES_ORDER.indexOf(a) - CATEGORIES_ORDER.indexOf(b))
 					.reduce((map, [key, values]) => ({
 						...map,
 						[key]:
 							<div className={styles.wrapper}>
 								{Object.entries(values) // @ts-ignore
-									.map(([slug, { name, image, background }]) =>
-										<figure
-											key={slug}
-											className={styles.skill}
-											data-background={background || 'dark'}
-										>
-											<Image
-												src={image}
-												alt={name}
-												title={name}
-												layout="fill"
-												objectFit="contain"
-												className={styles.img}
-											/>
-											<figcaption className={styles.text}>{name}</figcaption>
-										</figure>
+									.map(([slug, technology]) =>
+										<Skill key={slug} slug={slug} technology={technology} />
 								)}
 							</div>
-					}), {})
-				}
+					}), {}),
+					'?': (
+						<span>
+						All of these Technology icons can be used to filter the projects listed just below!
+						<br/>
+						Simply Left-Click the Technologies you want to see projects made with, or Right-Click technologies you don&apos;t want to see projects made with
+						</span>
+					)
+				}}
 			</Tabs>
 		</Section>
 	)

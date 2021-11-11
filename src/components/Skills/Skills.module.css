@@ -12,10 +12,19 @@
 	margin: 0.25em;
 	background-color: hsl(216, 28%, 14%);
 	border-radius: 1em;
+	cursor: pointer;
 }
 
 .skill[data-background="light"] {
 	background-color: white;
+}
+
+.skill[data-inclusive="true"]{
+	outline: 1px solid green;
+}
+
+.skill[data-exclusive="true"]{
+	outline: 1px solid red;
 }
 
 .skill:hover .text {
