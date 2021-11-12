@@ -69,21 +69,28 @@ export async function getStaticProps(){
     console.error('Unable to fetch technologies:', e);
   }
 
-
+  let work: WorkData[] = []
   const allTechnologies = Object.values(technologies).reduce((all, mapping) => ({ ...all, ...mapping }), {})
 
-  const work = Object.entries(WORK).map(([slug, data]: [string, WorkData]) => {
-    data.slug = slug;
-    if (!('urls' in data)) data.urls = {};
-    if (!data.urls.source) data.urls.source = sourceToURL(data.source);
-    for (const key of ['technologies', 'concepts']){
-      data.tags[key] = data.tags[key].split(' ').map(slug => {
-        const tech = allTechnologies[slug]
-        return [tech ?? null, slug]
-      }).reduce((obj, [tech, slug]) => ({ ...obj, [slug]: tech }), {})
-    }
-    return data;
-  });
+  try{
+    const response = await fetch('https://raw.githubusercontent.com/RascalTwo/RascalTwo/main/data/projects.yaml');
+    const rawYAML = await response.text();
+    work = Object.entries(YAML.parse(rawYAML)).map(([slug, data]: [string, WorkData]) => {
+      data.slug = slug;
+      if (!('urls' in data)) data.urls = {};
+      if (!data.urls.source) data.urls.source = sourceToURL(data.source);
+      for (const key of ['technologies', 'concepts']){
+        data.tags[key] = data.tags[key].split(' ').map(slug => {
+          const tech = allTechnologies[slug]
+          return [tech ?? null, slug]
+        }).reduce((obj, [tech, slug]) => ({ ...obj, [slug]: tech }), {})
+      }
+      return data;
+    });
+  }
+  catch(e){
+    console.error('Unable to fetch work:', e);
+  }
 
   return { props: { technologies, work } }
 }
