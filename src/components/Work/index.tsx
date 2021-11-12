@@ -23,7 +23,7 @@ function MiniWorkMedia({ video, image, text }: MiniWorkMedia) {
 
   useEffect(() => {
     if (entry?.target?.tagName !== 'VIDEO') return;
-    entry.target[playing ? 'play' : 'pause']();
+    new Promise(r => r(entry.target[playing ? 'play' : 'pause']())).catch(() => undefined);
   }, [playing, entry]);
 
   const onMouseEnter = useCallback(() => setPlaying(false), []);
