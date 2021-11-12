@@ -1,0 +1,9 @@
+.linksContainer {
+	float: right;
+	text-align: center;
+	height: 100%;
+}
+
+.linksContainer img {
+	height: 2.5em;
+}
