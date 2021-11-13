@@ -11,6 +11,7 @@ import { TechnologiesContext, WorkContext, WorkFilterContext } from '../context'
 import { useSet } from '../hooks'
 import AboutMe from '../components/AboutMe'
 import Footer from '../components/Footer'
+import GitHubCorner from '../components/GitHubCorner'
 
 
 interface HomeProps {
@@ -27,6 +28,8 @@ export default function Home({ technologies, work }: HomeProps) {
         <title>Joseph Milliken - Portfolio</title>
         <meta name="description" content="Joseph Milliken Portfolio" />
       </Head>
+
+      <GitHubCorner />
 
       <Header />
 
