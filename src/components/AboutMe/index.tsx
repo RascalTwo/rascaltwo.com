@@ -15,6 +15,10 @@ const LINKS = {
     'https://img.shields.io/badge/-Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white',
     'https://twitter.com/RealRascalTwo',
   ],
+  LinkedIn: [
+    'https://img.shields.io/badge/-LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white',
+    'https://linkedin.com/in/joseph97milliken/',
+  ],
 };
 
 export default function AboutMe() {
@@ -39,6 +43,10 @@ export default function AboutMe() {
       <p>
         My experience started with Java, and blossomed into PHP, Python, the Cs, JavaScript, Ruby, Go, Rust and many
         more <a href="#section-skills">Technologies</a>
+      </p>
+      <p>
+        With a passion for solving problems and improving experiences, I&apos;m always streamlining various
+        processes, and making needed complexity work with and not against the user!
       </p>
     </Section>
   );
