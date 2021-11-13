@@ -1,6 +1,8 @@
 import Image from 'next/image';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
+import { marked } from 'marked';
+import { htmlToText } from 'html-to-text'
 
 import Section from '../Section/index';
 import Tabs from '../Tabs/index';
@@ -49,11 +51,19 @@ function MiniWorkMedia({ video, image, text }: MiniWorkMedia) {
 }
 
 function WorkItem({
-  urls: { image, video, source: sourceURL },
+  slug,
+  urls: { image, video, source: sourceURL, ...otherURLs },
   text: { title, alt, description },
   tags: { technologies, concepts },
 }: WorkData) {
-  const text = useMemo(() => description + ' - ' + alt, [alt, description]);
+  const text = useMemo(() => {
+    let markdown = Object.entries(otherURLs).map(([key, value]) => `[${slug} ${key}]: ${value}`).join('\n') + '\n';
+    if (description) markdown += description + ' - ';
+    markdown += alt;
+    return htmlToText(marked.parse(markdown), {
+      selectors: [{ selector: 'a', format: 'inline' }]
+    });
+  }, [slug, otherURLs, alt, description]);
   const media = useMemo(() => {
     if (video) return <MiniWorkMedia video={video} image={image} text={text} />;
     if (image) return <img className={styles.media} src={image} alt={text} title={text} />;

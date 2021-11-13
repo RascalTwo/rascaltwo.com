@@ -14,7 +14,7 @@ export type WorkSource = Partial<Record<'repo' | 'gist', string>>
 export interface WorkData {
 	slug: string
 	source?: WorkSource
-	urls?: Partial<Record<'image' | 'video' | 'live' | 'source', string>>
+	urls?: Partial<Record<string | 'image' | 'video' | 'live' | 'source', string>>
 	text: {
 		title: string
 		alt: string
