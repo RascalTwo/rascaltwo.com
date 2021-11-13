@@ -10,6 +10,7 @@ import type { Technologies, WorkData, WorkSource } from '../types'
 import { TechnologiesContext, WorkContext, WorkFilterContext } from '../context'
 import { useSet } from '../hooks'
 import AboutMe from '../components/AboutMe'
+import Footer from '../components/Footer'
 
 
 interface HomeProps {
@@ -41,6 +42,7 @@ export default function Home({ technologies, work }: HomeProps) {
         </TechnologiesContext.Provider>
         <Contact />
       </main>
+      <Footer />
     </div>
   )
 }
