@@ -12,7 +12,7 @@
 	/** Background image that can be targeted with filter for animation */
 	content: "";
 	position: absolute;
-	width: 100vw;
+	width: 100%;
 	height: 50vh;
 	background-image: url("/header.png");
 	background-repeat: no-repeat;
