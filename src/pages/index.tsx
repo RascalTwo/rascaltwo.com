@@ -12,6 +12,8 @@ import { useSet } from '../hooks'
 import AboutMe from '../components/AboutMe'
 import Footer from '../components/Footer'
 import GitHubCorner from '../components/GitHubCorner'
+import { IS_PRODUCTION } from '../helpers'
+import fs from 'fs';
 
 
 interface HomeProps {
@@ -57,6 +59,9 @@ const sourceToURL = ({ repo, gist }: WorkSource) => {
 }
 
 export async function getStaticProps(){
+  if (!IS_PRODUCTION && fs.existsSync('./src/data/cachedStaticProps.json')){
+    return { props: JSON.parse((await fs.promises.readFile('./src/data/cachedStaticProps.json')).toString()) }
+  }
   let technologies: Technologies = {};
 
   try{
@@ -86,10 +91,16 @@ export async function getStaticProps(){
       }
       return data;
     });
+    if (fs.existsSync('./src/data/order.json')){
+      const order = JSON.parse((await fs.promises.readFile('./src/data/order.json')).toString());
+      work.sort((a, b) => order.indexOf(a.slug) - order.indexOf(b.slug));
+    }
   }
   catch(e){
     console.error('Unable to fetch work:', e);
   }
+
+  if (!IS_PRODUCTION) await fs.promises.writeFile('./src/data/cachedStaticProps.json', JSON.stringify({ technologies, work }));
 
   return { props: { technologies, work } }
 }
