@@ -106,7 +106,7 @@ function WorkItem({
         data-background={concept?.background || 'dark'}
       />
     );
-  }, [media, concepts]);
+  }, [technologies, media, concepts]);
 
   return (
     <div className={styles.workItem} data-background={media.props['data-background']}>
