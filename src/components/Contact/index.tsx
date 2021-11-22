@@ -15,9 +15,10 @@ export default function Contact(){
 						method: 'POST',
 						body: params,
 						headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-					}).then(() =>
-						alert('Thank you for the message!\nI\'ll get back to you within one business day!')
-					);
+					}).then(() => {
+						alert('Thank you for the message!\nI\'ll get back to you within one business day!');
+						(e.target as HTMLFormElement).reset();
+					});
 				}, [])}
 			>
 				<div>
