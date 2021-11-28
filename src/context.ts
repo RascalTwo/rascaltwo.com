@@ -13,3 +13,12 @@ export const WorkFilterContext = createContext<{
 	exclusive: R2Set<string>
 }>(undefined);
 export const useWorkFilterContext = () => useContext(WorkFilterContext);
+
+export const ActivatedTabContext = createContext<{
+	activated: string | null
+	setActivated: (activated: string | null) => void
+}>({
+	activated: null,
+	setActivated: () => undefined
+});
+export const useActivatedTabContext = () => useContext(ActivatedTabContext)

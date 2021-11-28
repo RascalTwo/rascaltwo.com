@@ -7,13 +7,14 @@ import Work from '../components/Work/index'
 import Contact from '../components/Contact/index'
 import type { Technologies, WorkData, WorkSource } from '../types'
 
-import { TechnologiesContext, WorkContext, WorkFilterContext } from '../context'
+import { ActivatedTabContext, TechnologiesContext, WorkContext, WorkFilterContext } from '../context'
 import { useSet } from '../hooks'
 import AboutMe from '../components/AboutMe'
 import Footer from '../components/Footer'
 import GitHubCorner from '../components/GitHubCorner'
 import { IS_PRODUCTION } from '../helpers'
 import fs from 'fs';
+import { useState } from 'react'
 
 
 interface HomeProps {
@@ -24,6 +25,7 @@ interface HomeProps {
 export default function Home({ technologies, work }: HomeProps) {
   const inclusive = useSet<string>();
   const exclusive = useSet<string>();
+  const [activated, setActivated] = useState<string | null>(null);
   return (
     <div>
       <Head>
@@ -40,8 +42,10 @@ export default function Home({ technologies, work }: HomeProps) {
         <TechnologiesContext.Provider value={technologies}>
           <WorkContext.Provider value={work}>
             <WorkFilterContext.Provider value={{ inclusive, exclusive }}>
-              <Skills />
-              <Work />
+              <ActivatedTabContext.Provider value={{ activated, setActivated }}>
+                <Skills />
+                <Work />
+              </ActivatedTabContext.Provider>
             </WorkFilterContext.Provider>
           </WorkContext.Provider>
         </TechnologiesContext.Provider>

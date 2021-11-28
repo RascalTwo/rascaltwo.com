@@ -3,7 +3,7 @@ import React, { useCallback, useMemo } from "react";
 import Section from "../Section";
 import Tabs from "../Tabs";
 import { Technology } from '../../types';
-import { useTechnologiesContext, useWorkFilterContext } from '../../context';
+import { useActivatedTabContext, useTechnologiesContext, useWorkFilterContext } from '../../context';
 
 import styles from './Skills.module.css'
 
@@ -27,6 +27,7 @@ interface SkillProps {
 }
 
 function Skill({ slug, technology: { background, name, image } }: SkillProps){
+	const { setActivated } = useActivatedTabContext();
 	const { inclusive, exclusive } = useWorkFilterContext();
 	const isInclusive = useMemo(() => inclusive.set.has(slug), [slug, inclusive]);
 	const isExclusive = useMemo(() => exclusive.set.has(slug), [slug, exclusive]);
@@ -38,18 +39,20 @@ function Skill({ slug, technology: { background, name, image } }: SkillProps){
 			data-inclusive={isInclusive}
 			data-exclusive={isExclusive}
 			onClick={useCallback(() => {
+				setActivated('Filtered');
 				if (isInclusive)  return inclusive.delete(slug);
 
 				inclusive.add(slug);
 				if (isExclusive) exclusive.delete(slug);
-			}, [exclusive, inclusive, isExclusive, isInclusive, slug])}
+			}, [setActivated, exclusive, inclusive, isExclusive, isInclusive, slug])}
 			onContextMenu={useCallback((e) => {
 				e.preventDefault();
+				setActivated('Filtered');
 				if (isExclusive) return exclusive.delete(slug);
 
 				exclusive.add(slug);
 				if (isInclusive) inclusive.delete(slug)
-			}, [exclusive, inclusive, isExclusive, isInclusive, slug])}
+			}, [setActivated, exclusive, inclusive, isExclusive, isInclusive, slug])}
 		>
       <Image src={image} alt={name} title={name} layout="fill" objectFit="contain" className={styles.img} />
       <figcaption className={styles.text}>{name}</figcaption>

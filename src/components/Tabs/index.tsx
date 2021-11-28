@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useActivatedTabContext } from "../../context";
 import styles from './Tabs.module.css'
 
 interface TabsProps {
@@ -6,7 +7,15 @@ interface TabsProps {
 }
 
 export default function Tabs({ children }: TabsProps){
+	const { activated, setActivated } = useActivatedTabContext();
 	const [activeTab, setActiveTab] = useState(Object.keys(children)[0]);
+	useEffect(() => {
+		if (!activated || !Object.keys(children).includes(activated)) return;
+
+		setActiveTab(activated);
+		setActivated(null);
+	}, [activated, setActivated, children]);
+
 	return (
 		<div className={styles.wrapper}>
 			<nav>
