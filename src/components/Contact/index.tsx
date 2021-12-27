@@ -1,10 +1,16 @@
-import { useCallback } from 'react'
+import { useCallback, useState } from 'react'
+import { Modal } from '../Modal';
 import Section from '../Section'
 import styles from './Contact.module.css'
 
 export default function Contact(){
+	const [message, setMessage] = useState('');
+	const closeModal = useCallback(() => setMessage(''), []);
+
 	return (
 		<Section title="CONTACT" subTitle="Get in Touch">
+			{message ? <Modal onClose={closeModal}>{message}</Modal> : null}
+
 			<form
 				className={styles.form}
 				onSubmit={useCallback((e) => {
@@ -15,10 +21,14 @@ export default function Contact(){
 						method: 'POST',
 						body: params,
 						headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-					}).then(() => {
-						alert('Thank you for the message!\nI\'ll get back to you within one business day!');
+					}).then(async r => {
+						const message = await r.text();
+						if (r.ok) return message;
+						throw message;
+					}).then(message => {
 						(e.target as HTMLFormElement).reset();
-					});
+						return message
+					}).catch(message => message).then(setMessage);
 				}, [])}
 			>
 				<div>
