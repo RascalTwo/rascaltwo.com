@@ -16,8 +16,7 @@ body {
 }
 
 a {
-  color: inherit;
-  text-decoration: none;
+  color: rgb(102, 178, 255);
 }
 
 * {
