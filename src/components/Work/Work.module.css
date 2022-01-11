@@ -62,6 +62,13 @@
 	overflow-y: auto;
 }
 
+.fullWorkItem[data-page="true"] {
+	max-width: auto;
+	max-height: auto;
+	margin: auto;
+	overflow-y: unset;
+}
+
 .fullMedia {
 	max-width: 100%;
 	max-height: 50vmin;

@@ -13,12 +13,11 @@ import { useTechnologiesContext, useWorkContext, useWorkFilterContext } from '..
 import styles from './Work.module.css';
 import { R2Set } from '../../hooks';
 import { Modal } from '../Modal';
+import { useRouter } from 'next/router';
 
-interface FullWorkItemProps extends WorkData {
-}
+type FullWorkItemProps = React.HTMLProps<HTMLDivElement> & WorkData
 
-function FullWorkItem({ slug, tags: { technologies, concepts }, text: { title, description, alt }, urls: { video, image, source, live, ...otherURLs } }: FullWorkItemProps){
-
+export function FullWorkItem({ slug, tags: { technologies, concepts }, text: { title, description, alt }, urls: { video, image, source, live, ...otherURLs }, ...props }: FullWorkItemProps){
   const media = useMemo(() => {
     if (video) return <video
       src={video}
@@ -55,7 +54,7 @@ function FullWorkItem({ slug, tags: { technologies, concepts }, text: { title, d
     data-background={concept?.background || 'dark'}
   />), [media, concepts]);
 
-  return <div className={styles.fullWorkItem}>
+  return <div className={styles.fullWorkItem} {...props}>
     <div className={styles.fullWorkHeader}>
       {source ? <a className={styles.sourceAnchor} href={source}>Source</a> : null}
       {live ? <a className={styles.liveAnchor} href={live}>Live</a> : null}
@@ -382,22 +381,30 @@ function FilteredWork({ onClick }: FilteredWorkProps) {
 }
 
 export default function Work() {
+  const router = useRouter();
   const work = useWorkContext();
   const [selected, setSelected] = useState<WorkData | null>(null);
+  const selectWork = useCallback((data: WorkData) => {
+    setSelected(data);
+    router.push(router.route, `/work/${data.slug}`, { shallow: true });
+  }, [router]);
 
   return (
     <Section title="WORK" subTitle="Projects I've Made">
-      {selected ? <Modal onClose={() => setSelected(null)}><FullWorkItem {...selected} /></Modal> : null}
+      {selected ? <Modal onClose={() => {
+        setSelected(null)
+        router.push(router.route, router.route, { shallow: true });
+      }}><FullWorkItem {...selected} /></Modal> : null}
       <Tabs>
         {{
           All: (
             <div className={styles.wrapper}>
               {Object.entries(work).map(([slug, data]) => (
-                <MiniWorkItem key={slug} slug={slug} {...data} onClick={() => setSelected(data)} />
+                <MiniWorkItem key={slug} slug={slug} {...data} onClick={() => selectWork(data)} />
               ))}
             </div>
           ),
-          Filtered: <FilteredWork onClick={(data) => setSelected(data)} />,
+          Filtered: <FilteredWork onClick={(data) => selectWork(data)} />,
         }}
       </Tabs>
     </Section>
