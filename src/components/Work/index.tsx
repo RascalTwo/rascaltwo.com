@@ -12,14 +12,83 @@ import { useTechnologiesContext, useWorkContext, useWorkFilterContext } from '..
 
 import styles from './Work.module.css';
 import { R2Set } from '../../hooks';
+import { Modal } from '../Modal';
+
+interface FullWorkItemProps extends WorkData {
+}
+
+function FullWorkItem({ slug, tags: { technologies, concepts }, text: { title, description, alt }, urls: { video, image, source, live, ...otherURLs } }: FullWorkItemProps){
+
+  const htmlDescription = useMemo(() => {
+    if (!description) return '';
+    return marked.parse(Object.entries(otherURLs).map(([key, value]) => `[${slug} ${key}]: ${value}`).join('\n') + '\n' + description)
+  }, [slug, otherURLs, description]);
+
+  const media = useMemo(() => {
+    if (video) return <video
+      src={video}
+      className={styles.fullMedia}
+      autoPlay
+      loop
+      controls
+      poster={image}
+      title={alt}
+    />
+    if (image) return <img className={styles.fullMedia} src={image} alt={alt} title={alt} />;
+    return null;
+  }, [alt, video, image]);
+
+  const techIcons = useMemo(() => Object.entries(technologies).map(([slug, tech]) => <img
+    key={slug}
+    className={styles.fullIcon}
+    src={tech.image}
+    title={tech.name}
+    alt={tech.name}
+    data-background={tech?.background || 'dark'}
+  />), [technologies]);
+  const conceptIcons = useMemo(() => Object.entries(concepts).filter(([_, concept]) => concept.image != media.props.src).map(([slug, concept]) => <img
+    key={slug}
+    className={styles.fullIcon}
+    src={concept.image}
+    title={concept.name}
+    alt={concept.name}
+    data-background={concept?.background || 'dark'}
+  />), [media, concepts]);
+
+  return <div className={styles.fullWorkItem}>
+    <div className={styles.fullWorkHeader}>
+      {source ? <a className={styles.sourceAnchor} href={source}>Source</a> : null}
+      {live ? <a className={styles.liveAnchor} href={live}>Live</a> : null}
+      <h2>{title}</h2>
+    </div>
+    {media}
+
+    <p dangerouslySetInnerHTML={{ __html: htmlDescription }}></p>
+    <div className={styles.fullWorkTags}>
+      <span>
+        <h3>Technologies</h3>
+        <div className={styles.iconsWrapper}>
+          {techIcons}
+        </div>
+      </span>
+      <span>
+        <h3>Concepts</h3>
+        <div className={styles.iconsWrapper}>
+          {conceptIcons}
+        </div>
+      </span>
+    </div>
+  </div>
+}
 
 interface MiniWorkMedia {
   video: string;
   image: string;
   text: string
+  onClick?: () => void
 }
 
-function MiniWorkMedia({ video, image, text }: MiniWorkMedia) {
+function MiniWorkMedia({ video, image, text, onClick }: MiniWorkMedia) {
   const { ref, inView, entry } = useInView({ threshold: 1 });
   const [playing, setPlaying] = useState(false);
 
@@ -44,18 +113,24 @@ function MiniWorkMedia({ video, image, text }: MiniWorkMedia) {
       onCanPlayThrough={startPlaying}
       poster={image}
       title={text}
+      onClick={onClick}
     />
   ) : (
-    <img ref={ref} src={image} className={styles.media} alt={text} title={text} />
+    <img ref={ref} src={image} className={styles.media} alt={text} title={text} onClick={onClick} />
   );
 }
 
-function WorkItem({
+interface MiniWorkItemProps extends WorkData {
+  onClick: () => void
+}
+
+function MiniWorkItem({
   slug,
   urls: { image, video, source: sourceURL, ...otherURLs },
   text: { title, alt, description },
   tags: { technologies, concepts },
-}: WorkData) {
+  onClick
+}: MiniWorkItemProps) {
   const text = useMemo(() => {
     let markdown = Object.entries(otherURLs).map(([key, value]) => `[${slug} ${key}]: ${value}`).join('\n') + '\n';
     if (description) markdown += description + ' - ';
@@ -65,8 +140,8 @@ function WorkItem({
     });
   }, [slug, otherURLs, alt, description]);
   const media = useMemo(() => {
-    if (video) return <MiniWorkMedia video={video} image={image} text={text} />;
-    if (image) return <img className={styles.media} src={image} alt={text} title={text} />;
+    if (video) return <MiniWorkMedia video={video} image={image} text={text} onClick={onClick} />;
+    if (image) return <img className={styles.media} src={image} alt={text} title={text} onClick={onClick} />;
 
     const tech = Object.values(concepts)[0];
     return (
@@ -76,6 +151,7 @@ function WorkItem({
         title={text}
         alt={text}
         data-background={tech.background || 'dark'}
+        onClick={onClick}
       />
     );
   }, [video, image, concepts]);
@@ -219,7 +295,11 @@ function NewWorkForm({ onAdd }: { onAdd: (slug: string) => void }) {
   );
 }
 
-function FilteredWork() {
+interface FilteredWorkProps {
+  onClick: (data: WorkData) => void
+}
+
+function FilteredWork({ onClick }: FilteredWorkProps) {
   const work = useWorkContext();
   const { inclusive, exclusive } = useWorkFilterContext();
   const [addingTo, setAddingTo] = useState<R2Set<string> | null>(null);
@@ -295,7 +375,7 @@ function FilteredWork() {
         </div>
       </div>
       {Object.entries(filteredWork).map(([slug, data]) => (
-        <WorkItem key={slug} slug={slug} {...data} />
+        <MiniWorkItem key={slug} slug={slug} {...data} onClick={() => onClick(data)} />
       ))}
     </div>
   );
@@ -303,19 +383,21 @@ function FilteredWork() {
 
 export default function Work() {
   const work = useWorkContext();
+  const [selected, setSelected] = useState<WorkData | null>(null);
 
   return (
     <Section title="WORK" subTitle="Projects I've Made">
+      {selected ? <Modal onClose={() => setSelected(null)}><FullWorkItem {...selected} /></Modal> : null}
       <Tabs>
         {{
           All: (
             <div className={styles.wrapper}>
               {Object.entries(work).map(([slug, data]) => (
-                <WorkItem key={slug} slug={slug} {...data} />
+                <MiniWorkItem key={slug} slug={slug} {...data} onClick={() => setSelected(data)} />
               ))}
             </div>
           ),
-          Filtered: <FilteredWork />,
+          Filtered: <FilteredWork onClick={(data) => setSelected(data)} />,
         }}
       </Tabs>
     </Section>
