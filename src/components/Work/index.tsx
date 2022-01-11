@@ -19,11 +19,6 @@ interface FullWorkItemProps extends WorkData {
 
 function FullWorkItem({ slug, tags: { technologies, concepts }, text: { title, description, alt }, urls: { video, image, source, live, ...otherURLs } }: FullWorkItemProps){
 
-  const htmlDescription = useMemo(() => {
-    if (!description) return '';
-    return marked.parse(Object.entries(otherURLs).map(([key, value]) => `[${slug} ${key}]: ${value}`).join('\n') + '\n' + description)
-  }, [slug, otherURLs, description]);
-
   const media = useMemo(() => {
     if (video) return <video
       src={video}
@@ -37,6 +32,11 @@ function FullWorkItem({ slug, tags: { technologies, concepts }, text: { title, d
     if (image) return <img className={styles.fullMedia} src={image} alt={alt} title={alt} />;
     return null;
   }, [alt, video, image]);
+  const htmlDescription = useMemo(() => {
+    if (!description) return media ? '' : alt;
+    return marked.parse(Object.entries(otherURLs).map(([key, value]) => `[${slug} ${key}]: ${value}`).join('\n') + '\n' + description)
+  }, [slug, otherURLs, description, media, alt]);
+
 
   const techIcons = useMemo(() => Object.entries(technologies).map(([slug, tech]) => <img
     key={slug}
@@ -46,7 +46,7 @@ function FullWorkItem({ slug, tags: { technologies, concepts }, text: { title, d
     alt={tech.name}
     data-background={tech?.background || 'dark'}
   />), [technologies]);
-  const conceptIcons = useMemo(() => Object.entries(concepts).filter(([_, concept]) => concept.image != media.props.src).map(([slug, concept]) => <img
+  const conceptIcons = useMemo(() => Object.entries(concepts).filter(([_, concept]) => concept.image != media?.props.src).map(([slug, concept]) => <img
     key={slug}
     className={styles.fullIcon}
     src={concept.image}
