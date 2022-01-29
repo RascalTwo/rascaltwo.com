@@ -1,0 +1,25 @@
+.header {
+	text-align: center;
+}
+
+.main {
+	margin: auto;
+	width: 80vw;
+}
+
+.section {
+	padding: 1em;
+}
+
+.section:first-of-type {
+	border-radius: 1em 1em 0 0;
+}
+
+.section:last-of-type {
+	border-radius: 0 0 1em 1em;
+}
+
+.sectionHeader > * {
+	display: inline-block;
+	padding-right: 1em;
+}

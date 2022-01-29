@@ -25,3 +25,11 @@ export interface WorkData {
 		concepts?: Record<string, Technology>
 	}
 }
+
+export interface Blog {
+	slug: string
+	title: string
+	date: [number, number, number];
+	html: string
+	excerpt: string
+}

@@ -2,8 +2,10 @@
 import fs from 'fs';
 import path from 'path';
 import YAML from 'yaml'
+import { marked } from 'marked';
+import hljs from 'highlight.js';
 import { IS_PRODUCTION } from './helpers';
-import { Technologies, WorkData, WorkSource } from "./types";
+import type { Blog, Technologies, WorkData, WorkSource } from "./types";
 
 export function fetchStaticResource(url: string, name: string){
 	const cachePath = path.join('.', 'src', 'data', name + '.response');
@@ -59,4 +61,36 @@ export async function fetchWorkDataAndTechnologies(){
   }
 
 	return { work, technologies }
+}
+
+export async function fetchBlogs(){
+  const ROOT = path.join('src', 'data', 'blogs');
+
+  const blogs: Blog[] = []
+  for (const filename of fs.readdirSync(ROOT).sort((a, b) => b.localeCompare(a))){
+    const markdown = (await fs.promises.readFile(path.join(ROOT, filename))).toString()
+      .replace(
+        /```(\w*?) (.*?)```/gi,
+        (_, lang, code) => {
+          const language = hljs.getLanguage(lang) ? lang : 'plaintext';
+          return `<code class="language-${lang} hljs">${hljs.highlight(code, { language }).value}</code>`
+        });
+
+    const html = marked(markdown, {
+      highlight(code, lang){
+        const language = hljs.getLanguage(lang) ? lang : 'plaintext';
+        return hljs.highlight(code, { language }).value;
+      }
+    }).replace(/<code class="(language.*?)"/ig, (match, oldClass) => {
+      return match.slice(0, -1) + ' hljs"';
+    });
+
+    const title = markdown.split('\n')[0].slice(1).trim();
+    const excerpt = markdown.split('\n')[2];
+    const slug = title.toLowerCase().split(' ').join('-').replace('?', '').replace('.', '').replace('!', '');
+    const date = filename.split('.')[0].split('-').map(Number) as [number, number, number]
+    blogs.push({ slug, title, date, html, excerpt })
+  }
+
+  return blogs;
 }

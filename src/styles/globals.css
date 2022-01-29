@@ -40,3 +40,7 @@ section {
     border-top: 1em solid hsl(200, 30%, 15%);
     background: hsl(200, 20%, 15%);
   }
+
+.hljs {
+  width: max-content
+}
