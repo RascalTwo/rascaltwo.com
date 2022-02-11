@@ -68,8 +68,23 @@ export async function fetchBlogs(){
 
   const blogs: Blog[] = []
   for (const filename of fs.readdirSync(ROOT).sort((a, b) => b.localeCompare(a))){
-    const markdown = (await fs.promises.readFile(path.join(ROOT, filename))).toString()
-      .replace(
+    const absolutePath = path.join(ROOT, filename);
+    if (!(await fs.promises.stat(absolutePath)).isFile()) continue;
+
+    const content = (await fs.promises.readFile(absolutePath)).toString();
+
+    let yaml: Record<string, any> = {};
+    let rawMarkdown;
+    const yamlMatch = content.match(/^---\n(.*?)\n---/ms);
+    if (yamlMatch) {
+      yaml = YAML.parse(yamlMatch[1])
+      rawMarkdown = content.split(yamlMatch[0])[1].trim()
+    }
+    else {
+      rawMarkdown = content
+    }
+
+    const markdown = rawMarkdown.replace(
         /```(\w*?) (.*?)```/gi,
         (_, lang, code) => {
           const language = hljs.getLanguage(lang) ? lang : 'plaintext';
@@ -87,7 +102,7 @@ export async function fetchBlogs(){
 
     const title = markdown.split('\n')[0].slice(1).trim();
     const excerpt = markdown.split('\n')[2];
-    const slug = title.toLowerCase().split(' ').join('-').replace('?', '').replace('.', '').replace('!', '');
+    const slug = yaml.slug ?? title.toLowerCase().split(' ').join('-').replace('?', '').replace('.', '').replace('!', '');
     const date = filename.split('.')[0].split('-').map(Number) as [number, number, number]
     blogs.push({ slug, title, date, html, excerpt })
   }
