@@ -1,2 +1,1 @@
-import BlogEntry from '../blog/[slug]';
-export default BlogEntry;
+export { default, getStaticPaths, getStaticProps } from '../blog/[slug]';

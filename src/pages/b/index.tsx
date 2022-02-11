@@ -1,2 +1,1 @@
-import BlogLanding from '../blog';
-export default BlogLanding;
+export { default, getStaticProps } from '../blog';
