@@ -39,10 +39,7 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params: { slug } }) {
   return {
     props: {
-      blog: (await fetchBlogs()).filter(blog => {
-        console.log(blog.slug, 'vs', slug, blog.slug === slug);
-        return blog.slug === slug;
-      })[0],
+      blog: (await fetchBlogs()).filter(blog => blog.slug === slug)[0] ?? null,
     },
   };
 }
