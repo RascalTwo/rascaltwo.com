@@ -63,13 +63,119 @@ export async function fetchWorkDataAndTechnologies(){
 	return { work, technologies }
 }
 
+interface MatchWithIndices extends RegExpMatchArray {
+  indices: [number, number][]
+}
+
+interface R2Match {
+  regex: string
+  match: MatchWithIndices
+}
+
+function indexChanges(content: string, regexes: string[]): R2Match[]{
+  return regexes.reduce((indexes, regex) => {
+    const matches = Array.from(content.matchAll(new RegExp(regex, 'gd')));
+    if (!matches.length) return indexes;
+    for (const match of matches) indexes.push({ regex, match });
+    return indexes;
+  }, [])
+}
+
+function filterNestedMatches(matches: R2Match[]): R2Match[]{
+  const good = [];
+  for (const match of matches){
+    let nested = false;
+    for (const possibleNestor of matches){
+      if (match.regex === possibleNestor.regex) continue;
+      if (match.match.indices[0][0] >= possibleNestor.match.indices[0][0] && match.match.indices[0][1] <= possibleNestor.match.indices[0][1]) {
+        nested = true;
+        break
+      }
+    }
+    if (!nested) good.push(match)
+  }
+  return good
+}
+
+function performReplacements(content: string, matches: R2Match[], infos: ReplaceInfo[]){
+  const infoMap = infos.reduce<Record<string, ReplaceInfo>>((obj, info) => ({ ...obj, [info.regex]: info }), {})
+  for (const match of matches){
+    const info = infoMap[match.regex]!
+    const strings = { ...info }
+    for (const key of ['url', 'newContent', 'title']){
+      let string = strings[key]
+      if (!string) string = key === 'newContent' ? '$0' : ''
+
+      for (let i = 0; i < match.match.indices.length; i++){
+        string = string.replaceAll(`$${i}`, content.substring(...match.match.indices[i]))
+      }
+
+      strings[key] = string;
+    }
+    let replacement = '';
+    switch(info.type){
+      case 'raw': {
+        replacement = strings.newContent
+        break
+      }
+      case 'links': {
+        replacement = `<a href="${strings.url}"`
+        if (strings.title) replacement += ` title="${strings.title}"`
+        replacement += `>${strings.newContent}</a>`
+        break;
+      }
+      case 'abbreviations': {
+        replacement += `<abbr title="${strings.title}">`;
+        if (strings.url) replacement += `<a href="${strings.url}">`;
+        replacement += strings.newContent;
+        if (strings.url) replacement += '</a>';
+        replacement += '</abbr>';
+        break;
+      }
+    }
+    content = content.substring(0, match.match.indices[0][0]) + replacement + content.substring(match.match.indices[0][1])
+  }
+  return content;
+}
+
+interface ReplaceInfo {
+  regex: string
+  type: string
+  newContent?: string
+  title?: string
+  url?: string
+}
+
 export async function fetchBlogs(){
   const ROOT = path.join('src', 'data', 'blogs');
+
+  const regexes = (await Promise.all(['abbreviations', 'links', 'raw'].map(async (type): Promise<ReplaceInfo[]>  => {
+    const absolute = path.join(ROOT, type + '.yaml')
+    if (!fs.existsSync(absolute)) return [];
+
+    const data = (await fs.promises.readFile(absolute)).toString();
+    const yaml: Record<string, string[]> = YAML.parse(data)
+
+    let remap = (args: string[]): Partial<ReplaceInfo> => ({})
+    switch (type){
+      case 'abbreviations':
+        remap = ([title, url, newContent]) => ({ title, url, newContent })
+        break;
+      case 'links':
+        remap = ([url, title, newContent]) => ({ title, url, newContent })
+        break;
+      case 'raw':
+        remap = ([newContent]) => ({ newContent })
+        break;
+    }
+
+    return Object.entries(yaml).map(([regex, ...args]) => ({ type, regex, ...remap(...args) }));
+  }))).flat()
 
   const blogs: Blog[] = []
   for (const filename of fs.readdirSync(ROOT).sort((a, b) => b.localeCompare(a))){
     const absolutePath = path.join(ROOT, filename);
-    if (!(await fs.promises.stat(absolutePath)).isFile()) continue;
+    if (!filename.endsWith('md') || !(await fs.promises.stat(absolutePath)).isFile()) continue;
 
     const content = (await fs.promises.readFile(absolutePath)).toString();
 
@@ -83,6 +189,13 @@ export async function fetchBlogs(){
     else {
       rawMarkdown = content
     }
+
+    let titlelessMarkdown = rawMarkdown.split('\n').slice(1).join('\n')
+    const matches = indexChanges(titlelessMarkdown, regexes.map(r => r.regex))
+    const goodMatches = filterNestedMatches(matches);
+    goodMatches.sort((a, b) => b.match.index - a.match.index);
+    titlelessMarkdown = performReplacements(titlelessMarkdown, goodMatches, regexes)
+    rawMarkdown = rawMarkdown.split('\n')[0] + '\n' + titlelessMarkdown
 
     const markdown = rawMarkdown.replace(
         /```(\w*?) (.*?)```/gi,
