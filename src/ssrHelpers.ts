@@ -120,7 +120,7 @@ function performReplacements(content: string, matches: R2Match[], infos: Replace
       }
       case 'links': {
         replacement = `<a href="${strings.url}"`
-        if (strings.title) replacement += ` title="${strings.title}"`
+        if (strings.title) replacement += ` title="${strings.title}" aria-label="${strings.title}"`
         replacement += `>${strings.newContent}</a>`
         break;
       }
