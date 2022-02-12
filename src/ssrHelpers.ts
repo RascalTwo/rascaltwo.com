@@ -104,7 +104,7 @@ function performReplacements(content: string, matches: R2Match[], infos: Replace
     const strings = { ...info }
     for (const key of ['url', 'newContent', 'title']){
       let string = strings[key]
-      if (!string) string = key === 'newContent' ? '$0' : ''
+      if (!string) string = key === 'newContent' ? info.type === 'abbreviations' ? '$1' : '$0' : ''
 
       for (let i = 0; i < match.match.indices.length; i++){
         string = string.replaceAll(`$${i}`, content.substring(...match.match.indices[i]))
@@ -125,7 +125,7 @@ function performReplacements(content: string, matches: R2Match[], infos: Replace
         break;
       }
       case 'abbreviations': {
-        replacement += `<abbr title="${strings.title}">`;
+        replacement = ` <abbr title="${strings.title}">`;
         if (strings.url) replacement += `<a href="${strings.url}">`;
         replacement += strings.newContent;
         if (strings.url) replacement += '</a>';
@@ -154,22 +154,22 @@ export async function fetchBlogs(){
     if (!fs.existsSync(absolute)) return [];
 
     const data = (await fs.promises.readFile(absolute)).toString();
-    const yaml: Record<string, string[]> = YAML.parse(data)
+    const yaml: Record<string, string[]> = YAML.parse(data) ?? {}
 
-    let remap = (args: string[]): Partial<ReplaceInfo> => ({})
+    let remap = (regex: string, args: string[]): Partial<ReplaceInfo> & { regex: string } => ({ regex: '' })
     switch (type){
       case 'abbreviations':
-        remap = ([title, url, newContent]) => ({ title, url, newContent })
+        remap = (regex, [title, url, newContent]) => ({ regex: ' (' + regex + ')', title, url, newContent })
         break;
       case 'links':
-        remap = ([url, title, newContent]) => ({ title, url, newContent })
+        remap = (regex, [url, title, newContent]) => ({ regex, title, url, newContent })
         break;
       case 'raw':
-        remap = ([newContent]) => ({ newContent })
+        remap = (regex, [newContent]) => ({ regex, newContent })
         break;
     }
 
-    return Object.entries(yaml).map(([regex, ...args]) => ({ type, regex, ...remap(...args) }));
+    return Object.entries(yaml).map(([regex, ...args]) => ({ type, ...remap(regex, ...args) }));
   }))).flat()
 
   const blogs: Blog[] = []
