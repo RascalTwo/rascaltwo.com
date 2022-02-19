@@ -183,18 +183,28 @@ export async function fetchBlogs(){
     let rawMarkdown;
     const yamlMatch = content.match(/^---\n(.*?)\n---/ms);
     if (yamlMatch) {
-      yaml = YAML.parse(yamlMatch[1])
-      rawMarkdown = content.split(yamlMatch[0])[1].trim()
-    }
-    else {
-      rawMarkdown = content
+      yaml = YAML.parse(yamlMatch[1]);
+      rawMarkdown = content.split(yamlMatch[0])[1].trim();
+    } else {
+      rawMarkdown = content;
     }
 
+    const allRegexes = [
+      ...regexes,
+      ...(yaml.replacements
+        ? Object.entries(yaml.replacements).map<ReplaceInfo>(([regex, newContent]: [string, string]) => ({
+            type: 'raw',
+            regex,
+            newContent,
+          }))
+        : []),
+    ];
+
     let titlelessMarkdown = rawMarkdown.split('\n').slice(1).join('\n')
-    const matches = indexChanges(titlelessMarkdown, regexes.map(r => r.regex))
+    const matches = indexChanges(titlelessMarkdown, allRegexes.map(r => r.regex))
     const goodMatches = filterNestedMatches(matches);
     goodMatches.sort((a, b) => b.match.index - a.match.index);
-    titlelessMarkdown = performReplacements(titlelessMarkdown, goodMatches, regexes)
+    titlelessMarkdown = performReplacements(titlelessMarkdown, goodMatches, allRegexes)
     rawMarkdown = rawMarkdown.split('\n')[0] + '\n' + titlelessMarkdown
 
     const markdown = rawMarkdown.replace(
