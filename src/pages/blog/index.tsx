@@ -3,19 +3,21 @@ import Link from 'next/link';
 
 import Footer from '../../components/Footer';
 import { fetchBlogs } from '../../ssrHelpers';
+import { useLocaleConfig } from '../../helpers';
 import { Blog } from '../../types';
 
 import styles from './index.module.css';
 
 export default function BlogLanding({ blogs }: { blogs: Blog[] }) {
+  const { name } = useLocaleConfig();
   return (
     <>
       <Head>
-        <title>Joseph Milliken&apos;s Blog</title>
+        <title>{name}&apos;s Blog</title>
       </Head>
       <header className={styles.header}>
         <h1>
-          <Link href="/">Joseph Milliken</Link>&apos;s Blog
+          <Link href="/">{name}</Link>&apos;s Blog
         </h1>
       </header>
       <main className={styles.main}>
@@ -33,7 +35,7 @@ export default function BlogLanding({ blogs }: { blogs: Blog[] }) {
           </section>
         ))}
       </main>
-      <Footer />
+      <Footer name={name} />
     </>
   );
 }

@@ -5,14 +5,16 @@ import { Blog } from '../../types';
 import styles from './Blog.module.css';
 import 'highlight.js/styles/github-dark-dimmed.css';
 import Footer from '../../components/Footer';
+import { useLocaleConfig } from '../../helpers';
 import Head from 'next/head';
 
 export default function BlogEntry({ blog }: { blog: Blog | undefined }) {
+  const { name } = useLocaleConfig();
   if (!blog) return null;
   return (
     <>
       <Head>
-        <title>Joseph Milliken&apos;s Blog - {blog.title}</title>
+        <title>{name}&apos;s Blog - {blog.title}</title>
       </Head>
       <Link href="/blog">Return to Blog Home</Link>
       <header className={styles.header}>
@@ -23,8 +25,8 @@ export default function BlogEntry({ blog }: { blog: Blog | undefined }) {
           {new Date(blog.date.map(String).join('-')).toDateString()}
         </time>
       </header>
-      <article className={styles.article} dangerouslySetInnerHTML={{ __html: blog.html }}></article>
-      <Footer />
+      <article className={styles.article} dangerouslySetInnerHTML={{ __html: blog.html.replaceAll('I18N_NAME', name) }}></article>
+      <Footer name={name} />
     </>
   );
 }

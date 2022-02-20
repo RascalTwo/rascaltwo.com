@@ -1,6 +1,4 @@
 import Head from 'next/head'
-import getConfig from 'next/config'
-import { useRouter } from 'next/router'
 
 import Header from '../components/Header/index'
 import Skills from '../components/Skills/index'
@@ -14,6 +12,7 @@ import AboutMe from '../components/AboutMe'
 import Footer from '../components/Footer'
 import GitHubCorner from '../components/GitHubCorner'
 import { fetchWorkDataAndTechnologies } from '../ssrHelpers'
+import { useLocaleConfig } from '../helpers'
 import { useState } from 'react'
 
 
@@ -22,15 +21,8 @@ interface HomeProps {
   work: WorkData[]
 }
 
-interface Config {
-  publicRuntimeConfig: Record<string, {
-    name: string,
-    links: Record<string, string>
-  }>
-}
-
 export default function Home({ technologies, work }: HomeProps) {
-  const { publicRuntimeConfig: { [useRouter().locale]: { name, links } } }: Config = getConfig();
+  const { name, links } = useLocaleConfig();
 
   const inclusive = useSet<string>();
   const exclusive = useSet<string>();
@@ -60,7 +52,7 @@ export default function Home({ technologies, work }: HomeProps) {
         </TechnologiesContext.Provider>
         <Contact />
       </main>
-      <Footer />
+      <Footer name={name} />
     </div>
   )
 }

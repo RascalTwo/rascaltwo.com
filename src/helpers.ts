@@ -1,3 +1,5 @@
+import getConfig from 'next/config'
+import { useRouter } from 'next/router'
 import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
@@ -21,4 +23,9 @@ export const usePortal = (selector: string, content: React.ReactNode, callback?:
 	useEffect(() => callback(element), [element, callback]);
 
 	return element ? createPortal(content, element) : null;
+}
+
+export const useLocaleConfig = () => getConfig().publicRuntimeConfig[useRouter().locale] as {
+	name: string,
+	links: Record<string, string>
 }
