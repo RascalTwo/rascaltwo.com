@@ -1,4 +1,6 @@
 import Head from 'next/head'
+import getConfig from 'next/config'
+import { useRouter } from 'next/router'
 
 import Header from '../components/Header/index'
 import Skills from '../components/Skills/index'
@@ -20,15 +22,24 @@ interface HomeProps {
   work: WorkData[]
 }
 
+interface Config {
+  publicRuntimeConfig: Record<string, {
+    name: string,
+    links: Record<string, string>
+  }>
+}
+
 export default function Home({ technologies, work }: HomeProps) {
+  const { publicRuntimeConfig: { [useRouter().locale]: { name, links } } }: Config = getConfig();
+
   const inclusive = useSet<string>();
   const exclusive = useSet<string>();
   const [activated, setActivated] = useState<string | null>(null);
   return (
     <div>
       <Head>
-        <title>Joseph Milliken - Portfolio</title>
-        <meta name="description" content="Joseph Milliken Portfolio" />
+        <title>{name} - Portfolio</title>
+        <meta name="description" content={`${name} Portfolio`} />
       </Head>
 
       <GitHubCorner />
@@ -36,7 +47,7 @@ export default function Home({ technologies, work }: HomeProps) {
       <Header />
 
       <main>
-        <AboutMe />
+        <AboutMe links={links} />
         <TechnologiesContext.Provider value={technologies}>
           <WorkContext.Provider value={work}>
             <WorkFilterContext.Provider value={{ inclusive, exclusive }}>

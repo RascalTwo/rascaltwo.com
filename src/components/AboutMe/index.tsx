@@ -2,26 +2,18 @@ import React from 'react';
 import Section from '../Section';
 import styles from './AboutMe.module.css';
 
-const LINKS = {
-  Email: [
-    'https://img.shields.io/badge/Email-c14438?style=for-the-badge&logo=Gmail&logoColor=white',
-    'mailto:therealrascaltwo@gmail.com',
-  ],
-  Github: [
-    'https://img.shields.io/badge/-Github-181717?style=for-the-badge&logo=Github&logoColor=white',
-    'https://github.com/RascalTwo',
-  ],
-  Twitter: [
-    'https://img.shields.io/badge/-Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white',
-    'https://twitter.com/RealRascalTwo',
-  ],
-  LinkedIn: [
-    'https://img.shields.io/badge/-LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white',
-    'https://linkedin.com/in/joseph97milliken/',
-  ],
-};
+const LINK_IMAGES = {
+  Email: 'https://img.shields.io/badge/Email-c14438?style=for-the-badge&logo=Gmail&logoColor=white',
+  Github: 'https://img.shields.io/badge/-Github-181717?style=for-the-badge&logo=Github&logoColor=white',
+  Twitter: 'https://img.shields.io/badge/-Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white',
+  LinkedIn: 'https://img.shields.io/badge/-LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white',
+}
 
-export default function AboutMe() {
+interface AboutMeProps {
+  links: Record<string, string>
+}
+
+export default function AboutMe({ links }: AboutMeProps) {
   return (
     <Section title="ABOUT ME" subTitle="Who am I">
       <h3>
@@ -29,9 +21,9 @@ export default function AboutMe() {
       </h3>
 
       <aside className={styles.linksContainer}>
-        {Object.entries(LINKS).map(([name, [image, href]]) => (
+        {Object.entries(links).map(([name, href]) => (
           <a key={name} href={href}>
-            <img src={image} alt={name} title={name} />
+            <img src={LINK_IMAGES[name]!} alt={name} title={name} />
             <br />
           </a>
         ))}
