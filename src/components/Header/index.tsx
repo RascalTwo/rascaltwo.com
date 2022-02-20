@@ -2,15 +2,14 @@ import { useCallback } from 'react'
 import Typewriter from '../Typewriter'
 import styles from './Header.module.css'
 
-export default function Header(){
+export default function Header({ name }: { name: string }){
 	return (
 		<header className={styles.header}>
 			<span>
 				<p>Hello!</p>
 				<Typewriter
 					phrases={[
-						"I'm Joseph Milliken",
-						"I'm Rascal Two",
+						`I'm ${name}`,
 						"I'm a Software Engineer",
 						"I'm a Fullstack Developer",
 						"I'm a Polyglot"

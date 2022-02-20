@@ -36,10 +36,10 @@ export default function Home({ technologies, work }: HomeProps) {
 
       <GitHubCorner />
 
-      <Header />
+      <Header name={name} />
 
       <main>
-        <AboutMe links={links} />
+        <AboutMe name={name} links={links} />
         <TechnologiesContext.Provider value={technologies}>
           <WorkContext.Provider value={work}>
             <WorkFilterContext.Provider value={{ inclusive, exclusive }}>

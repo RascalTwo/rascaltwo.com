@@ -10,14 +10,15 @@ const LINK_IMAGES = {
 }
 
 interface AboutMeProps {
+  name: string
   links: Record<string, string>
 }
 
-export default function AboutMe({ links }: AboutMeProps) {
+export default function AboutMe({ name, links }: AboutMeProps) {
   return (
     <Section title="ABOUT ME" subTitle="Who am I">
       <h3>
-        I am <i title="Rascal Two">Joseph Milliken</i>, a Software Engineer.
+        I am <i title={name}>{name}</i>, a Software Engineer.
       </h3>
 
       <aside className={styles.linksContainer}>
@@ -33,7 +34,7 @@ export default function AboutMe({ links }: AboutMeProps) {
         Fullstack Websites, to automated IT management, and everything inbetween!
       </p>
       <p>
-        My experience started with Java, and blossomed into PHP, Python, the Cs, JavaScript, Ruby, Go, Rust and many
+        My experience started with Python, and blossomed into Java, PHP, the Cs, JavaScript, Ruby, Go, Rust and many
         more <a href="#section-skills">Technologies</a>
       </p>
       <p>
