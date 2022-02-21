@@ -99,24 +99,28 @@ function MiniWorkMedia({ video, image, text, onClick }: MiniWorkMedia) {
   const onMouseEnter = useCallback(() => setPlaying(false), []);
   const startPlaying = useCallback(() => setPlaying(true), []);
 
-  return playing || inView ? (
-    <video
-      ref={ref}
-      src={video}
-      className={styles.media}
-      autoPlay
-      loop
-      playsInline
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={startPlaying}
-      onCanPlayThrough={startPlaying}
-      poster={image}
-      title={text}
-      onClick={onClick}
-    />
-  ) : (
-    <img ref={ref} src={image} className={styles.media} alt={text} title={text} onClick={onClick} />
-  );
+  return (
+    <button className={styles.media} onClick={onClick}>
+      {playing || inView ? (
+        <video
+          ref={ref}
+          src={video}
+          className={styles.media}
+          autoPlay
+          loop
+          playsInline
+          onMouseEnter={onMouseEnter}
+          onMouseLeave={startPlaying}
+          onCanPlayThrough={startPlaying}
+          poster={image}
+          title={text}
+          aria-label={text}
+        />
+      ) : (
+        <img ref={ref} src={image} className={styles.media} alt={text} title={text} onClick={onClick} />
+      )}
+    </button>
+  )
 }
 
 interface MiniWorkItemProps extends WorkData {
@@ -140,25 +144,25 @@ function MiniWorkItem({
   }, [slug, otherURLs, alt, description]);
   const media = useMemo(() => {
     if (video) return <MiniWorkMedia video={video} image={image} text={text} onClick={onClick} />;
-    if (image) return <img className={styles.media} src={image} alt={text} title={text} onClick={onClick} />;
-
     const tech = Object.values(concepts)[0];
-    return (
+    const img = image
+      ? <img className={styles.media} src={image} alt={text} title={text} />
+      : (
       <img
-        className={styles.media}
         src={tech.image}
         title={text}
         alt={text}
         data-background={tech.background || 'dark'}
-        onClick={onClick}
       />
-    );
+    )
+    return <button className={styles.media} onClick={onClick} aria-label={`View ${title}`}>{img}</button>
   }, [video, image, concepts]);
 
   const techIcon = useMemo(() => {
     const tech = Object.values(technologies)[0];
     return (
       <img
+        aria-hidden
         className={styles.icon}
         data-side="left"
         src={tech.image}
@@ -173,6 +177,7 @@ function MiniWorkItem({
     if (!concept) return;
     return (
       <img
+        aria-hidden
         className={styles.icon}
         data-side="right"
         src={concept.image}
@@ -185,7 +190,7 @@ function MiniWorkItem({
 
   return (
     <div className={styles.workItem} data-background={media.props['data-background']}>
-      <a className={styles.text} href={sourceURL} target="_blank" rel="noreferrer">
+      <a className={styles.text} href={sourceURL} target="_blank" rel="noreferrer" aria-hidden>
         {title}
       </a>
       {media}
@@ -210,11 +215,12 @@ function TechnologyBadge({ tag, badgeType, ...props }: TechnologyBadgeProps) {
   return (
     <button
       className={styles.badge}
+      aria-label={`${badgeType[0].toUpperCase() + badgeType.slice(1)} ${technology.name} tag`}
       data-background={technology.background ?? 'dark'}
       data-type={badgeType}
       {...props}
     >
-      <span className={styles.badgeIconWrapper}>
+      <span className={styles.badgeIconWrapper} aria-hidden>
         <Image
           src={technology.image}
           alt={technology.name}
@@ -226,7 +232,7 @@ function TechnologyBadge({ tag, badgeType, ...props }: TechnologyBadgeProps) {
         />
       </span>
 
-      <span className={styles.badgeCaption}>{technology.name}</span>
+      <span className={styles.badgeCaption} aria-hidden >{technology.name}</span>
     </button>
   );
 }
@@ -331,14 +337,15 @@ function FilteredWork({ onClick }: FilteredWorkProps) {
 			<div className={styles.filterForm}>
 				<div style={{ textAlign: 'center' }}>Tags</div>
         <span className={styles.filterButtons}>
-          <button type="button" onClick={handleAddTag.bind(null, inclusive)}>
+          <button type="button" aria-label="Add Inclusive Tag" onClick={handleAddTag.bind(null, inclusive)}>
             Include
           </button>
-          <button type="button" onClick={handleAddTag.bind(null, exclusive)}>
+          <button type="button" aria-label="Add Exclusive Tag" onClick={handleAddTag.bind(null, exclusive)}>
             Exclude
           </button>
           <button
             type="button"
+            aria-label="Clear All Tags"
             className={styles.clearFilterButton}
             onClick={useCallback(() => {
               inclusive.setSet(new Set());
@@ -390,12 +397,12 @@ export default function Work() {
   }, [router]);
 
   return (
-    <Section title="WORK" subTitle="Projects I've Made">
+    <Section title="Projects I've Made" subTitle="WORK">
       {selected ? <Modal onClose={() => {
         setSelected(null)
         router.push(router.route, router.route, { shallow: true });
       }}><FullWorkItem {...selected} /></Modal> : null}
-      <Tabs>
+      <Tabs navLabel="List Type">
         {{
           All: (
             <div className={styles.wrapper}>

@@ -3,10 +3,11 @@ import { useActivatedTabContext } from "../../context";
 import styles from './Tabs.module.css'
 
 interface TabsProps {
+	navLabel: string
 	children: Record<string, React.ReactNode>
 }
 
-export default function Tabs({ children }: TabsProps){
+export default function Tabs({ navLabel, children }: TabsProps){
 	const { activated, setActivated } = useActivatedTabContext();
 	const [activeTab, setActiveTab] = useState(Object.keys(children)[0]);
 	useEffect(() => {
@@ -18,7 +19,7 @@ export default function Tabs({ children }: TabsProps){
 
 	return (
 		<div className={styles.wrapper}>
-			<nav>
+			<nav aria-label={navLabel}>
 				<ul className={styles.tabs}>
 					{Object.keys(children).map(key =>
 						<li key={key} className={styles.tab}>

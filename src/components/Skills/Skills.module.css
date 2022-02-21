@@ -5,6 +5,7 @@
 }
 
 .skill {
+	border: 0;
 	position: relative;
 	height: 100px;
 	min-width: 100px;
@@ -27,7 +28,11 @@
 	outline: 1px solid red;
 }
 
-.skill:hover .text {
+.skill:is(:hover, :focus, :active){
+	outline: 1px solid #63b1bc;
+}
+
+.skill:is(:hover, :focus, :active) .text {
 	opacity: 1;
 }
 

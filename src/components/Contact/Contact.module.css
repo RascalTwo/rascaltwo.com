@@ -5,6 +5,7 @@
 	text-align: center;
 	background-color: #049a8f;
 	border-radius: 1em;
+  color: black;
 }
 
 
@@ -52,7 +53,7 @@
 .submitButton {
   font-size: 1em;
   padding: 8px 28px;
-  color: #049a8f;
+  color: #024b46;
   background: white;
   border: 0.15em solid #049a8f;
   border-radius: 1em;

@@ -8,11 +8,12 @@ export default function Contact(){
 	const closeModal = useCallback(() => setMessage(''), []);
 
 	return (
-		<Section title="CONTACT" subTitle="Get in Touch">
+		<Section title="Get in Touch" subTitle="CONTACT">
 			{message ? <Modal onClose={closeModal}>{message}</Modal> : null}
 
 			<form
 				className={styles.form}
+				aria-label="Contact Form"
 				onSubmit={useCallback((e) => {
 					e.preventDefault();
 					// @ts-ignore
@@ -32,24 +33,39 @@ export default function Contact(){
 				}, [])}
 			>
 				<div>
-					<input className={styles.inputStyles} type="text" name="name" required placeholder="Name" />
+					<label>
+						Name<br/>
+						<input className={styles.inputStyles} type="text" name="name" required placeholder="Name" />
+					</label>
 				</div>
 				<div>
-					<input className={styles.inputStyles} type="email" name="email" placeholder="Email" />
+					<label>
+						Email<br/>
+						<input className={styles.inputStyles} type="email" name="email" placeholder="Email" />
+					</label>
 				</div>
 				<div>
-					<input className={styles.inputStyles} type="tel" name="phone" placeholder="Phone Number" />
+					<label>
+						Phone<br/>
+						<input className={styles.inputStyles} type="tel" name="phone" placeholder="Phone Number" />
+					</label>
 				</div>
 				<div>
-					<input className={styles.inputStyles} type="url" name="website" placeholder="Website"  />
+					<label>
+						Website<br/>
+						<input className={styles.inputStyles} type="url" name="website" placeholder="Website"  />
+					</label>
 				</div>
 				<div className={styles.messageWrapper}>
-					<textarea
-						required
-						className={`${styles.inputStyles} ${styles.textarea}`}
-						name="message"
-						placeholder="Message to send!"
-					></textarea>
+					<label>
+						Message<br/>
+						<textarea
+							required
+							className={`${styles.inputStyles} ${styles.textarea}`}
+							name="message"
+							placeholder="Message to send!"
+						></textarea>
+					</label>
 					<button className={styles.submitButton}>Let&apos;s chat!</button>
 				</div>
 			</form>

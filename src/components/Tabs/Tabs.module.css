@@ -29,6 +29,10 @@
 					background-color: rgb(13, 17, 23);
 				}
 
+				.tab button:is(:active, :hover, :focus) {
+					background-color: rgb(25, 27, 31);
+				}
+
 		.content {
 			background-color: hsl(216, 28%, 7%);
 		}

@@ -33,11 +33,13 @@ function Skill({ slug, technology: { background, name, image } }: SkillProps){
 	const isExclusive = useMemo(() => exclusive.set.has(slug), [slug, exclusive]);
 
 	return (
-    <figure
+    <button
 			className={styles.skill}
 			data-background={useMemo(() => background || 'dark', [background])}
 			data-inclusive={isInclusive}
 			data-exclusive={isExclusive}
+			tabIndex={0}
+			aria-label={`${name} Logo`}
 			onClick={useCallback(() => {
 				setActivated('Filtered');
 				if (isInclusive)  return inclusive.delete(slug);
@@ -54,9 +56,9 @@ function Skill({ slug, technology: { background, name, image } }: SkillProps){
 				if (isInclusive) inclusive.delete(slug)
 			}, [setActivated, exclusive, inclusive, isExclusive, isInclusive, slug])}
 		>
-      <Image src={image} alt={name} title={name} layout="fill" objectFit="contain" className={styles.img} />
-      <figcaption className={styles.text}>{name}</figcaption>
-    </figure>
+      <Image src={image} alt={name} title={name} layout="fill" objectFit="contain" className={styles.img} aria-hidden />
+      <span aria-hidden className={styles.text}>{name}</span>
+    </button>
   );
 }
 
@@ -65,8 +67,8 @@ export default function Skills(){
 	if (!Object.keys(technologies)) return null;
 
 	return (
-		<Section title="SKILLS" subTitle="Technologies I've Used">
-			<Tabs>
+		<Section title="Technologies I've Used" subTitle="SKILLS">
+			<Tabs navLabel='Technology Type Tabs'>
 				{{
 					...Object.entries(technologies)
 					.sort(([a], [b]) => CATEGORIES_ORDER.indexOf(a) - CATEGORIES_ORDER.indexOf(b))
@@ -80,7 +82,7 @@ export default function Skills(){
 								)}
 							</div>
 					}), {}),
-					'?': (
+					'Help': (
 						<span>
 						All of these Technology icons can be used to filter the projects listed just below!
 						<br/>

@@ -16,12 +16,12 @@ interface AboutMeProps {
 
 export default function AboutMe({ name, links }: AboutMeProps) {
   return (
-    <Section title="ABOUT ME" subTitle="Who am I">
+    <Section title="Who am I" subTitle="ABOUT ME">
       <h3>
         I am <i title={name}>{name}</i>, a Software Engineer.
       </h3>
 
-      <aside className={styles.linksContainer}>
+      <aside className={styles.linksContainer} aria-label="Also find me here:">
         {Object.entries(links).map(([name, href]) => (
           <a key={name} href={href}>
             <img src={LINK_IMAGES[name]!} alt={name} title={name} />

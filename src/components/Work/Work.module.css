@@ -17,7 +17,6 @@
 	height: max-content;
 	padding: 1em;
 	max-width: 80vw;
-	cursor: pointer;
 }
 
 .workItem[data-background="light"]{
@@ -46,13 +45,16 @@
 	transition: 250ms opacity linear;
 }
 
-.media {
+.media, .media img {
+	background: none;
+	border: 0;
 	padding: 0.25em !important;
 	width: 100%;
 	min-width: 25vmin;
 	height: auto;
 	object-fit: contain;
 	margin: auto;
+	cursor: pointer;
 }
 
 .fullWorkItem {
@@ -192,6 +194,10 @@
 	align-items: center;
 	height: 2em;
 	gap: 0.5em;
+}
+
+.badge:is(:hover, :focus, :active) {
+	outline: 1px solid #63b1bc;
 }
 
 .badgeIconWrapper {

@@ -4,8 +4,8 @@
 	text-align: center;
 }
 
-	.titleWrapper > h2 {
-		opacity: 0.125;
+	.titleWrapper > p {
+		opacity: 0.25;
 		width: 100%;
 		color: hsl(200, 10%, 50%);
 		font-weight: 900;
@@ -13,7 +13,7 @@
 		margin: 0;
 	}
 
-	.titleWrapper > p {
+	.titleWrapper > h2 {
 		align-self: center;
 		position: absolute;
 		width: 100%;
