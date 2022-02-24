@@ -225,7 +225,7 @@ export async function fetchBlogs(){
 
     const title = markdown.split('\n')[0].slice(1).trim();
     const excerpt = markdown.split('\n')[2];
-    const slug = yaml.slug ?? title.toLowerCase().split(' ').join('-').replace('?', '').replace('.', '').replace('!', '');
+    const slug = yaml.slug ?? title.toLowerCase().split(' ').join('-').replace('?', '').replace('.', '').replace('!', '').replace('#', '');
     const date = filename.split('.')[0].split('-').map(Number) as [number, number, number]
     blogs.push({ slug, title, date, html, excerpt })
   }
