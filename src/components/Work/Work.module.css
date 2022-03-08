@@ -12,6 +12,7 @@
 
 @media (max-width: 800px) {
 	.wrapper {
+		grid-template-columns: auto;
 		grid-auto-flow: row;
 		height: 100vh;
 	}
@@ -29,6 +30,7 @@
 	width: 100%;
 	padding: 1em;
 	max-width: 80vw;
+	max-height: 75vh;
 }
 
 .workItem[data-background="light"]{
@@ -67,6 +69,7 @@
 	object-fit: contain;
 	margin: auto;
 	cursor: pointer;
+	overflow: hidden;
 }
 
 .fullWorkItem {
