@@ -44,8 +44,8 @@ export default function Home({ technologies, work }: HomeProps) {
           <WorkContext.Provider value={work}>
             <WorkFilterContext.Provider value={{ inclusive, exclusive }}>
               <ActivatedTabContext.Provider value={{ activated, setActivated }}>
-                <Skills />
                 <Work />
+                <Skills />
               </ActivatedTabContext.Provider>
             </WorkFilterContext.Provider>
           </WorkContext.Provider>
