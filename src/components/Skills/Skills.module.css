@@ -2,6 +2,7 @@
 	padding-top: 0.5em;
 	display: flex;
 	flex-wrap: wrap;
+	justify-content: space-between;
 }
 
 .skill {
@@ -9,7 +10,7 @@
 	position: relative;
 	height: 100px;
 	min-width: 100px;
-	flex: 1;
+	flex: 0 1;
 	margin: 0.25em;
 	background-color: hsl(216, 28%, 14%);
 	border-radius: 1em;
