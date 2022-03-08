@@ -16,7 +16,7 @@ interface TypewriterProps {
 	/** Rate of typing characters */
 	typingRate: number
 	/** Delay when reaching the beginning/end of a phrase */
-	pauseMS: number
+	pauseMS: [number, number]
 	/** Initial character index */
 	initialIndex: number
 	/** Function to render the actual JSX element with the current text */
@@ -47,7 +47,7 @@ export default function Typewriter({ phrases, typingRate, pauseMS, initialIndex=
 
 		// If writing and reached end of the phrase, start backspacing
 		if (writing && textIndex === phrase.length) {
-			return createTimeoutEffect(() => setWriting(false), pauseMS / 2);
+			return createTimeoutEffect(() => setWriting(false), pauseMS[1] / 2);
 		}
 
 		// If backspacing and the next phrase starts with the current phrase,
@@ -56,7 +56,7 @@ export default function Typewriter({ phrases, typingRate, pauseMS, initialIndex=
 			return createTimeoutEffect(() => {
 				setWriting(true);
 				setPhraseIndex(pi => (pi + 1) % phrases.length);
-			}, pauseMS);
+			}, pauseMS[0]);
 		}
 
 		// Change text index by one accordingly
