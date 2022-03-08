@@ -36,6 +36,7 @@ export async function fetchWorkDataAndTechnologies(){
 
   let work: WorkData[] = []
   const allTechnologies = Object.values(technologies).reduce((all, mapping) => ({ ...all, ...mapping }), {})
+  const seenTech = new Set<string>();
 
   try{
     const rawYAML = await fetchStaticResource('https://raw.githubusercontent.com/RascalTwo/RascalTwo/main/data/projects.yaml', 'projects');
@@ -46,6 +47,7 @@ export async function fetchWorkDataAndTechnologies(){
       for (const key of ['technologies', 'concepts']){
         data.tags[key] = data.tags[key].split(' ').map(slug => {
           const tech = allTechnologies[slug]
+          if (tech) seenTech.add(slug)
           return [tech ?? null, slug]
         }).reduce((obj, [tech, slug]) => ({ ...obj, [slug]: tech }), {})
       }
@@ -58,6 +60,13 @@ export async function fetchWorkDataAndTechnologies(){
   }
   catch(e){
     console.error('Unable to fetch work:', e);
+  }
+
+  for (const [catSlug, category] of Object.entries(technologies)){
+    for (const slug in category){
+      if (!seenTech.has(slug)) delete category[slug]
+    }
+    if (!Object.keys(category).length) delete technologies[catSlug];
   }
 
 	return { work, technologies }
