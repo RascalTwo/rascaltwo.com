@@ -31,15 +31,15 @@ export default function AboutMe({ name, links }: AboutMeProps) {
       </aside>
       <p>
         I&apos;ve been solving the problems I encounter with whatever tools I have at my disposal since 2008, from
-        Fullstack Websites, to automated IT management, and everything inbetween!
+        Fullstack Websites, to automated IT management, and everything in-between!
       </p>
       <p>
         My experience started with Python, and blossomed into Java, PHP, the Cs, JavaScript, Ruby, Go, Rust and many
         more <a href="#section-skills">Technologies</a>
       </p>
       <p>
-        With a passion for solving problems and improving experiences, I&apos;m always streamlining various
-        processes, and making needed complexity work with and not against the user!
+        With a passion for solving problems and improving experiences, I&apos;m always streamlining
+        processes, and making needed complexities work with, and not against the user!
       </p>
     </Section>
   );

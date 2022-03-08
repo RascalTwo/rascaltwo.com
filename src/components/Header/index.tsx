@@ -6,18 +6,17 @@ export default function Header({ name }: { name: string }){
 	return (
 		<header className={styles.header}>
 			<span>
-				<p>Hello!</p>
+				<h1>{name}</h1>
 				<Typewriter
 					phrases={[
-						`I'm ${name}`,
-						"I'm a Software Engineer",
-						"I'm a Fullstack Developer",
-						"I'm a Polyglot"
+						"Software Engineer",
+						"Fullstack Developer",
+						"Polyglot"
 					]}
 					typingRate={250}
-					pauseMS={2500}
-					initialIndex={4}
-					render={useCallback(text => <h1>{text}</h1>, [])}
+					pauseMS={[0, 10000]}
+					initialIndex={8}
+					render={useCallback(text => <span>{text}</span>, [])}
 				/>
 			</span>
 		</header>
