@@ -19,6 +19,7 @@ export default function Tabs({ navLabel, children }: TabsProps){
 
 	return (
 		<div className={styles.wrapper}>
+			{Object.keys(children).length > 1 ? 
 			<nav aria-label={navLabel}>
 				<ul className={styles.tabs}>
 					{Object.keys(children).map(key =>
@@ -32,7 +33,7 @@ export default function Tabs({ navLabel, children }: TabsProps){
 						</li>
 					)}
 				</ul>
-			</nav>
+			</nav> : null}
 			<div className={styles.content}>
 				{children[activeTab]}
 			</div>
