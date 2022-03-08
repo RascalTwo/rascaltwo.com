@@ -334,6 +334,9 @@ function FilteredWork({ onClick }: FilteredWorkProps) {
 
   return (
     <div className={styles.wrapper}>
+      {Object.entries(filteredWork).map(([slug, data]) => (
+        <MiniWorkItem key={slug} slug={slug} {...data} onClick={() => onClick(data)} />
+      ))}
 			<div className={styles.filterForm}>
 				<div style={{ textAlign: 'center' }}>Tags</div>
         <span className={styles.filterButtons}>
@@ -380,9 +383,6 @@ function FilteredWork({ onClick }: FilteredWorkProps) {
             ))}
         </div>
       </div>
-      {Object.entries(filteredWork).map(([slug, data]) => (
-        <MiniWorkItem key={slug} slug={slug} {...data} onClick={() => onClick(data)} />
-      ))}
     </div>
   );
 }
@@ -397,20 +397,13 @@ export default function Work() {
   }, [router]);
 
   return (
-    <Section title="Projects I've Made" subTitle="WORK">
+    <Section title="Experience" subTitle="WORK">
       {selected ? <Modal onClose={() => {
         setSelected(null)
         router.push(router.route, router.route, { shallow: true });
       }}><FullWorkItem {...selected} /></Modal> : null}
       <Tabs navLabel="List Type">
         {{
-          All: (
-            <div className={styles.wrapper}>
-              {Object.entries(work).map(([slug, data]) => (
-                <MiniWorkItem key={slug} slug={slug} {...data} onClick={() => selectWork(data)} />
-              ))}
-            </div>
-          ),
           Filtered: <FilteredWork onClick={(data) => selectWork(data)} />,
         }}
       </Tabs>
