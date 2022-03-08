@@ -96,28 +96,30 @@ function MiniWorkMedia({ video, image, text, onClick }: MiniWorkMedia) {
     new Promise(r => r(entry.target[playing ? 'play' : 'pause']())).catch(() => undefined);
   }, [playing, entry]);
 
-  const onMouseEnter = useCallback(() => setPlaying(false), []);
-  const startPlaying = useCallback(() => setPlaying(true), []);
+  const onMouseEnter = useCallback(() => setPlaying(true), []);
+  const onMouseLeave = useCallback(() => setPlaying(false), []);
 
   return (
     <button className={styles.media} onClick={onClick}>
       {playing || inView ? (
-        <video
-          ref={ref}
-          src={video}
-          className={styles.media}
-          autoPlay
-          loop
-          playsInline
-          onMouseEnter={onMouseEnter}
-          onMouseLeave={startPlaying}
-          onCanPlayThrough={startPlaying}
-          poster={image}
-          title={text}
-          aria-label={text}
-        />
+        <>
+          <video
+            ref={ref}
+            src={video}
+            className={styles.media}
+            loop
+            playsInline
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}
+            preload="metadata"
+            poster={image}
+            title={text}
+            aria-label={text}
+          />
+          {!playing ? <img src="./118620_play_icon.png" className={styles.playIcon} /> : null}
+        </>
       ) : (
-        <img ref={ref} src={image} className={styles.media} alt={text} title={text} onClick={onClick} />
+        <img ref={ref} src={image} className={styles.media} alt={text} title={text} onClick={onClick} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} loading="lazy" />
       )}
     </button>
   )
@@ -146,13 +148,14 @@ function MiniWorkItem({
     if (video) return <MiniWorkMedia video={video} image={image} text={text} onClick={onClick} />;
     const tech = Object.values(concepts)[0];
     const img = image
-      ? <img className={styles.media} src={image} alt={text} title={text} />
+      ? <img className={styles.media} src={image} alt={text} title={text} loading="lazy" />
       : (
       <img
         src={tech.image}
         title={text}
         alt={text}
         data-background={tech.background || 'dark'}
+        loading="lazy"
       />
     )
     return <button className={styles.media} onClick={onClick} aria-label={`View ${title}`}>{img}</button>
@@ -169,6 +172,7 @@ function MiniWorkItem({
         title={tech.name}
         alt={tech.name}
         data-background={tech?.background || 'dark'}
+        loading="lazy"
       />
     );
   }, [technologies]);
@@ -184,6 +188,7 @@ function MiniWorkItem({
         title={concept.name}
         alt={concept.name}
         data-background={concept?.background || 'dark'}
+        loading="lazy"
       />
     );
   }, [technologies, media, concepts]);
