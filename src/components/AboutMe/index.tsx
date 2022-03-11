@@ -1,4 +1,5 @@
 import React from 'react';
+import { useInView } from 'react-intersection-observer';
 import Section from '../Section';
 import styles from './AboutMe.module.css';
 
@@ -14,6 +15,19 @@ interface AboutMeProps {
   links: Record<string, string>
 }
 
+interface SlidingInSocialBadgeProps extends React.DetailedHTMLProps<React.ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement> {
+  href: string
+}
+
+function SlidingInSocialBadge({ href, ...imgProps }: SlidingInSocialBadgeProps){
+  const { ref, inView } = useInView({ threshold: 1 });
+  return (
+    <a href={href} ref={ref} data-in-view={inView}>
+      <img {...imgProps} />
+    </a>
+  )
+}
+
 export default function AboutMe({ name, links }: AboutMeProps) {
   return (
     <Section title="Who am I" subTitle="ABOUT ME">
@@ -25,9 +39,7 @@ export default function AboutMe({ name, links }: AboutMeProps) {
         <ul>
         {Object.entries(links).map(([linkName, href]) => (
           <li key={linkName}>
-            <a href={href}>
-              <img src={LINK_IMAGES[linkName]!} alt={`${name}'s ${linkName}`} title={`${name}'s ${linkName}`} />
-            </a>
+            <SlidingInSocialBadge href={href} src={LINK_IMAGES[linkName]!} alt={`${name}'s ${linkName}`} title={`${name}'s ${linkName}`} />
           </li>
         ))}
         </ul>

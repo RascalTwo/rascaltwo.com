@@ -11,5 +11,12 @@
 }
 
 .linksContainer img {
+	position: relative;
+	right: -200%;
 	height: 2.5em;
+	transition: 1s 1s right ease-in-out;
+}
+
+.linksContainer [data-in-view="true"] img {
+	right: 0;
 }
