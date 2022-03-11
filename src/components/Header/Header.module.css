@@ -1,5 +1,5 @@
 .header {
-	height: 50vh;
+	height: 75vh;
 	/** Center the children both vertically and horizontally */
 	text-align: center;
 	display: flex;
@@ -13,11 +13,19 @@
 	content: "";
 	position: absolute;
 	width: 100%;
-	height: 50vh;
+	height: 75vh;
 	background-image: url("/header.png");
 	background-repeat: no-repeat;
 	background-position: center center;
 	animation: cycle-hues 10s linear 2.5s infinite;
+}
+
+.header::after {
+	content: "";
+	position: absolute;
+	width: 100%;
+	height: 75vh;
+	background-image: linear-gradient(0deg, hsl(200, 20%, 15%) 0%, rgba(0,0,0,0) 33%);
 }
 
 .header span {
