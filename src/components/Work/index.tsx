@@ -138,6 +138,7 @@ function MiniWorkItem({
   onClick,
   inView
 }: MiniWorkItemProps) {
+  const { ref, inView: itemInView } = useInView({ threshold: 0.5 });
   const text = useMemo(() => {
     let markdown = Object.entries(otherURLs).map(([key, value]) => `[${slug} ${key}]: ${value}`).join('\n') + '\n';
     if (description) markdown += description + ' - ';
@@ -175,9 +176,10 @@ function MiniWorkItem({
         alt={tech.name}
         data-background={tech?.background || 'dark'}
         loading="lazy"
+        data-in-view={itemInView}
       />
     );
-  }, [technologies]);
+  }, [technologies, itemInView]);
   const conceptIcon = useMemo(() => {
     const concept = Object.values(concepts).find(concept => concept.image != media.props.src) || technologies[1];
     if (!concept) return;
@@ -191,12 +193,13 @@ function MiniWorkItem({
         alt={concept.name}
         data-background={concept?.background || 'dark'}
         loading="lazy"
+        data-in-view={itemInView}
       />
     );
-  }, [technologies, media, concepts]);
+  }, [technologies, media, concepts, itemInView]);
 
   return (
-    <div className={styles.workItem} data-background={media.props['data-background']} data-in-view={inView}>
+    <div className={styles.workItem} data-background={media.props['data-background']} ref={ref} data-in-view={inView}>
       <a className={styles.text} href={sourceURL} target="_blank" rel="noreferrer" aria-hidden>
         {title}
       </a>

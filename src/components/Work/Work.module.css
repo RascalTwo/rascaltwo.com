@@ -1,5 +1,5 @@
 .wrapper {
-	padding: 0.5em 0;
+	padding: 0.5em;
 	display: grid;
 	gap: 1em;
 	grid-template-columns: repeat(auto-fit, 33%);
@@ -198,23 +198,67 @@
 	width: 5vmin;
 	background-color: hsl(216, 28%, 14%);
 	padding: 0.1em;
+	transition: 1s 250ms all;
+	opacity: 1;
 }
 .icon[data-background="light"] {
 	background: white;
 }
+.icon[data-in-view="false"]{
+	background: transparent;
+	opacity: 0;
+}
 
 .icon[data-side="left"] {
-	left: 0;
 	border-top-right-radius: 0.25em;
 	border-bottom-left-radius: 0.75em;
 }
-
 .icon[data-side="right"] {
-	right: 0;
 	border-top-left-radius: 0.25em;
 	border-bottom-right-radius: 0.75em;
 }
 
+.icon[data-side="left"] {
+	left: 0;
+	bottom: 0;
+}
+.workItem:nth-of-type(even) .icon[data-side="left"][data-in-view="false"] {
+	bottom: -500%;
+}
+.workItem:nth-of-type(odd) .icon[data-side="left"][data-in-view="false"] {
+	bottom: 500%;
+}
+
+.icon[data-side="right"] {
+	right: 0;
+	bottom: 0;
+}
+.workItem:nth-of-type(even) .icon[data-side="right"][data-in-view="false"] {
+	bottom: -500%;
+}
+.workItem:nth-of-type(odd) .icon[data-side="right"][data-in-view="false"] {
+	bottom: 500%;
+}
+
+@media (max-width: 800px) {
+	.icon[data-side="left"] {
+		bottom: 0;
+		left: 0;
+	}
+	.icon[data-side="left"][data-in-view="false"] {
+		bottom: 0;
+		left: -500%;
+	}
+
+	.icon[data-side="right"] {
+		bottom: 0;
+		right: 0;
+	}
+	.icon[data-side="right"][data-in-view="false"] {
+		bottom: 0;
+		right: -500%;
+	}
+}
 
 
 .filterBadges {
