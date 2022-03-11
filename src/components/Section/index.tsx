@@ -9,7 +9,7 @@ interface SectionProps {
 
 export default function Section({ title, subTitle, children }: SectionProps){
 	return (
-		<section id={`section-${title.toLowerCase()}`}>
+		<section id={`section-${subTitle.toLowerCase()}`}>
 			<div className={styles.titleWrapper}>
 				<p aria-hidden>{subTitle}</p>
 				<h2>{title}</h2>
