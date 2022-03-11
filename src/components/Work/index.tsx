@@ -127,6 +127,7 @@ function MiniWorkMedia({ video, image, text, onClick }: MiniWorkMedia) {
 
 interface MiniWorkItemProps extends WorkData {
   onClick: () => void
+  inView: boolean
 }
 
 function MiniWorkItem({
@@ -134,7 +135,8 @@ function MiniWorkItem({
   urls: { image, video, source: sourceURL, ...otherURLs },
   text: { title, alt, description },
   tags: { technologies, concepts },
-  onClick
+  onClick,
+  inView
 }: MiniWorkItemProps) {
   const text = useMemo(() => {
     let markdown = Object.entries(otherURLs).map(([key, value]) => `[${slug} ${key}]: ${value}`).join('\n') + '\n';
@@ -194,7 +196,7 @@ function MiniWorkItem({
   }, [technologies, media, concepts]);
 
   return (
-    <div className={styles.workItem} data-background={media.props['data-background']}>
+    <div className={styles.workItem} data-background={media.props['data-background']} data-in-view={inView}>
       <a className={styles.text} href={sourceURL} target="_blank" rel="noreferrer" aria-hidden>
         {title}
       </a>
@@ -310,6 +312,8 @@ interface FilteredWorkProps {
 }
 
 function FilteredWork({ onClick }: FilteredWorkProps) {
+  const { ref, inView } = useInView({ threshold: 0.33 });
+
   const work = useWorkContext();
   const { inclusive, exclusive } = useWorkFilterContext();
   const [addingTo, setAddingTo] = useState<R2Set<string> | null>(null);
@@ -338,9 +342,9 @@ function FilteredWork({ onClick }: FilteredWorkProps) {
   );
 
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} ref={ref}>
       {Object.entries(filteredWork).map(([slug, data]) => (
-        <MiniWorkItem key={slug} slug={slug} {...data} onClick={() => onClick(data)} />
+        <MiniWorkItem key={slug} slug={slug} {...data} onClick={() => onClick(data)} inView={inView} />
       ))}
 			<div className={styles.filterForm}>
 				<div style={{ textAlign: 'center' }}>Tags</div>
