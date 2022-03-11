@@ -9,7 +9,7 @@ import { Blog } from '../../types';
 import styles from './index.module.css';
 
 export default function BlogLanding({ blogs }: { blogs: Blog[] }) {
-  const { name } = useLocaleConfig();
+  const { name, links } = useLocaleConfig();
   return (
     <>
       <Head>
@@ -35,7 +35,7 @@ export default function BlogLanding({ blogs }: { blogs: Blog[] }) {
           </section>
         ))}
       </main>
-      <Footer name={name} />
+      <Footer name={name} links={links} />
     </>
   );
 }

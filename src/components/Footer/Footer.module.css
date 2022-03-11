@@ -2,3 +2,33 @@
 	padding: 1em;
 	text-align: center;
 }
+
+.footer ul {
+	list-style: none;
+	margin: 0;
+	position: relative;
+	background: rgba(128, 128, 128, 0.25);
+	border-radius: 4em;
+	display: inline-block;
+	padding: 0.5em 0.75em 0.25em 0.75em;
+	font-size: 1.25em;
+	cursor: default;
+	list-style: none;
+}
+
+.footer li {
+	display: inline-block;
+	width: 33px;
+	height: 33px;
+}
+.footer li:not(:last-of-type) {
+	margin-right: 16px;
+}
+
+.footer li a[href*="mailto"] {
+	filter: invert(1);
+}
+
+.footer li a:is(:hover, :focus, :active) img{
+	transform: scale(0.9);
+}

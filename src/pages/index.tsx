@@ -52,7 +52,7 @@ export default function Home({ technologies, work }: HomeProps) {
         </TechnologiesContext.Provider>
         <Contact />
       </main>
-      <Footer name={name} />
+      <Footer name={name} links={links} />
     </div>
   )
 }

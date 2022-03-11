@@ -9,7 +9,7 @@ import { useLocaleConfig } from '../../helpers';
 import Head from 'next/head';
 
 export default function BlogEntry({ blog }: { blog: Blog | undefined }) {
-  const { name } = useLocaleConfig();
+  const { name, links } = useLocaleConfig();
   if (!blog) return null;
   return (
     <>
@@ -26,7 +26,7 @@ export default function BlogEntry({ blog }: { blog: Blog | undefined }) {
         </time>
       </header>
       <article className={styles.article} dangerouslySetInnerHTML={{ __html: blog.html.replaceAll('I18N_NAME', name) }}></article>
-      <Footer name={name} />
+      <Footer name={name} links={links} />
     </>
   );
 }
