@@ -5,6 +5,7 @@ import type { WorkData } from '../../types';
 import { FullWorkItem } from '../../components/Work';
 import Footer from '../../components/Footer';
 import { useLocaleConfig } from '../../helpers';
+import ThemeToggler from '../../components/ThemeToggler';
 
 interface WorkProps {
   work: WorkData | null;
@@ -17,6 +18,7 @@ export default function Work({ work }: WorkProps) {
   }, [router, work]);
 
   return work ? <>
+    <ThemeToggler />
     <FullWorkItem {...work} data-page="true" />
     <Footer name={name} links={links} />
   </>: null;

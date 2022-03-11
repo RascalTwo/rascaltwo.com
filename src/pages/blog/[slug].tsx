@@ -7,6 +7,7 @@ import 'highlight.js/styles/github-dark-dimmed.css';
 import Footer from '../../components/Footer';
 import { useLocaleConfig } from '../../helpers';
 import Head from 'next/head';
+import ThemeToggler from '../../components/ThemeToggler';
 
 export default function BlogEntry({ blog }: { blog: Blog | undefined }) {
   const { name, links } = useLocaleConfig();
@@ -16,8 +17,9 @@ export default function BlogEntry({ blog }: { blog: Blog | undefined }) {
       <Head>
         <title>{name}&apos;s Blog - {blog.title}</title>
       </Head>
-      <Link href="/blog">Return to Blog Home</Link>
+      <ThemeToggler />
       <header className={styles.header}>
+        <Link href="/blog">Return to Blog Home</Link>
         <h2>
           <Link href={`/blog/${blog.slug}`}>{blog.title}</Link>
         </h2>

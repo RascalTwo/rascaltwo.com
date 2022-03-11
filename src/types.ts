@@ -33,3 +33,5 @@ export interface Blog {
 	html: string
 	excerpt: string
 }
+
+export type Theme = 'dark' | 'light';

@@ -1,4 +1,4 @@
-:root {
+body {
   /** Theming Variables */
   --background-color: black;
   --color: white;
@@ -21,36 +21,35 @@
   --tabs-active: hsl(216, 28%, 10%);
   --tabs-focused: hsl(220, 11%, 20%);
   --mini-work-item-background: hsl(216, 28%, 20%);
-  --skill-dark-background-color: hsl(216, 28%, 20%);
   --badge-background-color: hsl(216, 28%, 10%);
+
+  --skill-dark-background-color: hsl(216, 28%, 20%);
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    --background-color: white;
-    --color: black;
-    --scrollbar-background: hsl(0, 0%, 60%);
-    --scrollbar-thumb: hsl(60, 5%, 92%);
-    --anchor-color: hsl(210, 100%, 30%);
-    --section-even: hsl(200, 40%, 75%);
-    --section-borders: hsl(200, 30%, 75%);
-    --section-odd: hsl(200, 20%, 75%);
-    --section-color: hsl(200, 10%, 15%);
-    --section-subtitle-color: hsl(200, 10%, 33%);
-    --header-inversion: invert(1);
-    --contact-background: hsl(176, 95%, 70%);
-    --contact-color: white;
-    --contact-placeholder-color: black;
-    --contact-cv: 255;
-    --footer-background: rgba(128, 128, 128, 0.75);
-    --modal-background-color: hsl(0, 0%, 78%);
-    --tabs-background-color: hsl(240, 1%, 85%);
-    --tabs-content-background-color: hsl(216, 28%, 90%);
-    --tabs-active: hsl(216, 28%, 90%);
-    --tabs-focused: hsl(220, 11%, 80%);
-    --mini-work-item-background: hsl(216, 28%, 80%);
-    --badge-background-color: hsl(216, 28%, 90%);
-  }
+body[data-theme="light"] {
+  --background-color: white;
+  --color: black;
+  --scrollbar-background: hsl(0, 0%, 60%);
+  --scrollbar-thumb: hsl(60, 5%, 92%);
+  --anchor-color: hsl(210, 100%, 30%);
+  --section-even: hsl(200, 40%, 75%);
+  --section-borders: hsl(200, 30%, 75%);
+  --section-odd: hsl(200, 20%, 75%);
+  --section-color: hsl(200, 10%, 15%);
+  --section-subtitle-color: hsl(200, 10%, 33%);
+  --header-inversion: invert(1);
+  --contact-background: hsl(176, 95%, 70%);
+  --contact-color: white;
+  --contact-placeholder-color: black;
+  --contact-cv: 255;
+  --footer-background: rgba(128, 128, 128, 0.75);
+  --modal-background-color: hsl(0, 0%, 78%);
+  --tabs-background-color: hsl(240, 1%, 85%);
+  --tabs-content-background-color: hsl(216, 28%, 90%);
+  --tabs-active: hsl(216, 28%, 90%);
+  --tabs-focused: hsl(220, 11%, 80%);
+  --mini-work-item-background: hsl(216, 28%, 80%);
+  --badge-background-color: hsl(216, 28%, 90%);
 }
 
 html,

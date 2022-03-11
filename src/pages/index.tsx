@@ -10,6 +10,7 @@ import { ActivatedTabContext, TechnologiesContext, WorkContext, WorkFilterContex
 import { useSet } from '../hooks'
 import AboutMe from '../components/AboutMe'
 import Footer from '../components/Footer'
+import ThemeToggler from '../components/ThemeToggler'
 import GitHubCorner from '../components/GitHubCorner'
 import { fetchWorkDataAndTechnologies } from '../ssrHelpers'
 import { useLocaleConfig } from '../helpers'
@@ -34,6 +35,7 @@ export default function Home({ technologies, work }: HomeProps) {
         <meta name="description" content={`${name} Portfolio`} />
       </Head>
 
+      <ThemeToggler />
       <GitHubCorner />
 
       <Header name={name} />

@@ -7,6 +7,7 @@ import { useLocaleConfig } from '../../helpers';
 import { Blog } from '../../types';
 
 import styles from './index.module.css';
+import ThemeToggler from '../../components/ThemeToggler';
 
 export default function BlogLanding({ blogs }: { blogs: Blog[] }) {
   const { name, links } = useLocaleConfig();
@@ -15,6 +16,7 @@ export default function BlogLanding({ blogs }: { blogs: Blog[] }) {
       <Head>
         <title>{name}&apos;s Blog</title>
       </Head>
+      <ThemeToggler />
       <header className={styles.header}>
         <h1>
           <Link href="/">{name}</Link>&apos;s Blog
