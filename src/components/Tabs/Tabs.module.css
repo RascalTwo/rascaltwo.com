@@ -23,6 +23,7 @@
 				width: 100%;
 				text-align: center;
 				padding: 0 0.5em;
+				height: 2rem;
 			}
 
 				.tab button[data-active=true] {
