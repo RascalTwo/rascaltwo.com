@@ -84,9 +84,9 @@ export default function Skills(){
 					}), {}),
 					'Help': (
 						<span>
-						All of these Technology icons can be used to filter the projects listed just below!
+						All of these Technology icons can be used to filter the projects listed just above!
 						<br/>
-						Simply Left-Click the Technologies you want to see projects made with, or Right-Click technologies you don&apos;t want to see projects made with
+						Simply Left-Click the Technologies you want to see projects made with, or Right-Click technologies you don&apos;t want to see projects made with.
 						</span>
 					)
 				}}
