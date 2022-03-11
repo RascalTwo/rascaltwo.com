@@ -3,17 +3,23 @@ import { useEffect } from 'react';
 import { fetchWorkDataAndTechnologies } from '../../ssrHelpers';
 import type { WorkData } from '../../types';
 import { FullWorkItem } from '../../components/Work';
+import Footer from '../../components/Footer';
+import { useLocaleConfig } from '../../helpers';
 
 interface WorkProps {
   work: WorkData | null;
 }
 export default function Work({ work }: WorkProps) {
+  const { name, links } = useLocaleConfig();
   const router = useRouter();
   useEffect(() => {
     if (!work) router.push('/#section-work');
   }, [router, work]);
 
-  return work ? <FullWorkItem {...work} data-page="true" /> : null;
+  return work ? <>
+    <FullWorkItem {...work} data-page="true" />
+    <Footer name={name} links={links} />
+  </>: null;
 }
 
 export async function getStaticPaths() {
