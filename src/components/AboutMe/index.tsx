@@ -22,12 +22,15 @@ export default function AboutMe({ name, links }: AboutMeProps) {
       </h3>
 
       <aside className={styles.linksContainer} aria-label="Also find me here:">
-        {Object.entries(links).map(([name, href]) => (
-          <a key={name} href={href}>
-            <img src={LINK_IMAGES[name]!} alt={name} title={name} />
-            <br />
-          </a>
+        <ul>
+        {Object.entries(links).map(([linkName, href]) => (
+          <li key={linkName}>
+            <a href={href}>
+              <img src={LINK_IMAGES[linkName]!} alt={`${name}'s ${linkName}`} title={`${name}'s ${linkName}`} />
+            </a>
+          </li>
         ))}
+        </ul>
       </aside>
       <p>
         I&apos;ve been solving the problems I encounter with whatever tools I have at my disposal since 2008, from
