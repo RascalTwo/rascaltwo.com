@@ -15,6 +15,25 @@
 	background-color: hsl(216, 28%, 14%);
 	border-radius: 1em;
 	cursor: pointer;
+	opacity: 0;
+}
+
+.skill:nth-of-type(2n+1){
+	transform: scale(0) rotate(120deg);
+	transition: 1s 0ms all;
+}
+.skill:nth-of-type(2n){
+	transform: scale(0) rotate(240deg);
+	transition: 1s 250ms all;
+}
+.skill:nth-of-type(3n){
+	transform: scale(0) rotate(360deg);
+	transition: 1s 500ms all;
+}
+
+.skill[data-in-view="true"] {
+	opacity: 1;
+	transform: scale(1);
 }
 
 .skill[data-background="light"] {
