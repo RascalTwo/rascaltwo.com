@@ -91,7 +91,7 @@
 	border-top-left-radius: 1em;
 	border-top-right-radius: 1em;
 	background-color: rgba(0, 0, 0, 0.8);
-	color: var(--color);
+	color: white;
 	opacity: 0;
 	transition: 250ms opacity linear;
 }
