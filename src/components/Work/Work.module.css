@@ -96,6 +96,10 @@
 	transition: 250ms opacity linear;
 }
 
+.text:is(:active, :hover, :focus) {
+	opacity: 1;
+}
+
 .media, .media img {
 	position: relative;
 	background: none;

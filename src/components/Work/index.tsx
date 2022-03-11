@@ -115,6 +115,7 @@ function MiniWorkMedia({ video, image, text, onClick }: MiniWorkMedia) {
             poster={image}
             title={text}
             aria-label={text}
+            tabIndex={-1}
           />
           {!playing ? <img src="./118620_play_icon.png" className={styles.playIcon} /> : null}
         </>
