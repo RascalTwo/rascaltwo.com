@@ -5,12 +5,17 @@
 }
 
 	.titleWrapper > p {
-		opacity: 0.25;
+		opacity: 0;
 		width: 100%;
 		color: hsl(200, 10%, 50%);
 		font-weight: 900;
 		font-size: min(6em, 12.5vw);
 		margin: 0;
+		transition: 1s 250ms opacity;
+	}
+
+	.titleWrapper[data-in-view="true"] > p {
+		opacity: 0.25;
 	}
 
 	.titleWrapper > h2 {
@@ -21,6 +26,11 @@
 		font-weight: 600;
 		font-size: min(2em, 4vw);
 		margin: 0;
+		transform: scale(0);
+		transition: 1s 1250ms transform;
+	}
+	.titleWrapper[data-in-view="true"] > h2 {
+		transform: scale(1);
 	}
 
 .childrenWrapper {
