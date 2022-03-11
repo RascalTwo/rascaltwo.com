@@ -4,7 +4,7 @@
   right: 0;
   left: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(var(--contact-cv), var(--contact-cv), var(--contact-cv), 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -13,12 +13,12 @@
 
 .modal > div {
   position: relative;
-  background-color: #383838;
+  background-color: var(--modal-background-color);
   box-shadow:
-    rgba(0, 0, 0, 0.5) 0px 11px 15px -7px,
-    rgba(0, 0, 0, 0.5) 0px 24px 38px 3px,
-    rgba(0, 0, 0, 0.5) 0px 9px 46px 8px;
-  color: white;
+    rgba(var(--contact-cv), var(--contact-cv), var(--contact-cv), 0.5) 0px 11px 15px -7px,
+    rgba(var(--contact-cv), var(--contact-cv), var(--contact-cv), 0.5) 0px 24px 38px 3px,
+    rgba(var(--contact-cv), var(--contact-cv), var(--contact-cv), 0.5) 0px 9px 46px 8px;
+  color: var(--color);
   border-radius: 1em;
   padding: 1em;
   display: flex;

@@ -23,7 +23,7 @@
 .workItem {
 	position: relative;
 	flex: 1;
-	background-color: hsl(216, 28%, 14%);
+	background-color: var(--mini-work-item-background);
 	border-radius: 1em;
 	display: flex;
 	flex-direction: column;
@@ -151,7 +151,7 @@
 	max-width: 100px;
 	flex: 1;
 	margin: 0.25em;
-	background-color: rgb(26, 34, 46);
+	background-color: var(--mini-work-item-background);
 	border-radius: 1em;
 	margin: 0.1em;
 	padding: 0.1em;
@@ -176,7 +176,7 @@
 }
 
 .fullWorkTags > span {
-	background-color: hsl(216, 28%, 7%);
+	background-color: var(--tabs-content-background-color);
 	border-radius: 1em;
 	padding-bottom: 0.5em;
 }
@@ -200,7 +200,7 @@
 	position: absolute;
 	bottom: 0;
 	width: 5vmin;
-	background-color: hsl(216, 28%, 14%);
+	background-color: var(--mini-work-item-background);
 	padding: 0.1em;
 	transition: 1s 250ms all;
 	opacity: 1;
@@ -276,7 +276,7 @@
 	height: 100%;
 	width: 100%;
 	padding: 1em;
-	background-color: hsl(216, 28%, 14%);
+	background-color: var(--mini-work-item-background);
 	border-radius: 1em;
 	max-width: 80vw;
 }
@@ -301,7 +301,7 @@
 	all: unset;
 	cursor: not-allowed;
 	cursor: url("/delete-16.png"), not-allowed;
-	background-color: hsl(216, 28%, 7%);
+	background-color: var(--badge-background-color);
 	border-radius: 1em;
 	border: 1px solid;
 	display: flex;

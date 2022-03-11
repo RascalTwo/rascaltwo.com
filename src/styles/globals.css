@@ -2,6 +2,55 @@
   /** Theming Variables */
   --background-color: black;
   --color: white;
+  --scrollbar-background: #686868;
+  --scrollbar-thumb: #151513;
+  --anchor-color: rgb(102, 178, 255);
+  --section-even: hsl(200, 20%, 15%);
+  --section-borders: hsl(200, 30%, 15%);
+  --section-odd: hsl(200, 40%, 15%);
+  --section-color: hsl(200, 10%, 75%);
+  --section-subtitle-color: hsl(200, 10%, 66%);--header-inversion: invert(0);
+  --contact-background: #049a8f;
+  --contact-color: black;
+  --contact-placeholder-color: white;
+  --contact-cv: 0;
+  --footer-background: rgba(128, 128, 128, 0.25);
+  --modal-background-color: #383838;
+  --tabs-background-color: rgb(37, 37, 38);
+  --tabs-content-background-color: hsl(216, 28%, 10%);
+  --tabs-active: hsl(216, 28%, 10%);
+  --tabs-focused: hsl(220, 11%, 20%);
+  --mini-work-item-background: hsl(216, 28%, 20%);
+  --skill-dark-background-color: hsl(216, 28%, 20%);
+  --badge-background-color: hsl(216, 28%, 10%);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --background-color: white;
+    --color: black;
+    --scrollbar-background: hsl(0, 0%, 60%);
+    --scrollbar-thumb: hsl(60, 5%, 92%);
+    --anchor-color: hsl(210, 100%, 30%);
+    --section-even: hsl(200, 40%, 75%);
+    --section-borders: hsl(200, 30%, 75%);
+    --section-odd: hsl(200, 20%, 75%);
+    --section-color: hsl(200, 10%, 15%);
+    --section-subtitle-color: hsl(200, 10%, 33%);
+    --header-inversion: invert(1);
+    --contact-background: hsl(176, 95%, 70%);
+    --contact-color: white;
+    --contact-placeholder-color: black;
+    --contact-cv: 255;
+    --footer-background: rgba(128, 128, 128, 0.75);
+    --modal-background-color: hsl(0, 0%, 78%);
+    --tabs-background-color: hsl(240, 1%, 85%);
+    --tabs-content-background-color: hsl(216, 28%, 90%);
+    --tabs-active: hsl(216, 28%, 90%);
+    --tabs-focused: hsl(220, 11%, 80%);
+    --mini-work-item-background: hsl(216, 28%, 80%);
+    --badge-background-color: hsl(216, 28%, 90%);
+  }
 }
 
 html,
@@ -20,22 +69,22 @@ body {
 }
 
 *::-webkit-scrollbar-track {
-  background: #151513;
+  background: var(--scrollbar-thumb)
 }
 
 *::-webkit-scrollbar-thumb {
-  background: #686868;
+  background: var(--scrollbar-background);
   border-radius: 1rem;
-  border: 2px solid #151513;
+  border: 2px solid var(--scrollbar-thumb);
 }
 
 * {
-  scrollbar-color: #686868 #151513;
+  scrollbar-color: var(--scrollbar-background) var(--scrollbar-thumb);
 }
 
 
 a {
-  color: rgb(102, 178, 255);
+  color: var(--anchor-color);
 }
 
 * {
@@ -43,7 +92,7 @@ a {
 }
 
 section {
-  color: hsl(200, 10%, 75%);
+  color: var(--section-color);
 }
 
   section:first-child {
@@ -51,13 +100,13 @@ section {
   }
 
   section:nth-child(even) {
-    border-top: 1em solid hsl(200, 30%, 15%);
-    background: hsl(200, 40%, 15%);
+    border-top: 1em solid var(--section-borders);
+    background: var(--section-even);
   }
 
   section:nth-child(odd) {
-    border-top: 1em solid hsl(200, 30%, 15%);
-    background: hsl(200, 20%, 15%);
+    border-top: 1em solid var(--section-borders);
+    background: var(--section-odd);
   }
 
 .hljs {

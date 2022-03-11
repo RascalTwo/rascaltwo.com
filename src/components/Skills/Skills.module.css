@@ -12,7 +12,7 @@
 	min-width: 100px;
 	flex: 0 1;
 	margin: 0.25em;
-	background-color: hsl(216, 28%, 14%);
+	background-color: var(--skill-dark-background-color);
 	border-radius: 1em;
 	cursor: pointer;
 	opacity: 0;
@@ -69,7 +69,7 @@
 	border-bottom-left-radius: 1em;
 	border-bottom-right-radius: 1em;
 	background-color: rgba(0, 0, 0, 0.8);
-	color: var(--color);
+	color: white;
 	opacity: 0;
 	transition: 250ms opacity linear;
 }

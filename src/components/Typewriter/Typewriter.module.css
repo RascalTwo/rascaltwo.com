@@ -1,19 +1,19 @@
 .typewriter {
-	color: white;
+	color: var(--color);
   letter-spacing: 0.1em;
 	padding: 0.1em;
 }
 
 .typewriter > * {
-  border-right: 0.25em solid white;
+  border-right: 0.25em solid var(--color);
 	animation: blink-caret 1s step-end infinite;
 	width: max-content;
 	font-weight: 900;
 	margin: 1em auto;
-	text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
+	text-shadow: 1px 0 0 var(--background-color), 0 -1px 0 var(--background-color), 0 1px 0 var(--background-color), -1px 0 0 var(--background-color);
 }
 
 @keyframes blink-caret {
   from, to { border-color: transparent }
-  50% { border-color: white; }
+  50% { border-color: var(--color); }
 }

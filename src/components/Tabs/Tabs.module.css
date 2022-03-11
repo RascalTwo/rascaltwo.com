@@ -1,11 +1,11 @@
 .wrapper {
-	filter: drop-shadow(0 0 0.25em black)
+	filter: drop-shadow(0 0 0.25em var(--background-color))
 }
 
 	.tabs {
 		overflow: auto;
 		list-style: none;
-		background-color: rgb(37, 37, 38);
+		background-color: var(--tabs-background-color);
 		margin: 0;
 		display: flex;
 		padding: 0 1em
@@ -27,13 +27,13 @@
 			}
 
 				.tab button[data-active=true] {
-					background-color: rgb(13, 17, 23);
+					background-color: var(--tabs-active);
 				}
 
 				.tab button:is(:active, :hover, :focus) {
-					background-color: rgb(25, 27, 31);
+					background-color: var(--tabs-focused);
 				}
 
 		.content {
-			background-color: hsl(216, 28%, 7%);
+			background-color: var(--tabs-content-background-color);
 		}
