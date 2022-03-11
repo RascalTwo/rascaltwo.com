@@ -6,6 +6,7 @@ import { Technology } from '../../types';
 import { useActivatedTabContext, useTechnologiesContext, useWorkFilterContext } from '../../context';
 
 import styles from './Skills.module.css'
+import { useInView } from 'react-intersection-observer';
 
 
 const CATEGORIES_ORDER = [
@@ -27,6 +28,7 @@ interface SkillProps {
 }
 
 function Skill({ slug, technology: { background, name, image } }: SkillProps){
+  const { ref, inView } = useInView({ threshold: 1 });
 	const { setActivated } = useActivatedTabContext();
 	const { inclusive, exclusive } = useWorkFilterContext();
 	const isInclusive = useMemo(() => inclusive.set.has(slug), [slug, inclusive]);
@@ -34,10 +36,12 @@ function Skill({ slug, technology: { background, name, image } }: SkillProps){
 
 	return (
     <button
+			ref={ref}
 			className={styles.skill}
 			data-background={useMemo(() => background || 'dark', [background])}
 			data-inclusive={isInclusive}
 			data-exclusive={isExclusive}
+			data-in-view={inView}
 			tabIndex={0}
 			aria-label={`${name} Logo`}
 			onClick={useCallback(() => {
