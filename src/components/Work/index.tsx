@@ -62,7 +62,7 @@ export function FullWorkItem({ slug, tags: { technologies, concepts }, text: { t
     </div>
     {media}
 
-    <p dangerouslySetInnerHTML={{ __html: htmlDescription }}></p>
+    <div dangerouslySetInnerHTML={{ __html: htmlDescription }}></div>
     <div className={styles.fullWorkTags}>
       <span>
         <h3>Technologies</h3>
