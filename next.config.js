@@ -1,6 +1,6 @@
 module.exports = {
   publicRuntimeConfig: {
-    r2: {
+    en: {
       name: 'Rascal Two',
       email: 'therealrascaltwo@gmail.com',
       links: {
@@ -9,7 +9,7 @@ module.exports = {
         Twitter: 'https://twitter.com/RealRascalTwo',
       }
     },
-    jm: {
+    'en-US': {
       name: 'Joseph Milliken',
       email: 'joseph97milliken@gmail.com',
       links: {
@@ -31,17 +31,17 @@ module.exports = {
     return config;
   },
   i18n: {
-    locales: ['r2', 'jm'],
-    defaultLocale: 'r2',
+    locales: ['en', 'en-US'],
+    defaultLocale: 'en',
     localeDetection: false,
     domains: [
       {
         domain: 'rascaltwo.com',
-        defaultLocale: 'r2',
+        defaultLocale: 'en',
       },
       {
         domain: 'josephmilliken.com',
-        defaultLocale: 'jm'
+        defaultLocale: 'en-US'
       }
     ]
   }
