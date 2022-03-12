@@ -35,16 +35,16 @@ function useThemeState() {
 export default function ThemeToggler() {
   const { theme, toggleTheme } = useThemeState();
   return (
-    <div className={styles.wrapper} aria-label={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} theme`}>
+    <div className={styles.wrapper}>
       <div className={styles.switch}>
         <input
           type="checkbox"
           className={styles.switch__input}
-          id="Switch"
+          id="theme-toggler"
           onChange={toggleTheme}
           checked={theme === 'light'}
         />
-        <label className={styles.switch__label} htmlFor="Switch">
+        <label className={styles.switch__label} htmlFor="theme-toggler" aria-label={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} theme`}>
           <span className={styles.switch__indicator}></span>
           <span className={styles.switch__decoration}></span>
         </label>

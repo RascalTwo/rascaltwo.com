@@ -201,7 +201,7 @@ function MiniWorkItem({
 
   return (
     <div className={styles.workItem} data-background={media.props['data-background']} ref={ref} data-in-view={inView}>
-      <a className={styles.text} href={sourceURL} target="_blank" rel="noreferrer" aria-hidden>
+      <a className={styles.text} href={sourceURL} target="_blank" rel="noreferrer">
         {title}
       </a>
       {media}
