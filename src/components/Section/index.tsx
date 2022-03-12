@@ -5,11 +5,12 @@ import styles from './Section.module.css'
 interface SectionProps {
 	title: string
 	subTitle: string
+	initialInView?: boolean
 	children: React.ReactNode
 }
 
-export default function Section({ title, subTitle, children }: SectionProps){
-  const { ref, inView } = useInView({ threshold: 0.25 });
+export default function Section({ title, subTitle, initialInView=false, children }: SectionProps){
+  const { ref, inView } = useInView({ threshold: 0.25, initialInView });
 	return (
 		<section id={`section-${subTitle.toLowerCase()}`}>
 			<div className={styles.titleWrapper} ref={ref} data-in-view={inView}>
