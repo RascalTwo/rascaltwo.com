@@ -117,7 +117,7 @@ function MiniWorkMedia({ video, image, text, onClick }: MiniWorkMedia) {
             aria-label={text}
             tabIndex={-1}
           />
-          {!playing ? <img src="./118620_play_icon.png" className={styles.playIcon} /> : null}
+          {!playing ? <img src="./118620_play_icon.png" className={styles.playIcon} alt="" /> : null}
         </>
       ) : (
         <img ref={ref} src={image} className={styles.media} alt={text} title={text} onClick={onClick} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} loading="lazy" />
@@ -163,7 +163,7 @@ function MiniWorkItem({
       />
     )
     return <button className={styles.media} onClick={onClick} aria-label={`View ${title}`}>{img}</button>
-  }, [video, image, concepts]);
+  }, [video, image, concepts, onClick, text, title]);
 
   const techIcon = useMemo(() => {
     const tech = Object.values(technologies)[0];

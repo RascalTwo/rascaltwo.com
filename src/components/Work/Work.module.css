@@ -135,8 +135,8 @@
 }
 
 .fullWorkItem[data-page="true"] {
-	max-width: auto;
-	max-height: auto;
+	max-width: none;
+	max-height: none;
 	margin: auto;
 	overflow-y: unset;
 }
