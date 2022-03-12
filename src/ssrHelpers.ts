@@ -191,8 +191,10 @@ export async function fetchBlogs(){
     let yaml: Record<string, any> = {};
     let rawMarkdown;
     const yamlMatch = content.match(/^---\n(.*?)\n---/ms);
+    let urls = {}
     if (yamlMatch) {
       yaml = YAML.parse(yamlMatch[1]);
+      Object.assign(urls, yaml.urls);
       rawMarkdown = content.split(yamlMatch[0])[1].trim();
     } else {
       rawMarkdown = content;
@@ -236,7 +238,7 @@ export async function fetchBlogs(){
     const excerpt = markdown.split('\n')[2];
     const slug = yaml.slug ?? title.toLowerCase().split(' ').join('-').replace('?', '').replace('.', '').replace('!', '').replace('#', '');
     const date = filename.split('.')[0].split('-').map(Number) as [number, number, number]
-    blogs.push({ slug, title, date, html, excerpt })
+    blogs.push({ slug, title, date, html, excerpt, urls })
   }
 
   return blogs;

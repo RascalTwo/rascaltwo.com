@@ -23,6 +23,10 @@ export default function BlogEntry({ blog }: { blog: Blog | undefined }) {
         <h2>
           <Link href={`/blog/${blog.slug}`}>{blog.title}</Link>
         </h2>
+        {blog.urls.source ? <a href={blog.urls.source}>Source</a> : <span></span>}
+        &nbsp;
+        {blog.urls.live ? <a href={blog.urls.live}>Live</a> : <span></span>}
+        <br/>
         <time dateTime={blog.date.map(String).join('-')}>
           {new Date(blog.date.map(String).join('-')).toDateString()}
         </time>

@@ -32,6 +32,10 @@ export interface Blog {
 	date: [number, number, number];
 	html: string
 	excerpt: string
+	urls: {
+		source?: string
+		live?: string
+	}
 }
 
 export type Theme = 'dark' | 'light';
