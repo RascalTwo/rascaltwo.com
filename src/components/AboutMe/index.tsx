@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link'
 import { useInView } from 'react-intersection-observer';
 import Section from '../Section';
 import styles from './AboutMe.module.css';
@@ -66,8 +67,7 @@ export default function AboutMe({ name, links }: AboutMeProps) {
         more <a href="#section-skills">Technologies</a>
       </p>
       <p>
-        With a passion for solving problems and improving experiences, I&apos;m always streamlining
-        processes, and making needed complexities work with, and not against the user!
+        With a <Link href="/blog">passion for solving problems and improving experiences</Link>, I&apos;m always streamlining processes, and making needed complexities work with, and not against the user!
       </p>
     </Section>
   );
