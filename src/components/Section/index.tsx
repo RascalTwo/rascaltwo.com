@@ -12,8 +12,8 @@ interface SectionProps {
 export default function Section({ title, subTitle, initialInView=false, children }: SectionProps){
   const { ref, inView } = useInView({ threshold: 0.25, initialInView });
 	return (
-		<section id={`section-${subTitle.toLowerCase()}`}>
-			<div className={styles.titleWrapper} ref={ref} data-in-view={inView}>
+		<section id={`section-${subTitle.toLowerCase()}`} ref={ref}>
+			<div className={styles.titleWrapper} data-in-view={inView}>
 				<p aria-hidden>{subTitle}</p>
 				<h2>{title}</h2>
 			</div>

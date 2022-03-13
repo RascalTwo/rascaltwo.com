@@ -27,7 +27,7 @@
 		font-size: min(2em, 4vw);
 		margin: 0;
 		transform: scale(0);
-		transition: 1s 1250ms transform;
+		transition: 1s 1750ms transform;
 	}
 	.titleWrapper[data-in-view="true"] > h2 {
 		transform: scale(1);
