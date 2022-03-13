@@ -7,7 +7,8 @@ module.exports = {
         Email: 'mailto:therealrascaltwo@gmail.com',
         Github: 'https://github.com/RascalTwo',
         Twitter: 'https://twitter.com/RealRascalTwo',
-      }
+      },
+      website: 'https://rascaltwo.com'
     },
     'en-US': {
       name: 'Joseph Milliken',
@@ -15,7 +16,8 @@ module.exports = {
       links: {
         Email: 'mailto:joseph97milliken@gmail.com',
         LinkedIn: 'https://linkedin.com/in/joseph97milliken/'
-      }
+      },
+      website: 'https://josephmilliken.com'
     }
   },
   reactStrictMode: true,

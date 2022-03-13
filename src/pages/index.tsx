@@ -23,7 +23,7 @@ interface HomeProps {
 }
 
 export default function Home({ technologies, work }: HomeProps) {
-  const { name, links } = useLocaleConfig();
+  const { name, links, website } = useLocaleConfig();
 
   const inclusive = useSet<string>();
   const exclusive = useSet<string>();
@@ -31,8 +31,23 @@ export default function Home({ technologies, work }: HomeProps) {
   return (
     <div>
       <Head>
-        <title>{name} - Portfolio</title>
-        <meta name="description" content={`${name} Portfolio`} />
+        <title>{name} - Software Engineer</title>
+        <meta content="#172b36" name="theme-color" />
+        <meta name="description" content={`${name}, your next Software Engineer!`} />
+        <meta property="og:locale" content="en_US"/>
+        <meta property="og:type" content="website"/>
+        <meta property="og:site_name" content={name} />
+        <meta property="og:title" content="Homepage"/>
+        <meta property="og:description" content={`${name}, your next Software Engineer!`}/>
+        <meta property="og:url" content={website}/>
+        <meta property="og:image" content={`${website}/header-low.webp`}/>
+
+        <meta name="twitter:image" content={`${website}/header-low.webp`}/>
+        <meta name="twitter:image:alt" content="Logo"/>
+        <meta name="twitter:description" content={`${name}, your next Software Engineer!`} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@RealRascalTwo" />
+        <meta name="twitter:creator" content="@RealRascalTwo" />
       </Head>
 
       <ThemeToggler />

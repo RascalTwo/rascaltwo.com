@@ -27,5 +27,6 @@ export const usePortal = (selector: string, content: React.ReactNode, callback?:
 
 export const useLocaleConfig = () => getConfig().publicRuntimeConfig[useRouter().locale] as {
 	name: string,
-	links: Record<string, string>
+	links: Record<string, string>,
+	website: string
 }

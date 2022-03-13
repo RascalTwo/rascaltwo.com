@@ -15,7 +15,7 @@ export default function BlogEntry({ blog }: { blog: Blog | undefined }) {
   return (
     <>
       <Head>
-        <title>{name}&apos;s Blog - {blog.title}</title>
+        <title>{name}&apos;s Software Development Blog - {blog.title}</title>
       </Head>
       <ThemeToggler />
       <header className={styles.header}>

@@ -14,7 +14,7 @@ export default function BlogLanding({ blogs }: { blogs: Blog[] }) {
   return (
     <>
       <Head>
-        <title>{name}&apos;s Blog</title>
+        <title>{name}&apos;s Software Development Blog</title>
       </Head>
       <ThemeToggler />
       <header className={styles.header}>
