@@ -10,6 +10,11 @@
 	overflow: scroll hidden;
 }
 
+.tabWrapper {
+	filter: drop-shadow(0 10px 0.25em var(--background-color));
+	position: relative;
+}
+
 @media (max-width: 800px) {
 	.wrapper {
 		grid-template-columns: auto;

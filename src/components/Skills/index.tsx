@@ -1,6 +1,5 @@
 import Image from 'next/image'
 import React, { useCallback, useMemo } from "react";
-import Section from "../Section";
 import Tabs from "../Tabs";
 import { Technology } from '../../types';
 import { useActivatedTabContext, useTechnologiesContext, useWorkFilterContext } from '../../context';
@@ -71,30 +70,21 @@ export default function Skills(){
 	if (!Object.keys(technologies)) return null;
 
 	return (
-		<Section title="Technologies I've Used" subTitle="SKILLS">
-			<Tabs navLabel='Technology Type Tabs'>
-				{{
-					...Object.entries(technologies)
-					.sort(([a], [b]) => CATEGORIES_ORDER.indexOf(a) - CATEGORIES_ORDER.indexOf(b))
-					.reduce((map, [key, values]) => ({
-						...map,
-						[key]:
-							<div className={styles.wrapper}>
-								{Object.entries(values) // @ts-ignore
-									.map(([slug, technology]) =>
-										<Skill key={slug} slug={slug} technology={technology} />
-								)}
-							</div>
-					}), {}),
-					'Help': (
-						<span>
-						All of these Technology icons can be used to filter the projects listed just above!
-						<br/>
-						Simply Left-Click the Technologies you want to see projects made with, or Right-Click technologies you don&apos;t want to see projects made with.
-						</span>
-					)
-				}}
-			</Tabs>
-		</Section>
+		<Tabs navLabel='Technology Type Tabs'>
+			{{
+				...Object.entries(technologies)
+				.sort(([a], [b]) => CATEGORIES_ORDER.indexOf(a) - CATEGORIES_ORDER.indexOf(b))
+				.reduce((map, [key, values]) => ({
+					...map,
+					[key]:
+						<div className={styles.wrapper}>
+							{Object.entries(values) // @ts-ignore
+								.map(([slug, technology]) =>
+									<Skill key={slug} slug={slug} technology={technology} />
+							)}
+						</div>
+				}), {})
+			}}
+		</Tabs>
 	)
 }
