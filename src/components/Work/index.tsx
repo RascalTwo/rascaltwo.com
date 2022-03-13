@@ -402,11 +402,14 @@ function FilteredWork({ onClick }: FilteredWorkProps) {
 
 export default function Work() {
   const router = useRouter();
-  const work = useWorkContext();
   const [selected, setSelected] = useState<WorkData | null>(null);
   const selectWork = useCallback((data: WorkData) => {
-    setSelected(data);
     router.push(router.route, `/work/${data.slug}`, { shallow: true });
+    setSelected(data);
+  }, [router]);
+
+  useEffect(() => {
+    if (router.asPath.length === 1) setSelected(null);
   }, [router]);
 
   return (
