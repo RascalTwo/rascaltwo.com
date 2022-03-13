@@ -6,20 +6,16 @@ import styles from './AboutMe.module.css';
 
 const LINK_IMAGES = {
   Email: {
-    src: 'https://img.shields.io/badge/Email-c14438?style=for-the-badge&logo=Gmail&logoColor=white',
-    width: 152.223 + 'px'
+    src: 'https://img.shields.io/badge/Email-c14438?style=for-the-badge&logo=Gmail&logoColor=white'
   },
   Github: {
-    src: 'https://img.shields.io/badge/-Github-181717?style=for-the-badge&logo=Github&logoColor=white',
-    width: 170.533 + 'px'
+    src: 'https://img.shields.io/badge/-Github-181717?style=for-the-badge&logo=Github&logoColor=white'
   },
   Twitter: {
-    src: 'https://img.shields.io/badge/-Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white',
-    width: 185.267 + 'px'
+    src: 'https://img.shields.io/badge/-Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white'
   },
   LinkedIn: {
-    src: 'https://img.shields.io/badge/-LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white',
-    width: 198.217 + 'px'
+    src: 'https://img.shields.io/badge/-LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white'
   },
 }
 
