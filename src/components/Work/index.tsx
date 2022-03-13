@@ -413,7 +413,7 @@ export default function Work() {
   }, [router]);
 
   return (
-    <Section title="Experience" subTitle="WORK">
+    <Section title="Experience" subTitle="WORK" className={styles.section}>
       {selected ? <Modal onClose={() => {
         setSelected(null)
         router.push(router.route, router.route, { shallow: true });

@@ -6,10 +6,11 @@ interface SectionProps {
 	title: string
 	subTitle: string
 	initialInView?: boolean
+	className?: string;
 	children: React.ReactNode
 }
 
-export default function Section({ title, subTitle, initialInView=false, children }: SectionProps){
+export default function Section({ title, subTitle, initialInView=false, className='', children }: SectionProps){
   const { ref, inView } = useInView({ threshold: 0.25, initialInView });
 	return (
 		<section id={`section-${subTitle.toLowerCase()}`} ref={ref}>
@@ -18,7 +19,7 @@ export default function Section({ title, subTitle, initialInView=false, children
 				<h2>{title}</h2>
 			</div>
 
-			<div className={styles.childrenWrapper}>{children}</div>
+			<div className={`${styles.childrenWrapper} ${className}`}>{children}</div>
 		</section>
 	)
 }

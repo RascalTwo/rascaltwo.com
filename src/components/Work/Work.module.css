@@ -14,11 +14,16 @@
 	.wrapper {
 		grid-template-columns: auto;
 		grid-auto-flow: row;
-		height: 100vh;
+		height: 80vh;
 		overflow: hidden scroll;
 	}
 }
 
+@media (max-width: 800px) {
+	.section {
+		padding: 1em 10vmax 1em 1em;
+	}
+}
 
 .workItem {
 	position: relative;
