@@ -24,10 +24,10 @@ const CATEGORIES_ORDER = [
 interface SkillProps {
 	slug: string
 	technology: Technology
+	inView: boolean
 }
 
-function Skill({ slug, technology: { background, name, image } }: SkillProps){
-  const { ref, inView } = useInView({ threshold: 1 });
+function Skill({ slug, technology: { background, name, image }, inView }: SkillProps){
 	const { setActivated } = useActivatedTabContext();
 	const { inclusive, exclusive } = useWorkFilterContext();
 	const isInclusive = useMemo(() => inclusive.set.has(slug), [slug, inclusive]);
@@ -35,7 +35,6 @@ function Skill({ slug, technology: { background, name, image } }: SkillProps){
 
 	return (
     <button
-			ref={ref}
 			className={styles.skill}
 			data-background={useMemo(() => background || 'dark', [background])}
 			data-inclusive={isInclusive}
@@ -65,6 +64,23 @@ function Skill({ slug, technology: { background, name, image } }: SkillProps){
   );
 }
 
+interface SkillTabProps {
+	categorySkills: Record<string, Technology>
+}
+
+function SkillTab({ categorySkills }: SkillTabProps){
+
+  const { ref, inView } = useInView({ threshold: 0.33 });
+	return (
+		<div className={styles.wrapper} ref={ref}>
+			{Object.entries(categorySkills) // @ts-ignore
+				.map(([slug, technology]) =>
+					<Skill key={slug} slug={slug} technology={technology} inView={inView} />
+			)}
+		</div>
+	)
+}
+
 export default function Skills(){
 	const technologies = useTechnologiesContext();
 	if (!Object.keys(technologies)) return null;
@@ -76,13 +92,7 @@ export default function Skills(){
 				.sort(([a], [b]) => CATEGORIES_ORDER.indexOf(a) - CATEGORIES_ORDER.indexOf(b))
 				.reduce((map, [key, values]) => ({
 					...map,
-					[key]:
-						<div className={styles.wrapper}>
-							{Object.entries(values) // @ts-ignore
-								.map(([slug, technology]) =>
-									<Skill key={slug} slug={slug} technology={technology} />
-							)}
-						</div>
+					[key]: <SkillTab key={key} categorySkills={values} />
 				}), {})
 			}}
 		</Tabs>
