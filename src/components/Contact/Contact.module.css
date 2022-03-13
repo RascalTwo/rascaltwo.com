@@ -7,10 +7,12 @@
 	border-radius: 1em;
   color: black;
   padding: 1rem;
+  max-width: 800px;
+  margin: auto;
 }
 
 
-@media (max-width: 600px){
+@media (max-width: 700px){
 	.form {
     display: block;
 	}
