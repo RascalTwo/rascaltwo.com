@@ -7,7 +7,7 @@ import styles from './ThemeToggler.module.css';
 function getInitialTheme(){
   const localTheme = localStorage.getItem(window.location.host + '-selected-theme');
   if (['light', 'dark'].includes(localTheme)) return localTheme as Theme;
-  return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+  return 'dark';
 }
 
 function useThemeState() {
