@@ -12,7 +12,7 @@ declare global {
 const VITALS_ENABLED = process.env.NEXT_PUBLIC_VITALS === 'true';
 
 const useMetricReporter = () => {
-  const queueReporter = useCallback(function queueMetric(_, data: object) {
+  const queueReporter = useCallback((_, data: object) => {
     if (!window.metricQueue) window.metricQueue = [];
     window.metricQueue.push(data);
     return Promise.resolve(true);
@@ -41,14 +41,14 @@ const useMetricReporter = () => {
   const clearQueue = useCallback(async () => {
     if (!window.metricQueue) window.metricQueue = [];
     if (!window.metricQueue.length) return;
-    reporter.name === 'queueMetric'
+    reporter === queueReporter
       ? fetchReporter('/api/vitals', window.metricQueue)
       : reportMetrics(...window.metricQueue);
     window.metricQueue = [];
-  }, [fetchReporter, reportMetrics, reporter]);
+  }, [queueReporter, fetchReporter, reportMetrics, reporter]);
 
   useEffect(() => {
-    if (!VITALS_ENABLED || reporter.name !== 'queueMetric') return;
+    if (!VITALS_ENABLED || reporter !== queueReporter) return;
 
     const ID = (Date.now() + Math.random()).toString();
     let timeout;
@@ -74,7 +74,7 @@ const useMetricReporter = () => {
       if (timeout) clearTimeout(timeout);
       clearQueue();
     };
-  }, [beaconReporter, fetchReporter, clearQueue, reporter]);
+  }, [queueReporter, beaconReporter, fetchReporter, clearQueue, reporter]);
 
   return reportMetrics;
 };
