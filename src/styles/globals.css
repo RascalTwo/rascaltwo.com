@@ -22,6 +22,8 @@ body {
   --tabs-focused: hsl(220, 11%, 20%);
   --mini-work-item-background: hsl(216, 28%, 20%);
   --badge-background-color: hsl(216, 28%, 10%);
+  --header-hue-lightness: 80%;
+  --header-hue-delay: 2.5s;
 
   --skill-dark-background-color: hsl(216, 28%, 20%);
 }
@@ -50,6 +52,8 @@ body[data-theme="light"] {
   --tabs-focused: hsl(220, 11%, 80%);
   --mini-work-item-background: hsl(216, 28%, 80%);
   --badge-background-color: hsl(216, 28%, 90%);
+  --header-hue-lightness: 20%;
+  --header-hue-delay: 7.5s;
 }
 
 html,
