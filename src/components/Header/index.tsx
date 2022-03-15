@@ -54,7 +54,7 @@ export default function Header({ name }: { name: string }) {
         phrases={['Software Engineer', 'Fullstack Developer', 'Polyglot']}
         typingRate={250}
         pauseMS={[0, 10000]}
-        initialIndex={8}
+        initialIndex={0}
         render={useCallback(
           text => (
             <span>{text}</span>
