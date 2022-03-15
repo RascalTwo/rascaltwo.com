@@ -232,6 +232,11 @@ function FilteredWork({ onClick }: FilteredWorkProps) {
     return inclusiveCount === inclusive.set.size && inclusiveCount >= exclusiveCount;
   });
 
+  useEffect(() => {
+    if (filteredWork.length) return;
+    if (inclusive.lastAdded !== null) inclusive.setSet(new Set([inclusive.lastAdded]))
+  }, [filteredWork, inclusive]);
+
   return (
     <div className={styles.wrapper} ref={ref}>
       {Object.entries(filteredWork).map(([slug, data]) => (
