@@ -32,19 +32,17 @@ export default function Home({ technologies, work }: HomeProps) {
     <div>
       <Head>
         <title>{name} - Software Engineer</title>
-        <meta content="#172b36" name="theme-color" />
-        <meta name="description" content={`${name}, your next Software Engineer!`} />
-        <meta property="og:locale" content="en_US"/>
+        <meta name="description" content={`Your next Software Engineer!`} />
         <meta property="og:type" content="website"/>
         <meta property="og:site_name" content={name} />
         <meta property="og:title" content="Homepage"/>
-        <meta property="og:description" content={`${name}, your next Software Engineer!`}/>
+        <meta property="og:description" content={`Your next Software Engineer!`}/>
         <meta property="og:url" content={website}/>
         <meta property="og:image" content={`${website}/header-low.webp`}/>
 
         <meta name="twitter:image" content={`${website}/header-low.webp`}/>
         <meta name="twitter:image:alt" content="Logo"/>
-        <meta name="twitter:description" content={`${name}, your next Software Engineer!`} />
+        <meta name="twitter:description" content={`Your next Software Engineer!`} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@RealRascalTwo" />
         <meta name="twitter:creator" content="@RealRascalTwo" />
