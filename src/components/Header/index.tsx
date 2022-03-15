@@ -51,9 +51,9 @@ export default function Header({ name }: { name: string }) {
     >
       <Name name={name} />
       <Typewriter
-        phrases={['Software Engineer', 'Fullstack Developer', 'Polyglot']}
-        typingRate={250}
-        pauseMS={[0, 10000]}
+        phrases={[' Software Engineer ', 'Fullstack Developer']}
+        typingRate={200}
+        pauseMS={[1000, 2000]}
         initialIndex={0}
         render={useCallback(
           text => (

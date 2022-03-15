@@ -47,7 +47,7 @@ export default function Typewriter({ phrases, typingRate, pauseMS, initialIndex=
 
 		// If writing and reached end of the phrase, start backspacing
 		if (writing && textIndex === phrase.length) {
-			return createTimeoutEffect(() => setWriting(false), pauseMS[1] / 2);
+			return createTimeoutEffect(() => setWriting(false), pauseMS[1]);
 		}
 
 		// If backspacing and the next phrase starts with the current phrase,
