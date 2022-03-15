@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import Link from 'next/link'
 import { useInView } from 'react-intersection-observer';
 import Section from '../Section';
@@ -38,9 +38,16 @@ function SlidingInSocialBadge({ href, ...imgProps }: SlidingInSocialBadgeProps){
   )
 }
 
+function AnchorToFragment({ fragment, children }: { fragment: string, children: React.ReactNode }){
+  return <a href={fragment} onClick={useCallback((e) => {
+    e.preventDefault()
+    document.querySelector(fragment).scrollIntoView({ behavior: 'smooth' });
+  }, [fragment])}>{children}</a>
+}
+
 export default function AboutMe({ name, links }: AboutMeProps) {
   return (
-    <Section title="Who am I" subTitle="ABOUT ME" initialInView={true}>
+    <Section title="Who am I" subTitle="ABOUT ME" initialInView={true} className={styles.aboutMe}>
       <h3>
         I am <i title={name}>{name}</i>, a Software Engineer.
       </h3>
@@ -60,10 +67,17 @@ export default function AboutMe({ name, links }: AboutMeProps) {
       </p>
       <p>
         My experience started with Python, and blossomed into Java, PHP, the Cs, JavaScript, Ruby, Go, Rust and many
-        more <a href="#section-skills">Technologies</a>
+        more <AnchorToFragment fragment="#section-work">Technologies</AnchorToFragment>
       </p>
       <p>
         With a <Link href="/blog">passion for solving problems and improving experiences</Link>, I&apos;m always streamlining processes, and making needed complexities work with, and not against the user!
+      </p>
+      <h3>My Services</h3>
+      <p>
+        Expanding to meet the needs of my clients, from straightforward landing pages, to complex fully-interactive Fullstack Web Applications, I can not only create them, but also ensure their longevity with maintenance &amp; monitoring over time!
+        </p>
+      <p>
+        From our initial consultation, to the proposal I create, I ensure that your needs are not just understood, but also being efficiently resolved!
       </p>
     </Section>
   );

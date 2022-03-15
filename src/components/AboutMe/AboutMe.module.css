@@ -1,7 +1,29 @@
+.aboutMe {
+	max-width: 75vw;
+	margin: auto;
+}
+
+@media (max-width: 600px) {
+	.aboutMe {
+		max-width: none;
+	}
+}
+
+
 .linksContainer {
 	float: right;
 	text-align: center;
 	height: 100%;
+}
+
+@media (max-width: 800px) {
+	.linksContainer {
+		float: none;
+	}
+	.linksContainer li {
+		display: inline-block;
+		padding-right: 1rem;
+	}
 }
 
 .linksContainer ul {
