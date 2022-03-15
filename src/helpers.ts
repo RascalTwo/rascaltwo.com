@@ -25,8 +25,21 @@ export const usePortal = (selector: string, content: React.ReactNode, callback?:
 	return element ? createPortal(content, element) : null;
 }
 
-export const useLocaleConfig = () => getConfig().publicRuntimeConfig[useRouter().locale] as {
-	name: string,
-	links: Record<string, string>,
-	website: string
-}
+export const useLocaleConfig = () => {
+  const config = getConfig().publicRuntimeConfig;
+	const localeConfig = config[useRouter().locale];
+	const name = localeConfig.name;
+  return {
+    ...localeConfig,
+		meta: {
+			...config.meta,
+			title: config.meta.title.replace('NAME', name),
+			oembedFilename: name.endsWith('Two') ? 'oembed.json' : 'oembed-jm.json'
+		}
+  } as {
+    name: string;
+    links: Record<string, string>;
+    website: string;
+    meta: Record<'description' | 'keywords' | 'title' | 'oembedFilename', string>;
+  };
+};

@@ -23,29 +23,34 @@ interface HomeProps {
 }
 
 export default function Home({ technologies, work }: HomeProps) {
-  const { name, links, website } = useLocaleConfig();
-
+  const { name, links, website, meta } = useLocaleConfig();
   const inclusive = useSet<string>();
   const exclusive = useSet<string>();
   const [activated, setActivated] = useState<string | null>(null);
   return (
     <div>
       <Head>
-        <title>{name} - Software Engineer</title>
-        <meta name="description" content={`Your next Software Engineer!`} />
+        <title>{meta.title}</title>
+        <meta name="description" content={meta.description} />
+        <meta name="keywords" content={meta.keywords} />
         <meta property="og:type" content="website"/>
-        <meta property="og:site_name" content={name} />
-        <meta property="og:title" content="Homepage"/>
-        <meta property="og:description" content={`Your next Software Engineer!`}/>
+        <meta property="og:title" content={meta.title} />
+        <meta property="og:description" content={meta.description}/>
         <meta property="og:url" content={website}/>
-        <meta property="og:image" content={`${website}/header-low.webp`}/>
+        <meta name="image" property="og:image" content={`${website}/embed-image.gif`}/>
+        <meta property="og:image:secure_url" content={`${website}/embed-image.gif`}/>
 
-        <meta name="twitter:image" content={`${website}/header-low.webp`}/>
-        <meta name="twitter:image:alt" content="Logo"/>
-        <meta name="twitter:description" content={`Your next Software Engineer!`} />
         <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:domain" content={website.split('//')[1]} />
+        <meta name="twitter:title" content={name}/>
+        <meta name="twitter:description" content={meta.description} />
+        <meta name="twitter:image" content={`${website}/embed-twitter.gif`}/>
         <meta name="twitter:site" content="@RealRascalTwo" />
         <meta name="twitter:creator" content="@RealRascalTwo" />
+        <meta name="twitter:label1" content="GitHub" />
+        <meta name="twitter:data1" content="https://github.com/RascalTwo" />
+
+        <link rel="alternate" type="application/json+oembed" href={`${website}/${meta.oembedFilename}`} />
       </Head>
 
       <ThemeToggler />

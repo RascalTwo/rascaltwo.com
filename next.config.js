@@ -18,6 +18,11 @@ module.exports = {
         LinkedIn: 'https://linkedin.com/in/joseph97milliken/'
       },
       website: 'https://josephmilliken.com'
+    },
+    meta: {
+      description: 'From landing pages, to complex Fullstack Web Applications, just imagine what I can make for you!',
+      keywords: 'fullstack software engineer,developer,coder,programmer,coding,programming,frontend,backend,fullstack,software engineer,software,engineer',
+      title: 'NAME - Software Engineer'
     }
   },
   reactStrictMode: true,
@@ -46,5 +51,17 @@ module.exports = {
         defaultLocale: 'en-US'
       }
     ]
-  }
+  },
+  async redirects() {
+    return [{
+      source: '/',
+      has: [{
+        type: 'header',
+        key: 'User-Agent',
+        value: '(.*Discordbot.*)'
+      }],
+      destination: '/embed/discord',
+      permanent: false
+    }]
+  },
 }
