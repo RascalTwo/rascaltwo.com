@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import React, { useCallback, useMemo } from "react";
+import React, { CSSProperties, useCallback, useMemo } from "react";
 import Tabs from "../Tabs";
 import { Technology } from '../../types';
 import { useActivatedTabContext, useTechnologiesContext, useWorkFilterContext } from '../../context';
@@ -25,9 +25,10 @@ interface SkillProps {
 	slug: string
 	technology: Technology
 	inView: boolean
+	delay: number
 }
 
-function Skill({ slug, technology: { background, name, image }, inView }: SkillProps){
+function Skill({ slug, technology: { background, name, image }, inView, delay }: SkillProps){
 	const { setActivated } = useActivatedTabContext();
 	const { inclusive, exclusive } = useWorkFilterContext();
 	const isInclusive = useMemo(() => inclusive.set.has(slug), [slug, inclusive]);
@@ -40,6 +41,9 @@ function Skill({ slug, technology: { background, name, image }, inView }: SkillP
 			data-inclusive={isInclusive}
 			data-exclusive={isExclusive}
 			data-in-view={inView}
+			style={{
+				'--delay': delay + 'ms'
+			} as CSSProperties}
 			tabIndex={0}
 			aria-label={`${name} Logo`}
 			onClick={useCallback(() => {
@@ -74,8 +78,8 @@ function SkillTab({ categorySkills }: SkillTabProps){
 	return (
 		<div className={styles.wrapper} ref={ref}>
 			{Object.entries(categorySkills) // @ts-ignore
-				.map(([slug, technology]) =>
-					<Skill key={slug} slug={slug} technology={technology} inView={inView} />
+				.map(([slug, technology], i) =>
+					<Skill key={slug} slug={slug} technology={technology} inView={inView} delay={i * 125} />
 			)}
 		</div>
 	)
