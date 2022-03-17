@@ -34,7 +34,7 @@
 
 .linksContainer img {
 	position: relative;
-	right: -200%;
+	right: -500%;
 	height: 2.5em;
 	transition: 1s 1s right ease-in-out;
 }

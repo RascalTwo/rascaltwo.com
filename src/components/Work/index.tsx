@@ -14,6 +14,7 @@ import styles from './Work.module.css';
 import { Modal } from '../Modal';
 import Skills from '../Skills';
 import { useRouter } from 'next/router';
+import ExpandingArrowButton from '../ExpandingArrowButton';
 
 type FullWorkItemProps = React.HTMLProps<HTMLDivElement> & WorkData
 
@@ -216,6 +217,7 @@ interface FilteredWorkProps {
 }
 
 function FilteredWork({ onClick }: FilteredWorkProps) {
+  const [viewingAll, setViewingAll] = useState(false);
   const { ref, inView } = useInView({ threshold: 0.33 });
 
   const work = useWorkContext();
@@ -237,11 +239,14 @@ function FilteredWork({ onClick }: FilteredWorkProps) {
     if (inclusive.lastAdded !== null) inclusive.setSet(new Set([inclusive.lastAdded]))
   }, [filteredWork, inclusive]);
 
+  const handleSetViewing = useCallback(() => setViewingAll(true), [])
+
   return (
-    <div className={styles.wrapper} ref={ref}>
-      {Object.entries(filteredWork).map(([slug, data]) => (
+    <div className={styles.wrapper} ref={ref} data-viewing-all={viewingAll}>
+      {Object.entries(filteredWork).slice(0, viewingAll ? undefined : 6).map(([slug, data]) => (
         <MiniWorkItem key={slug} slug={slug} {...data} onClick={() => onClick(data)} inView={inView} />
       ))}
+      {!viewingAll ? <ExpandingArrowButton onClick={handleSetViewing}>View More</ExpandingArrowButton> : null}
     </div>
   );
 }
@@ -259,7 +264,7 @@ export default function Work() {
   }, [router]);
 
   return (
-    <Section title="Experience" subTitle="WORK" className={styles.section}>
+    <Section title="Experience" subTitle="WORK">
       {selected ? <Modal onClose={() => {
         setSelected(null)
         router.push(router.route, router.route, { shallow: true });

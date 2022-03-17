@@ -10,24 +10,47 @@
 	overflow: scroll hidden;
 }
 
+.wrapper[data-viewing-all="false"] {
+	padding-bottom: 3rem;
+}
+
+.wrapper > button {
+	position: absolute;
+	bottom: 1rem;
+	right: 1rem;
+}
+
 .tabWrapper {
 	filter: drop-shadow(0 10px 0.25em var(--background-color));
 	position: relative;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 1000px) {
 	.wrapper {
-		grid-template-columns: auto;
+		grid-template-columns: 1fr 1fr;
 		grid-auto-flow: row;
+	}
+	.wrapper[data-viewing-all="true"] {
 		height: 80vh;
 		overflow: hidden scroll;
 	}
 }
 
 @media (max-width: 800px) {
-	.section {
-		padding: 1em 10vmax 1em 1em;
+	.wrapper {
+		grid-template-columns: auto;
 	}
+
+	.wrapper > button {
+		position: relative;
+		bottom: 0;
+		right: 0;
+	}
+
+	.wrapper[data-viewing-all="false"] {
+		padding-bottom: 0.5rem;
+	}
+
 }
 
 .workItem {
@@ -59,6 +82,25 @@
 	top: 0;
 }
 
+@media (max-width: 1000px) {
+	.workItem:nth-of-type(odd) {
+		bottom: auto;
+		left: -125%;
+	}
+	.workItem:nth-of-type(even) {
+		top: auto;
+		right: -125%;
+	}
+	.workItem:nth-of-type(odd)[data-in-view="true"]{
+		bottom: auto;
+		left: 0;
+	}
+	.workItem:nth-of-type(even)[data-in-view="true"]{
+		top: auto;
+		right: 0;
+	}
+}
+
 @media (max-width: 800px) {
 	.workItem:nth-of-type(even) {
 		bottom: auto;
@@ -86,6 +128,12 @@
 
 .workItem:hover .text {
 	opacity: 1;
+}
+
+@media (max-width: 1000px) {
+	.workItem .text {
+		opacity: 1;
+	}
 }
 
 .text {
@@ -116,7 +164,7 @@
 	border: 0;
 	padding: 0.25em !important;
 	width: 100%;
-	min-width: 25vmin;
+	min-width: 20vmin;
 	height: 100%;
 	object-fit: contain;
 	margin: auto;
@@ -237,10 +285,10 @@
 	bottom: 0;
 }
 .workItem:nth-of-type(even) .icon[data-side="left"][data-in-view="false"] {
-	bottom: -500%;
+	bottom: -100%;
 }
 .workItem:nth-of-type(odd) .icon[data-side="left"][data-in-view="false"] {
-	bottom: 500%;
+	bottom: 100%;
 }
 
 .icon[data-side="right"] {
@@ -248,10 +296,10 @@
 	bottom: 0;
 }
 .workItem:nth-of-type(even) .icon[data-side="right"][data-in-view="false"] {
-	bottom: -500%;
+	bottom: -100%;
 }
 .workItem:nth-of-type(odd) .icon[data-side="right"][data-in-view="false"] {
-	bottom: 500%;
+	bottom: 100%;
 }
 
 @media (max-width: 800px) {
@@ -261,7 +309,7 @@
 	}
 	.icon[data-side="left"][data-in-view="false"] {
 		bottom: 0;
-		left: -500%;
+		left: -100%;
 	}
 
 	.icon[data-side="right"] {
@@ -270,7 +318,19 @@
 	}
 	.icon[data-side="right"][data-in-view="false"] {
 		bottom: 0;
-		right: -500%;
+		right: -100%;
+	}
+	.workItem:nth-of-type(even) .icon[data-side="right"][data-in-view="false"] {
+		bottom: 0;
+	}
+	.workItem:nth-of-type(odd) .icon[data-side="right"][data-in-view="false"] {
+		bottom: 0;
+	}
+	.workItem:nth-of-type(even) .icon[data-side="left"][data-in-view="false"] {
+		bottom: 0;
+	}
+	.workItem:nth-of-type(odd) .icon[data-side="left"][data-in-view="false"] {
+		bottom: 0;
 	}
 }
 
