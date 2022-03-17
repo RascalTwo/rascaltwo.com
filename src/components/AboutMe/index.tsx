@@ -77,7 +77,7 @@ export default function AboutMe({ name, links }: AboutMeProps) {
         Expanding to meet the needs of my clients, from straightforward landing pages, to complex fully-interactive Fullstack Web Applications, I can not only create them, but also ensure their longevity with maintenance &amp; monitoring over time!
         </p>
       <p>
-        From our initial consultation, to the proposal I create, I ensure that your needs are not just understood, but also being efficiently resolved!
+        From our initial consultation, to the proposal I create, I ensure that your needs are not just understood, but also being efficiently satisfied!
       </p>
     </Section>
   );
