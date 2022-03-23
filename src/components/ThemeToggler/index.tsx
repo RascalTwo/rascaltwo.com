@@ -27,6 +27,7 @@ function useThemeState() {
     if (typeof document !== 'object') return;
     if (theme === null) return setTheme(getInitialTheme());
     document.querySelector('body').dataset.theme = theme;
+    document.querySelector<HTMLMetaElement>('meta[name="twitter:widgets:theme"]').content = theme;
   }, [setTheme, theme]);
 
   return { theme, toggleTheme };

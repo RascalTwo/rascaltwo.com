@@ -26,6 +26,8 @@ class MyDocument extends Document {
           <meta name="msapplication-TileImage" content="/favicon/mstile-144x144.png" />
           <meta name="theme-color" content="#172b36" />
 
+          <meta name="twitter:widgets:theme" content="dark"></meta>
+
           <meta property="og:locale" content="en_US"/>
           <link
             href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,900;1,900&display=swap"
