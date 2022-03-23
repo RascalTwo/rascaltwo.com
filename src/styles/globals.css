@@ -115,3 +115,16 @@ section {
 .hljs {
   width: max-content
 }
+
+.horizontal-tweets {
+  display: flex;
+  overflow-x: scroll;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--color);
+}
+
+.horizontal-tweets > * {
+  flex: 1;
+}
