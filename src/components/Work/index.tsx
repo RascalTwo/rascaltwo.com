@@ -15,6 +15,7 @@ import { Modal } from '../Modal';
 import Skills from '../Skills';
 import { useRouter } from 'next/router';
 import ExpandingArrowButton from '../ExpandingArrowButton';
+import { useSelection } from '../../hooks';
 
 type FullWorkItemProps = React.HTMLProps<HTMLDivElement> & WorkData
 
@@ -140,7 +141,7 @@ function MiniWorkItem({
   onClick,
   inView
 }: MiniWorkItemProps) {
-  const { ref, inView: itemInView } = useInView({ threshold: 0.5 });
+  const { ref, inView: itemInView, entry } = useInView({ threshold: 0.5 });
   const text = useMemo(() => {
     let markdown = Object.entries(otherURLs).map(([key, value]) => `[${slug} ${key}]: ${value}`).join('\n') + '\n';
     if (description) markdown += description + ' - ';
@@ -200,8 +201,16 @@ function MiniWorkItem({
     );
   }, [technologies, media, concepts, itemInView]);
 
+
+  const [selected, setWithin] = useSelection();
+
+  const handleRef = useCallback((node: HTMLDivElement | null) => {
+    ref(node);
+    setWithin(node);
+  }, [ref, setWithin]);
+
   return (
-    <div className={styles.workItem} data-background={media.props['data-background']} ref={ref} data-in-view={inView}>
+    <div className={styles.workItem} data-background={media.props['data-background']} data-selected={!!selected} ref={handleRef} data-in-view={inView}>
       <a className={styles.text} href={sourceURL} target="_blank" rel="noreferrer">
         {title}
       </a>

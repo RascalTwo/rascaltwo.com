@@ -1,11 +1,12 @@
 import Image from 'next/image'
-import React, { CSSProperties, useCallback, useMemo } from "react";
+import React, { CSSProperties, useCallback, useEffect, useMemo, useRef } from "react";
 import Tabs from "../Tabs";
 import { Technology } from '../../types';
 import { useActivatedTabContext, useTechnologiesContext, useWorkFilterContext } from '../../context';
 
 import styles from './Skills.module.css'
 import { useInView } from 'react-intersection-observer';
+import { useSelection } from '../../hooks';
 
 
 const CATEGORIES_ORDER = [
@@ -34,13 +35,20 @@ function Skill({ slug, technology: { background, name, image }, inView, delay }:
 	const isInclusive = useMemo(() => inclusive.set.has(slug), [slug, inclusive]);
 	const isExclusive = useMemo(() => exclusive.set.has(slug), [slug, exclusive]);
 
+	const ref = useRef<HTMLButtonElement | null>(null);
+
+	const [selected, setWithin] = useSelection();
+	useEffect(() => setWithin(ref.current), [setWithin]);
+
 	return (
     <button
+			ref={ref}
 			className={styles.skill}
 			data-background={useMemo(() => background || 'dark', [background])}
 			data-inclusive={isInclusive}
 			data-exclusive={isExclusive}
 			data-in-view={inView}
+			data-selected={!!selected}
 			style={{
 				'--delay': delay + 'ms'
 			} as CSSProperties}

@@ -37,11 +37,11 @@
 	outline: 1px solid red;
 }
 
-.skill:is(:hover, :focus, :active){
+.skill:is(:hover, :focus, :active, [data-selected="true"]){
 	outline: 1px solid #63b1bc;
 }
 
-.skill:is(:hover, :focus, :active) .text {
+.skill:is(:hover, :focus, :active, [data-selected="true"]) .text {
 	opacity: 1;
 }
 

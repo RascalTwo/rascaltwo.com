@@ -126,7 +126,7 @@
 	background-color: white;
 }
 
-.workItem:hover .text {
+.workItem:is(:hover, :focus-within, [data-selected="true"]) .text {
 	opacity: 1;
 }
 
@@ -137,6 +137,7 @@
 }
 
 .text {
+	z-index: 1;
 	margin: auto;
 	position: absolute;
 	left: 0;

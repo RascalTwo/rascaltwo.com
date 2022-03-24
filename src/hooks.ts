@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useCallback, useState } from "react"
+import { Dispatch, SetStateAction, useCallback, useEffect, useState } from "react"
 
 export interface R2Set<T> {
 	set: Set<T>
@@ -29,3 +29,37 @@ export const useSet = <T extends unknown>(initialState: Set<T> | (() => Set<T>) 
 	return { set, setSet, add: addFunc, delete: deleteFunc, lastAdded }
 }
 
+
+const SELECTION_HOOK = {
+	rootListener: null,
+	listeners: []
+}
+
+export const useSelection = (): [Node, Dispatch<SetStateAction<Element>>] => {
+	const [selected, setSelected] = useState<Node>(null);
+	const [within, setWithin] = useState<Element>(null);
+	const updateSelected = useCallback((selected: Node) => {
+		if (within?.contains(selected)) setSelected(selected);
+	}, [within, setSelected]);
+
+	useEffect(() => {
+		if (!SELECTION_HOOK.rootListener){
+			const listener = () => {
+				const selected = document.getSelection();
+				SELECTION_HOOK.listeners.forEach(hookUpdates => hookUpdates(selected.anchorNode));
+			};
+			SELECTION_HOOK.rootListener = listener;
+			document.addEventListener('selectionchange', listener);
+		}
+		SELECTION_HOOK.listeners.push(updateSelected);
+		return () => {
+			SELECTION_HOOK.listeners.splice(SELECTION_HOOK.listeners.indexOf(updateSelected), 1)
+			if (SELECTION_HOOK.listeners.length) return
+
+			document.removeEventListener('selectionchange', SELECTION_HOOK.rootListener);
+			SELECTION_HOOK.rootListener = null;
+		}
+	}, [updateSelected]);
+
+	return [selected, setWithin];
+}
