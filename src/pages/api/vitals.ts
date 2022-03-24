@@ -6,11 +6,12 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 let RFS;
 if (process.env.NEXT_PUBLIC_VITALS === 'true') {
   const filepath = path.resolve('.', process.env.VITALS_PATH);
-  console.log('Vitals Filepath:', filepath);
-  RFS = createStream(filepath, {
+  console.log('Vitals Filepath:', filepath)
+  RFS = createStream(filepath.split('/').at(-1), {
     size: '10M',
-    interval: '1d',
+    interval: '1h',
     compress: 'gzip',
+    path: filepath.split('/').slice(0, -1).join('/'),
   });
 }
 
