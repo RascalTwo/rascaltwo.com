@@ -31,6 +31,7 @@ export interface BlogMeta {
 	title: string
 	date: [number, number, number];
 	excerpt: string
+	tags: string[]
 	urls: {
 		source?: string
 		live?: string

@@ -8,9 +8,13 @@ import { BlogMeta } from '../../types';
 
 import styles from './index.module.css';
 import ThemeToggler from '../../components/ThemeToggler';
+import TagsContainer from '../../components/TagsContainer';
+import { useRouter } from 'next/router';
 
 export default function BlogLanding({ blogs }: { blogs: BlogMeta[] }) {
   const { name, links, meta, website, short } = useLocaleConfig();
+  const { query: { tag } } = useRouter();
+  const filteredBlogs = !tag ? blogs : blogs.filter(blog => blog.tags.includes(tag as string))
   return (
     <>
       <Head>
@@ -38,9 +42,10 @@ export default function BlogLanding({ blogs }: { blogs: BlogMeta[] }) {
         <h1>
           <Link href="/">{name}</Link>&apos;s Blog
         </h1>
+        {tag ? <Link href="/blog">Clear Tags</Link> : null}
       </header>
       <main className={styles.main}>
-        {blogs.map(blog => (
+        {filteredBlogs.map(blog => (
           <section key={blog.slug} className={styles.section}>
             <div className={styles.sectionHeader}>
               <h2>
@@ -49,6 +54,7 @@ export default function BlogLanding({ blogs }: { blogs: BlogMeta[] }) {
               <time dateTime={blog.date.map(String).join('-')}>
                 {new Date(blog.date.map(String).join('-')).toDateString()}
               </time>
+              <TagsContainer tags={blog.tags} absolute={false} />
             </div>
             <p>{blog.excerpt}</p>
           </section>

@@ -1,0 +1,17 @@
+.container {
+	list-style: none;
+	width: max-content;
+	position: absolute;
+	right: 1rem;
+	top: 1rem;
+	background: var(--footer-background);
+	border-radius: 4em;
+	padding: 0.5em 0.75em;
+}
+
+	.container li {
+		display: inline-block;
+	}
+	.container li:not(:last-of-type) {
+		padding-right: 1rem;
+	}

@@ -8,6 +8,7 @@ import Footer from '../../components/Footer';
 import { useLocaleConfig } from '../../helpers';
 import Head from 'next/head';
 import ThemeToggler from '../../components/ThemeToggler';
+import TagsContainer from '../../components/TagsContainer';
 
 export default function BlogEntry({ blog }: { blog: Blog | undefined }) {
   const { name, website, links, short } = useLocaleConfig();
@@ -68,6 +69,7 @@ export default function BlogEntry({ blog }: { blog: Blog | undefined }) {
         <time dateTime={blog.date.map(String).join('-')}>
           {new Date(blog.date.map(String).join('-')).toDateString()}
         </time>
+        <TagsContainer tags={blog.tags} />
       </header>
       <article className={styles.article} dangerouslySetInnerHTML={{ __html: blog.html.replaceAll('I18N_NAME', name) }}></article>
       <Footer name={name} links={links} />

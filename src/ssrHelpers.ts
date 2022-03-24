@@ -192,8 +192,10 @@ export async function fetchBlogs(){
     let rawMarkdown;
     const yamlMatch = content.match(/^---\n(.*?)\n---/ms);
     let urls = {}
+    let tags = [];
     if (yamlMatch) {
       yaml = YAML.parse(yamlMatch[1]);
+      tags = yaml.tags?.split(/\s+/) ?? [];
       Object.assign(urls, yaml.urls);
       rawMarkdown = content.split(yamlMatch[0])[1].trim();
     } else {
@@ -238,7 +240,7 @@ export async function fetchBlogs(){
     const excerpt = markdown.split('\n')[2];
     const slug = yaml.slug ?? title.toLowerCase().split(' ').join('-').replace('?', '').replace('.', '').replace('!', '').replace('#', '');
     const date = filename.split('.')[0].split('-').map(Number) as [number, number, number]
-    blogs.push({ slug, title, date, html, excerpt, urls })
+    blogs.push({ slug, title, date, html, excerpt, urls, tags })
   }
 
   return blogs;
