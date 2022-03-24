@@ -45,9 +45,13 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params: { slug } }) {
-  return {
-    props: {
-      blog: (await fetchBlogs()).filter(blog => blog.slug === slug)[0] ?? null,
+  const blog = (await fetchBlogs()).filter(blog => blog.slug === slug)[0];
+  return blog ? {
+    props: { blog },
+  } : {
+    redirect: {
+      destination: '/blog/',
+      permanent: false,
     },
-  };
+  }
 }

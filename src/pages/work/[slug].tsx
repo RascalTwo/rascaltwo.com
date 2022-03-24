@@ -35,7 +35,8 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params: { slug }}) {
   if (!slug) return { props: {} };
-  const { work } = await fetchWorkDataAndTechnologies();
+  const { work: allWork } = await fetchWorkDataAndTechnologies();
 
-  return { props: { work: work.find(w => w.slug === slug) ?? null } };
+  const work = allWork.find(w => w.slug === slug);
+  return work ? { props: { work } } : { redirect: { destination: '/', permanent: false } }
 }
