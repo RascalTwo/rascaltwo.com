@@ -70,15 +70,15 @@
 	text-transform: uppercase;
 }
 
-.learnMore:hover .circle {
+.learnMore:is(:hover, :focus-within, :active) .circle {
 	width: 100%;
 }
 
-.learnMore:hover .circle .icon.arrow {
+.learnMore:is(:hover, :focus-within, :active) .circle .icon.arrow {
 	background: #fff;
 	transform: translate(1rem, 0);
 }
 
-.learnMore:hover .buttonText {
+.learnMore:is(:hover, :focus-within, :active) .buttonText {
 	color: #fff;
 }
