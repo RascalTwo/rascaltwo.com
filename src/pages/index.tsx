@@ -23,7 +23,7 @@ interface HomeProps {
 }
 
 export default function Home({ technologies, work }: HomeProps) {
-  const { name, links, website, meta } = useLocaleConfig();
+  const { name, links, website, meta, short } = useLocaleConfig();
   const inclusive = useSet<string>();
   const exclusive = useSet<string>();
   const [activated, setActivated] = useState<string | null>(null);
@@ -37,20 +37,20 @@ export default function Home({ technologies, work }: HomeProps) {
         <meta property="og:title" content={meta.title} />
         <meta property="og:description" content={meta.description}/>
         <meta property="og:url" content={website}/>
-        <meta name="image" property="og:image" content={`${website}/embed-image.gif`}/>
-        <meta property="og:image:secure_url" content={`${website}/embed-image.gif`}/>
+        <meta name="image" property="og:image" content={`${website}/embeds/embed-image.gif`}/>
+        <meta property="og:image:secure_url" content={`${website}/embeds/embed-image.gif`}/>
 
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:domain" content={website.split('//')[1]} />
         <meta name="twitter:title" content={name}/>
         <meta name="twitter:description" content={meta.description} />
-        <meta name="twitter:image" content={`${website}/embed-twitter.gif`}/>
+        <meta name="twitter:image" content={`${website}/embeds/embed-twitter.jpg`}/>
         <meta name="twitter:site" content="@RealRascalTwo" />
         <meta name="twitter:creator" content="@RealRascalTwo" />
         <meta name="twitter:label1" content="GitHub" />
         <meta name="twitter:data1" content="https://github.com/RascalTwo" />
 
-        <link rel="alternate" type="application/json+oembed" href={`${website}/${meta.oembedFilename}`} />
+        <link rel="alternate" type="application/json+oembed" href={`${website}/embeds/oembed-${short}.json`} />
       </Head>
 
       <ThemeToggler />

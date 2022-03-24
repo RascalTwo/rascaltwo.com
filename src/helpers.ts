@@ -33,13 +33,13 @@ export const useLocaleConfig = () => {
     ...localeConfig,
 		meta: {
 			...config.meta,
-			title: config.meta.title.replace('NAME', name),
-			oembedFilename: name.endsWith('Two') ? 'oembed.json' : 'oembed-jm.json'
+			title: config.meta.title.replace('NAME', name)
 		}
   } as {
     name: string;
     links: Record<string, string>;
     website: string;
-    meta: Record<'description' | 'keywords' | 'title' | 'oembedFilename', string>;
+		short: string;
+    meta: Record<'description' | 'keywords' | 'title', string>;
   };
 };

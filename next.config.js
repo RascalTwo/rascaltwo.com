@@ -1,30 +1,7 @@
+const fs = require('fs')
+
 module.exports = {
-  publicRuntimeConfig: {
-    en: {
-      name: 'Rascal Two',
-      email: 'therealrascaltwo@gmail.com',
-      links: {
-        Email: 'mailto:therealrascaltwo@gmail.com',
-        Github: 'https://github.com/RascalTwo',
-        Twitter: 'https://twitter.com/RealRascalTwo',
-      },
-      website: 'https://rascaltwo.com'
-    },
-    'en-US': {
-      name: 'Joseph Milliken',
-      email: 'joseph97milliken@gmail.com',
-      links: {
-        Email: 'mailto:joseph97milliken@gmail.com',
-        LinkedIn: 'https://linkedin.com/in/joseph97milliken/'
-      },
-      website: 'https://josephmilliken.com'
-    },
-    meta: {
-      description: 'From landing pages, to complex Fullstack Web Applications, just imagine what I can make for you!',
-      keywords: 'fullstack software engineer,developer,coder,programmer,coding,programming,frontend,backend,fullstack,software engineer,software,engineer',
-      title: 'NAME - Software Engineer'
-    }
-  },
+  publicRuntimeConfig: JSON.parse(fs.readFileSync('./publicRuntimeConfig.json').toString()),
   reactStrictMode: true,
   // Allow Next.js optimization of images from cloudinary
   images: { domains: ['res.cloudinary.com'] },
@@ -61,6 +38,15 @@ module.exports = {
         value: '(.*Discordbot.*)'
       }],
       destination: '/embed/discord',
+      permanent: false
+    }, {
+      source: '/blog/embed/:slug',
+      has: [{
+        type: 'header',
+        key: 'User-Agent',
+        value: '(.*Discordbot.*)'
+      }],
+      destination: '/blog/embed/discord/:slug',
       permanent: false
     }]
   },
