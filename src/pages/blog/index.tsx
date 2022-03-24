@@ -4,12 +4,12 @@ import Link from 'next/link';
 import Footer from '../../components/Footer';
 import { fetchBlogs } from '../../ssrHelpers';
 import { useLocaleConfig } from '../../helpers';
-import { Blog } from '../../types';
+import { BlogMeta } from '../../types';
 
 import styles from './index.module.css';
 import ThemeToggler from '../../components/ThemeToggler';
 
-export default function BlogLanding({ blogs }: { blogs: Blog[] }) {
+export default function BlogLanding({ blogs }: { blogs: BlogMeta[] }) {
   const { name, links } = useLocaleConfig();
   return (
     <>
@@ -43,5 +43,13 @@ export default function BlogLanding({ blogs }: { blogs: Blog[] }) {
 }
 
 export async function getStaticProps() {
-  return { props: { blogs: await fetchBlogs() } };
+  const blogs = await fetchBlogs();
+  return {
+    props: {
+      blogs: blogs.map(blog => {
+        const { html, ...meta } = blog;
+        return meta;
+      }),
+    },
+  };
 }

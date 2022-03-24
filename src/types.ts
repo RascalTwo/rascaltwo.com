@@ -26,16 +26,19 @@ export interface WorkData {
 	}
 }
 
-export interface Blog {
+export interface BlogMeta {
 	slug: string
 	title: string
 	date: [number, number, number];
-	html: string
 	excerpt: string
 	urls: {
 		source?: string
 		live?: string
 	}
+}
+
+export interface Blog extends BlogMeta {
+	html: string
 }
 
 export type Theme = 'dark' | 'light';
