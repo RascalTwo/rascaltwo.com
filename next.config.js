@@ -40,6 +40,15 @@ module.exports = {
       destination: '/embed/discord',
       permanent: false
     }, {
+      source: '/blog',
+      has: [{
+        type: 'header',
+        key: 'User-Agent',
+        value: '(.*Discordbot.*)'
+      }],
+      destination: '/blog/embed/discord',
+      permanent: false
+    }, {
       source: '/blog/embed/:slug',
       has: [{
         type: 'header',
