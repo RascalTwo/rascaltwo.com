@@ -39,3 +39,4 @@ src/data
 *.sh
 
 public/embeds/blog
+public/assets/blog
