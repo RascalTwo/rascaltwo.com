@@ -1,0 +1,16 @@
+{
+  "name": "scripts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "generate-blog-embed-images": "ts-node generate-blog-embed-images.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "playwright": "^1.18.1",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.5"
+  }
+}
