@@ -9,7 +9,7 @@ if (process.env.NEXT_PUBLIC_VITALS === 'true') {
   console.log('Vitals Filepath:', filepath)
   RFS = createStream(filepath.split('/').at(-1), {
     size: '10M',
-    interval: '1h',
+    interval: '1d',
     compress: 'gzip',
     path: filepath.split('/').slice(0, -1).join('/'),
   });
