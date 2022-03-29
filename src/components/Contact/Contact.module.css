@@ -23,7 +23,7 @@
 }
 
 .inputStyles {
-
+  width: 80%;
   margin: 0.5em 0;
   background: rgba(var(--contact-cv), var(--contact-cv), var(--contact-cv), 0.25);
   border: 0;
