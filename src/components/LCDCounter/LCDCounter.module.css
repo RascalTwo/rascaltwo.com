@@ -1,0 +1,59 @@
+.digit {
+	position: relative;
+	width: 12px;
+	height: 22px;
+}
+	.digit > div {
+		position: absolute;
+	}
+		.digit > div > svg {
+			display: block;
+			width: 10px;
+			height: 2px;
+		}
+			.digit > div > svg > path {
+				opacity: 1;
+				transition: opacity 250ms ease 0s;
+			}
+
+.counter {
+	position: relative;
+	display: inline-block;
+	padding: 5px;
+}
+
+.counter > img {
+	position: absolute;
+	inset: 0;
+}
+
+.counter > div {
+	position: relative;
+	z-index: 3;
+}
+
+
+.counter > div > div {
+	position: relative;
+	display: inline-block;
+}
+
+.digitsWrapper {
+	position: relative;
+	z-index: 2;
+	display: flex;
+	justify-content: flex-end;
+	width: 82px;
+	background-color: rgb(34, 34, 34);
+	padding: 3px;
+	box-sizing: content-box;
+	gap: 2px;
+}
+
+.greenGlow {
+	position: absolute;
+	inset: -4px;
+	background: rgb(118, 255, 3) none repeat scroll 0% 0%;
+	filter: blur(2px);
+	opacity: 0.5;
+}

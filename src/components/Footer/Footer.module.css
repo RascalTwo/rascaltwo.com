@@ -2,6 +2,7 @@
 	padding: 1em;
 	padding-top: 5em;
 	text-align: center;
+	position: relative;
 }
 
 .footer ul {
@@ -32,4 +33,10 @@
 
 .footer li a:is(:hover, :focus, :active) img{
 	transform: scale(0.9);
+}
+
+.footer > div {
+	position: absolute;
+	right: 1rem;
+	bottom: 0;
 }
