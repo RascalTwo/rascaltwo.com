@@ -130,6 +130,12 @@
 	opacity: 1;
 }
 
+.workItem:is(:hover, :focus-within, [data-selected="true"]) {
+	background: var(--anchor-color);
+	transform: scale(1.025);
+	z-index: 5;
+}
+
 @media (max-width: 1000px) {
 	.workItem .text {
 		opacity: 1;
