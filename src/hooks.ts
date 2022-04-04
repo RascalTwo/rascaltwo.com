@@ -37,9 +37,9 @@ const SELECTION_HOOK = {
 
 export const useSelection = (): [Node, Dispatch<SetStateAction<Element>>] => {
 	const [selected, setSelected] = useState<Node>(null);
-	const [within, setWithin] = useState<Element>(null);
+	const [within, setWithin] = useState<Element | null>(null);
 	const updateSelected = useCallback((selected: Node) => {
-		if (within?.contains(selected)) setSelected(selected);
+		setSelected(within?.contains(selected) ? selected : null);
 	}, [within, setSelected]);
 
 	useEffect(() => {
