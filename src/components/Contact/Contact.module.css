@@ -35,12 +35,16 @@
   transition: all 0.25s;
 }
 
-.inputStyles:hover {
+.inputStyles:not(:disabled):is(:hover, :focus) {
   box-shadow: 0 0 3pt 2pt var(--contact-placeholder-color);
+  background: rgba(0, 0, 0, 0.5);
 }
 
-.inputStyles:focus {
-  background: rgba(0, 0, 0, 0.5);
+.inputStyles:disabled {
+  cursor: not-allowed;
+  width: 0;
+  resize: none;
+  text-align: center;
 }
 
 .inputStyles::placeholder {
@@ -65,13 +69,17 @@
   border: 0.15em solid #049a8f;
   border-radius: 1em;
   font-weight: bold;
-  cursor: pointer;
   font-family: Roboto;
   transition: all 0.2s;
 }
 
-.submitButton:hover, .submitButton:focus {
+.submitButton:not(:disabled):is(:hover, :focus) {
 	border: 0.15em solid white;
 	background: #049a8f;
 	color: white;
+  cursor: pointer;
+}
+
+.submitButton:disabled {
+  cursor: not-allowed;
 }

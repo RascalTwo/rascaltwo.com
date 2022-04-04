@@ -4,6 +4,7 @@ import Section from '../Section'
 import styles from './Contact.module.css'
 
 export default function Contact(){
+	const [sending, setSending] = useState(false);
 	const [message, setMessage] = useState('');
 	const closeModal = useCallback(() => setMessage(''), []);
 
@@ -16,6 +17,8 @@ export default function Contact(){
 				aria-label="Contact Form"
 				onSubmit={useCallback((e) => {
 					e.preventDefault();
+
+					setSending(true);
 					// @ts-ignore
 					const params = new URLSearchParams(new FormData(e.target as HTMLFormElement)).toString()
 					return fetch('/api/contact', {
@@ -29,31 +32,31 @@ export default function Contact(){
 					}).then(message => {
 						(e.target as HTMLFormElement).reset();
 						return message
-					}).catch(message => message).then(setMessage);
+					}).catch(message => message).then(setMessage).then(() => setSending(false));
 				}, [])}
 			>
 				<div>
 					<label>
 						Name<br/>
-						<input className={styles.inputStyles} type="text" name="name" required placeholder="Name" />
+						<input className={styles.inputStyles} disabled={sending} type="text" name="name" required placeholder="Name" />
 					</label>
 				</div>
 				<div>
 					<label>
 						Email<br/>
-						<input className={styles.inputStyles} type="email" name="email" placeholder="Email" />
+						<input className={styles.inputStyles} disabled={sending} type="email" name="email" placeholder="Email" />
 					</label>
 				</div>
 				<div>
 					<label>
 						Phone<br/>
-						<input className={styles.inputStyles} type="tel" name="phone" placeholder="Phone Number" />
+						<input className={styles.inputStyles} disabled={sending} type="tel" name="phone" placeholder="Phone Number" />
 					</label>
 				</div>
 				<div>
 					<label>
 						Website<br/>
-						<input className={styles.inputStyles} type="url" name="website" placeholder="Website"  />
+						<input className={styles.inputStyles} disabled={sending} type="url" name="website" placeholder="Website"  />
 					</label>
 				</div>
 				<div className={styles.messageWrapper}>
@@ -62,11 +65,13 @@ export default function Contact(){
 						<textarea
 							required
 							className={`${styles.inputStyles} ${styles.textarea}`}
+							disabled={sending}
 							name="message"
 							placeholder="Message to send!"
 						></textarea>
 					</label>
-					<button className={styles.submitButton}>Let&apos;s chat!</button>
+					<br/>
+					<button className={styles.submitButton} disabled={sending}>Let&apos;s chat!</button>
 				</div>
 			</form>
 		</Section>
