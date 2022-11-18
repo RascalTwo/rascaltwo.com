@@ -116,7 +116,7 @@ function performReplacements(content: string, matches: R2Match[], infos: Replace
       if (!string) string = key === 'newContent' ? info.type === 'abbreviations' ? '$1' : '$0' : ''
 
       for (let i = 0; i < match.match.indices.length; i++){
-        string = string.replaceAll(`$${i}`, content.substring(...match.match.indices[i]))
+        if (match.match.indices[i]) string = string.replaceAll(`$${i}`, content.substring(...match.match.indices[i]))
       }
 
       strings[key] = string;
