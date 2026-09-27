@@ -1,0 +1,6 @@
+plugin:
+  image: https://www.pngrepo.com/svg/302363/web-plugin-addon
+  background: light
+pr:
+  image: https://commons.wikimedia.org/wiki/File:Octicons-git-pull-request.svg
+  background: light

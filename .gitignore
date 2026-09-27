@@ -35,5 +35,6 @@ yarn-error.log*
 
 cached*.json
 meta
-src/data
+src/data/*.response
+src/data/blogs/drafts/
 *.sh
