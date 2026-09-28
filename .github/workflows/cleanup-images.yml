@@ -23,7 +23,7 @@ env:
   OWNER: RascalTwo
   # Deletions are real only when the switch below is on (set after a verified dry run),
   # or when a manual run explicitly unticks dry_run.
-  ENABLE_DELETE: "false"
+  ENABLE_DELETE: "true"
 
 jobs:
   cleanup:
