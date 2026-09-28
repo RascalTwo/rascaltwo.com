@@ -54,12 +54,24 @@ jobs:
           delete=true
           if [ "$DRY" = true ] || { [ "$DRY" = auto ] && [ "$ENABLE_DELETE" != true ]; }; then delete=false; fi
 
+          # A tag may point at an image INDEX whose child manifests (platform image,
+          # provenance) appear as separate *untagged* versions. Deleting those breaks the
+          # kept image — so collect every digest the kept tags reference and protect them.
+          echo "$GH_TOKEN" | docker login ghcr.io -u "$GITHUB_ACTOR" --password-stdin >/dev/null
+          protect=" "
+          for ref in latest "${keep[@]/#/sha-}"; do
+            raw=$(docker buildx imagetools inspect "ghcr.io/${OWNER,,}/$PACKAGE:$ref" --raw 2>/dev/null) || continue
+            for d in $(jq -r '.manifests[]?.digest' <<<"$raw"); do protect+="$d "; done
+          done
+          echo "child manifests protected: $(wc -w <<<"$protect")"
+
           gh api --paginate "users/$OWNER/packages/container/$PACKAGE/versions" \
-            --jq '.[] | "\(.id) \(.metadata.container.tags | join(","))"' |
-          while read -r vid tags; do
+            --jq '.[] | "\(.id) \(.name) \(.metadata.container.tags | join(","))"' |
+          while read -r vid digest tags; do
             keepit=false
             case ",$tags," in *",latest,"*) keepit=true ;; esac
             for s in "${keep[@]}"; do case ",$tags," in *",sha-$s,"*) keepit=true ;; esac; done
+            [[ "$protect" == *" $digest "* ]] && { echo "KEEP   $vid [child of a kept image]"; continue; }
             if $keepit; then echo "KEEP   $vid [$tags]"; continue; fi
             if $delete; then
               gh api -X DELETE "users/$OWNER/packages/container/$PACKAGE/versions/$vid" && echo "DELETE $vid [$tags]"
