@@ -38,12 +38,14 @@ jobs:
           set -euo pipefail
           repo="$GITHUB_REPOSITORY"
 
-          # Newest-first production deployments whose latest status is success → keep their SHAs.
+          # Newest-first production deployments that EVER reached success → keep their SHAs.
+          # (Not "latest status": GitHub auto-marks older deployments `inactive` once a newer
+          # one succeeds, so a good deploy's latest status stops being `success`.)
           keep=()
           for row in $(gh api "repos/$repo/deployments?environment=production&per_page=100" --jq '.[] | "\(.id):\(.sha)"'); do
             id=${row%%:*}; sha=${row#*:}
-            state=$(gh api "repos/$repo/deployments/$id/statuses?per_page=1" --jq '.[0].state // ""')
-            [ "$state" = success ] || continue
+            ok=$(gh api "repos/$repo/deployments/$id/statuses?per_page=100" --jq 'any(.[]; .state == "success")')
+            [ "$ok" = true ] || continue
             [[ " ${keep[*]:-} " == *" $sha "* ]] || keep+=("$sha")
             [ "${#keep[@]}" -ge "$KEEP" ] && break
           done
