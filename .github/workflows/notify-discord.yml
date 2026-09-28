@@ -1,0 +1,52 @@
+# Post deploy outcomes to Discord #homelab-alerts (webhook "GitHub Deploys").
+#   deployment_status (reported by the NAS after pull + digest + /api/version checks)
+#     success → ✅   failure → ❌
+#   build & deploy workflow failed (never reached the NAS) → ❌
+# Needs repo secret DISCORD_WEBHOOK_DEPLOYS. If it's missing, this workflow is a no-op.
+name: notify discord
+
+on:
+  deployment_status:
+  workflow_run:
+    workflows: ["build & deploy"]
+    types: [completed]
+
+permissions: {}
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    if: >-
+      (github.event_name == 'deployment_status' &&
+        contains(fromJSON('["success","failure","error"]'), github.event.deployment_status.state)) ||
+      (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'failure')
+    steps:
+      - name: Post to Discord
+        env:
+          HOOK: ${{ secrets.DISCORD_WEBHOOK_DEPLOYS }}
+          EVENT: ${{ github.event_name }}
+          STATE: ${{ github.event.deployment_status.state }}
+          DESC: ${{ github.event.deployment_status.description }}
+          DEP_SHA: ${{ github.event.deployment.sha }}
+          RUN_SHA: ${{ github.event.workflow_run.head_sha }}
+          RUN_URL: ${{ github.event.workflow_run.html_url }}
+          RUN_MSG: ${{ github.event.workflow_run.head_commit.message }}
+          REPO: ${{ github.repository }}
+        run: |
+          [ -n "$HOOK" ] || { echo "DISCORD_WEBHOOK_DEPLOYS not set — skipping"; exit 0; }
+          if [ "$EVENT" = deployment_status ]; then
+            sha=${DEP_SHA:0:7}; url="https://github.com/$REPO/commit/$DEP_SHA"
+            if [ "$STATE" = success ]; then
+              title="✅ rascaltwo.com deployed — $sha"; color=3066993
+            else
+              title="❌ rascaltwo.com deploy FAILED — $sha"; color=15158332
+            fi
+            body="$DESC"
+          else
+            sha=${RUN_SHA:0:7}; url="$RUN_URL"
+            title="❌ rascaltwo.com build FAILED — $sha (never reached the NAS)"; color=15158332
+            body="${RUN_MSG%%$'\n'*}"
+          fi
+          jq -n --arg t "$title" --arg u "$url" --arg d "$body" --argjson c "$color" \
+            '{username:"GitHub Deploys", embeds:[{title:$t, url:$u, description:$d, color:$c}]}' |
+          curl -fsS --max-time 20 -H "Content-Type: application/json" -d @- "$HOOK"
