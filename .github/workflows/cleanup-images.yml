@@ -1,0 +1,69 @@
+# Keep ghcr.io tidy: retain `latest` + the images of the last 10 SUCCESSFUL production
+# deploys (as reported by the NAS through GitHub Deployments); delete every other version.
+# Guard: if no successful deploy is on record, delete nothing.
+name: cleanup images
+
+on:
+  deployment_status:          # runs right after the NAS reports a deploy result
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Only list what would be deleted"
+        type: boolean
+        default: true
+
+permissions:
+  packages: write
+  deployments: read
+  contents: read
+
+env:
+  KEEP: 10
+  PACKAGE: rascaltwo.com
+  OWNER: RascalTwo
+  # Deletions are real only when the switch below is on (set after a verified dry run),
+  # or when a manual run explicitly unticks dry_run.
+  ENABLE_DELETE: "false"
+
+jobs:
+  cleanup:
+    if: github.event_name == 'workflow_dispatch' || github.event.deployment_status.state == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Prune old image versions
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DRY: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run || 'auto' }}
+        run: |
+          set -euo pipefail
+          repo="$GITHUB_REPOSITORY"
+
+          # Newest-first production deployments whose latest status is success → keep their SHAs.
+          keep=()
+          for row in $(gh api "repos/$repo/deployments?environment=production&per_page=100" --jq '.[] | "\(.id):\(.sha)"'); do
+            id=${row%%:*}; sha=${row#*:}
+            state=$(gh api "repos/$repo/deployments/$id/statuses?per_page=1" --jq '.[0].state // ""')
+            [ "$state" = success ] || continue
+            [[ " ${keep[*]:-} " == *" $sha "* ]] || keep+=("$sha")
+            [ "${#keep[@]}" -ge "$KEEP" ] && break
+          done
+          echo "successful deploys kept: ${#keep[@]}"
+          printf '  sha-%s\n' "${keep[@]:-}"
+          if [ "${#keep[@]}" -eq 0 ]; then echo "guard: no successful deploy on record — deleting nothing"; exit 0; fi
+
+          delete=true
+          if [ "$DRY" = true ] || { [ "$DRY" = auto ] && [ "$ENABLE_DELETE" != true ]; }; then delete=false; fi
+
+          gh api --paginate "users/$OWNER/packages/container/$PACKAGE/versions" \
+            --jq '.[] | "\(.id) \(.metadata.container.tags | join(","))"' |
+          while read -r vid tags; do
+            keepit=false
+            case ",$tags," in *",latest,"*) keepit=true ;; esac
+            for s in "${keep[@]}"; do case ",$tags," in *",sha-$s,"*) keepit=true ;; esac; done
+            if $keepit; then echo "KEEP   $vid [$tags]"; continue; fi
+            if $delete; then
+              gh api -X DELETE "users/$OWNER/packages/container/$PACKAGE/versions/$vid" && echo "DELETE $vid [$tags]"
+            else
+              echo "WOULD DELETE $vid [${tags:-untagged}]"
+            fi
+          done
