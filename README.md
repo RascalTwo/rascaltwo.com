@@ -1,5 +1,15 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## Deploying
+
+Pushing to `main` deploys automatically (~1.5 min): GitHub Actions
+([`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)) builds the image, publishes it to
+`ghcr.io/rascaltwo/rascaltwo.com`, and sends a signed notice to the self-hosted server,
+which pulls and redeploys. Pull requests build but never publish or deploy.
+
+Blog posts live in `src/data/blogs/*.md` (drafts in `src/data/blogs/drafts/` are not published).
+
+
 ## Getting Started
 
 First, run the development server:
