@@ -13,7 +13,10 @@ RUN node_modules/.bin/next build --no-lint
 
 FROM node:22-slim
 WORKDIR /app
-ENV NODE_ENV=production \
+# The commit this image was built from, served at /api/version (set by the CI workflow).
+ARG GIT_SHA=""
+ENV GIT_SHA=$GIT_SHA \
+    NODE_ENV=production \
     NEXT_TELEMETRY_DISABLED=1 \
     NEXT_PUBLIC_VITALS=true \
     VITALS_PATH=vitals/vitals.jsonl
