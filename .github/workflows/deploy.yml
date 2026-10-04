@@ -9,6 +9,18 @@ name: build & deploy
 on:
   push:
     branches: [main]
+    # A push that touches only these cannot change the image's behaviour, so it must not
+    # rebuild and restart the site. `src/data/blogs/drafts` is in .dockerignore, so it is not
+    # in the image at all. NOT ignored on purpose: `**/*.md` (the blog posts in
+    # src/data/blogs/ ARE the site's content), this file and anything else under `.github/`
+    # that is not listed (a change to the pipeline should run the pipeline), and
+    # `.dockerignore`. A manual run (workflow_dispatch) always deploys.
+    paths-ignore:
+      - 'README.md'
+      - '.env.example'
+      - 'src/data/blogs/drafts/**'
+      - '.github/workflows/cleanup-images.yml'
+      - '.github/workflows/notify-discord.yml'
   pull_request:
   workflow_dispatch:
 
